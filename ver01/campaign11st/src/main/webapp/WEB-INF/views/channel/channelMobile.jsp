@@ -47,8 +47,8 @@
 	var oEditors = [];
 
 	// this window resize
-	window.resizeTo(1180,910);
-	//window.resizeTo(1180,1100);  // KANG-20190323: resize of the popup
+	//window.resizeTo(1180,910);
+	window.resizeTo(1180,1100);  // KANG-20190323: resize of the popup
 
 	// document.ready
 	$(document).ready(function() {
@@ -182,7 +182,7 @@
 		}
 		//유효성 체크
 		if (!fn_validation()){
-			//return;     // KANG-20190328: after remove 'true'
+			return;
 		}
 		if (!confirm("저장 하시겠습니까?")){
 			return;
@@ -549,12 +549,17 @@
 		// clear contents
 		//
 		arrImg1 = [ { imgUrl: "" }];
+		
 		arrImg2 = [ { imgUrl: "" }];
 		arrPrd2 = [ { prdUrl: "", prdName: "", prdPrice: "", prdUnit: "KRW", prdMblUrl: "", prdWebUrl: "" } ];
+		
 		arrImg3 = [ { imgUrl: "" }];
 		arrCpn3 = [ { cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "show" } ];
+		
 		arrAnn4 = [ { annText: "", annFixed: "center" } ];
+		
 		arrPrd5 = [ { prdUrl: "", prdName: "", prdPrice: "", prdUnit: "KRW", prdMblUrl: "", prdWebUrl: "" } ];
+		
 		arrCpn6 = [ { cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "show" } ];
 		//
 		// setting default values to the elements
@@ -619,7 +624,6 @@
 		var idx = "";
 		arrImg1.forEach(function(value, index, array) {
 			if (isEmpty(value["imgUrl"]) && idx == "") {
-				if (true) console.log("fn_alimi_type1_validation().arrImg1.forEach(): empty-" + index);
 				idx = "type1_imgUrl" + index;
 			}
 		});
@@ -669,6 +673,437 @@
 	}
 
 	//
+	// type2 validation and json
+	//
+	function fn_alimi_type2_validation() {
+		// master
+		if (isEmpty($('#type2_title1').val())) {
+			document.getElementById('type2_title1').focus();
+			return false;
+		}
+		master["title1"] = $('#type2_title1').val();
+		if (isEmpty($('#type2_title2').val())) {
+			document.getElementById('type2_title2').focus();
+			return false;
+		}
+		master["title2"] = $('#type2_title2').val();
+		if (isEmpty($('#type2_title3').val())) {
+			document.getElementById('type2_title3').focus();
+			return false;
+		}
+		master["title3"] = $('#type2_title3').val();
+		
+		// array type
+		var idx = "";
+		arrImg2.forEach(function(value, index, array) {
+			if (isEmpty(value["imgUrl"]) && idx == "") {
+				idx = "type2_imgUrl" + index;
+			}
+		});
+		if (idx != "") {
+			document.getElementById(idx).focus();
+			return false;
+		}
+		arrPrd2.forEach(function(value, index, array) {
+			if (isEmpty(value["prdUrl"]) && idx == "") {
+				idx = "type2_prdUrl" + index;
+			}
+			if (isEmpty(value["prdName"]) && idx == "") {
+				idx = "type2_prdName" + index;
+			}
+			if (isEmpty(value["prdPrice"]) && idx == "") {
+				idx = "type2_prdPrice" + index;
+			}
+			if (isEmpty(value["prdMblUrl"]) && idx == "") {
+				idx = "type2_prdMblUrl" + index;
+			}
+			if (isEmpty(value["prdWebUrl"]) && idx == "") {
+				idx = "type2_prdWebUrl" + index;
+			}
+		});
+		if (idx != "") {
+			document.getElementById(idx).focus();
+			return false;
+		}
+		
+		// footer
+		if (isEmpty($('#type2_ftrText').val())) {
+			document.getElementById('type2_ftrText').focus();
+			return false;
+		}
+		footer["ftrText"] = $('#type2_ftrText').val();
+		if (isEmpty($('#type2_ftrMblUrl').val())) {
+			document.getElementById('type2_ftrMblUrl').focus();
+			return false;
+		}
+		footer["ftrMblUrl"] = $('#type2_ftrMblUrl').val();
+		if (isEmpty($('#type2_ftrWebUrl').val())) {
+			document.getElementById('type2_ftrWebUrl').focus();
+			return false;
+		}
+		footer["ftrWebUrl"] = $('#type2_ftrWebUrl').val();
+		
+		return true;
+	}
+	function fn_alimi_type2_json() {
+		switch(base['alimiShow']) {
+		case "show": base['alimiShow'] = "Y"; break;
+		default: base['alimiShow'] = "N"; break;
+		}
+		switch(base['alimiType']) {
+		case "type1": base['alimiType'] = "001"; break;
+		case "type2": base['alimiType'] = "002"; break;
+		case "type3": base['alimiType'] = "003"; break;
+		case "type4": base['alimiType'] = "004"; break;
+		case "type5": base['alimiType'] = "005"; break;
+		case "type6": base['alimiType'] = "006"; break;
+		default: base['alimiType'] = "000"; break;
+		}
+		var obj = Object.assign(base, master, { arrImg: arrImg2 }, { arrPrd: arrPrd2 }, footer);
+		resultJson = JSON.stringify(obj);
+		if (!true) alert(resultJson);
+		if (!true) console.log(">>> " + resultJson);
+		return true;
+	}
+
+	//
+	// type3 validation and json
+	//
+	function fn_alimi_type3_validation() {
+		// master
+		if (isEmpty($('#type3_title1').val())) {
+			document.getElementById('type3_title1').focus();
+			return false;
+		}
+		master["title1"] = $('#type3_title1').val();
+		if (isEmpty($('#type3_title2').val())) {
+			document.getElementById('type3_title2').focus();
+			return false;
+		}
+		master["title2"] = $('#type3_title2').val();
+		if (isEmpty($('#type3_title3').val())) {
+			document.getElementById('type3_title3').focus();
+			return false;
+		}
+		master["title3"] = $('#type3_title3').val();
+		
+		// array type
+		var idx = "";
+		arrImg3.forEach(function(value, index, array) {
+			if (isEmpty(value["imgUrl"]) && idx == "") {
+				idx = "type3_imgUrl" + index;
+			}
+		});
+		if (idx != "") {
+			document.getElementById(idx).focus();
+			return false;
+		}
+		arrCpn3.forEach(function(value, index, array) {
+			if (isEmpty(value["cpnText1"]) && idx == "") {
+				idx = "type3_cpnText1" + index;
+			}
+			if (isEmpty(value["cpnText2"]) && idx == "") {
+				idx = "type3_cpnText2" + index;
+			}
+			if (isEmpty(value["cpnText3"]) && idx == "") {
+				idx = "type3_cpnText3" + index;
+			}
+			if (isEmpty(value["cpnText4"]) && idx == "") {
+				idx = "type3_cpnText4" + index;
+			}
+			if (isEmpty(value["cpnNumber"]) && idx == "") {
+				idx = "type3_cpnNumber" + index;
+			}
+		});
+		if (idx != "") {
+			document.getElementById(idx).focus();
+			return false;
+		}
+		
+		// footer
+		if (isEmpty($('#type3_ftrText').val())) {
+			document.getElementById('type3_ftrText').focus();
+			return false;
+		}
+		footer["ftrText"] = $('#type3_ftrText').val();
+		if (isEmpty($('#type3_ftrMblUrl').val())) {
+			document.getElementById('type3_ftrMblUrl').focus();
+			return false;
+		}
+		footer["ftrMblUrl"] = $('#type3_ftrMblUrl').val();
+		if (isEmpty($('#type3_ftrWebUrl').val())) {
+			document.getElementById('type3_ftrWebUrl').focus();
+			return false;
+		}
+		footer["ftrWebUrl"] = $('#type3_ftrWebUrl').val();
+		
+		return true;
+	}
+	function fn_alimi_type3_json() {
+		switch(base['alimiShow']) {
+		case "show": base['alimiShow'] = "Y"; break;
+		default: base['alimiShow'] = "N"; break;
+		}
+		switch(base['alimiType']) {
+		case "type1": base['alimiType'] = "001"; break;
+		case "type2": base['alimiType'] = "002"; break;
+		case "type3": base['alimiType'] = "003"; break;
+		case "type4": base['alimiType'] = "004"; break;
+		case "type5": base['alimiType'] = "005"; break;
+		case "type6": base['alimiType'] = "006"; break;
+		default: base['alimiType'] = "000"; break;
+		}
+		var obj = Object.assign(base, master, { arrImg: arrImg3 }, { arrCpn: arrCpn3 }, footer);
+		resultJson = JSON.stringify(obj);
+		if (!true) alert(resultJson);
+		if (!true) console.log(">>> " + resultJson);
+		return true;
+	}
+
+	//
+	// type4 validation and json
+	//
+	function fn_alimi_type4_validation() {
+		// master
+		if (isEmpty($('#type4_title1').val())) {
+			document.getElementById('type4_title1').focus();
+			return false;
+		}
+		master["title1"] = $('#type4_title1').val();
+		if (isEmpty($('#type4_title2').val())) {
+			document.getElementById('type4_title2').focus();
+			return false;
+		}
+		master["title2"] = $('#type4_title2').val();
+		if (isEmpty($('#type4_title3').val())) {
+			document.getElementById('type4_title3').focus();
+			return false;
+		}
+		master["title3"] = $('#type4_title3').val();
+		
+		// array type
+		var idx = "";
+		arrAnn4.forEach(function(value, index, array) {
+			if (isEmpty(value["annText"]) && idx == "") {
+				idx = "type4_annText" + index;
+			}
+		});
+		if (idx != "") {
+			document.getElementById(idx).focus();
+			return false;
+		}
+		
+		// footer
+		if (isEmpty($('#type4_ftrText').val())) {
+			document.getElementById('type4_ftrText').focus();
+			return false;
+		}
+		footer["ftrText"] = $('#type4_ftrText').val();
+		if (isEmpty($('#type4_ftrMblUrl').val())) {
+			document.getElementById('type4_ftrMblUrl').focus();
+			return false;
+		}
+		footer["ftrMblUrl"] = $('#type4_ftrMblUrl').val();
+		if (isEmpty($('#type4_ftrWebUrl').val())) {
+			document.getElementById('type4_ftrWebUrl').focus();
+			return false;
+		}
+		footer["ftrWebUrl"] = $('#type4_ftrWebUrl').val();
+		
+		return true;
+	}
+	function fn_alimi_type4_json() {
+		switch(base['alimiShow']) {
+		case "show": base['alimiShow'] = "Y"; break;
+		default: base['alimiShow'] = "N"; break;
+		}
+		switch(base['alimiType']) {
+		case "type1": base['alimiType'] = "001"; break;
+		case "type2": base['alimiType'] = "002"; break;
+		case "type3": base['alimiType'] = "003"; break;
+		case "type4": base['alimiType'] = "004"; break;
+		case "type5": base['alimiType'] = "005"; break;
+		case "type6": base['alimiType'] = "006"; break;
+		default: base['alimiType'] = "000"; break;
+		}
+		var obj = Object.assign(base, master, { arrAnn: arrAnn4 }, footer);
+		resultJson = JSON.stringify(obj);
+		if (!true) alert(resultJson);
+		if (!true) console.log(">>> " + resultJson);
+		return true;
+	}
+
+	//
+	// type5 validation and json
+	//
+	function fn_alimi_type5_validation() {
+		// master
+		if (isEmpty($('#type5_title1').val())) {
+			document.getElementById('type5_title1').focus();
+			return false;
+		}
+		master["title1"] = $('#type5_title1').val();
+		if (isEmpty($('#type5_title2').val())) {
+			document.getElementById('type5_title2').focus();
+			return false;
+		}
+		master["title2"] = $('#type5_title2').val();
+		if (isEmpty($('#type5_title3').val())) {
+			document.getElementById('type5_title3').focus();
+			return false;
+		}
+		master["title3"] = $('#type5_title3').val();
+		
+		// array type
+		var idx = "";
+		arrPrd5.forEach(function(value, index, array) {
+			if (isEmpty(value["prdUrl"]) && idx == "") {
+				idx = "type5_prdUrl" + index;
+			}
+			if (isEmpty(value["prdName"]) && idx == "") {
+				idx = "type5_prdName" + index;
+			}
+			if (isEmpty(value["prdPrice"]) && idx == "") {
+				idx = "type5_prdPrice" + index;
+			}
+			if (isEmpty(value["prdMblUrl"]) && idx == "") {
+				idx = "type5_prdMblUrl" + index;
+			}
+			if (isEmpty(value["prdWebUrl"]) && idx == "") {
+				idx = "type5_prdWebUrl" + index;
+			}
+		});
+		if (idx != "") {
+			document.getElementById(idx).focus();
+			return false;
+		}
+		
+		// footer
+		if (isEmpty($('#type5_ftrText').val())) {
+			document.getElementById('type5_ftrText').focus();
+			return false;
+		}
+		footer["ftrText"] = $('#type5_ftrText').val();
+		if (isEmpty($('#type5_ftrMblUrl').val())) {
+			document.getElementById('type5_ftrMblUrl').focus();
+			return false;
+		}
+		footer["ftrMblUrl"] = $('#type5_ftrMblUrl').val();
+		if (isEmpty($('#type5_ftrWebUrl').val())) {
+			document.getElementById('type5_ftrWebUrl').focus();
+			return false;
+		}
+		footer["ftrWebUrl"] = $('#type5_ftrWebUrl').val();
+		
+		return true;
+	}
+	function fn_alimi_type5_json() {
+		switch(base['alimiShow']) {
+		case "show": base['alimiShow'] = "Y"; break;
+		default: base['alimiShow'] = "N"; break;
+		}
+		switch(base['alimiType']) {
+		case "type1": base['alimiType'] = "001"; break;
+		case "type2": base['alimiType'] = "002"; break;
+		case "type3": base['alimiType'] = "003"; break;
+		case "type4": base['alimiType'] = "004"; break;
+		case "type5": base['alimiType'] = "005"; break;
+		case "type6": base['alimiType'] = "006"; break;
+		default: base['alimiType'] = "000"; break;
+		}
+		var obj = Object.assign(base, master, { arrPrd: arrPrd5 }, footer);
+		resultJson = JSON.stringify(obj);
+		if (!true) alert(resultJson);
+		if (!true) console.log(">>> " + resultJson);
+		return true;
+	}
+	
+	//
+	// type6 validation and json
+	//
+	function fn_alimi_type6_validation() {
+		// master
+		if (isEmpty($('#type6_title1').val())) {
+			document.getElementById('type6_title1').focus();
+			return false;
+		}
+		master["title1"] = $('#type6_title1').val();
+		if (isEmpty($('#type6_title2').val())) {
+			document.getElementById('type6_title2').focus();
+			return false;
+		}
+		master["title2"] = $('#type6_title2').val();
+		if (isEmpty($('#type6_title3').val())) {
+			document.getElementById('type6_title3').focus();
+			return false;
+		}
+		master["title3"] = $('#type6_title3').val();
+		
+		// array type
+		var idx = "";
+		arrCpn6.forEach(function(value, index, array) {
+			if (isEmpty(value["cpnText1"]) && idx == "") {
+				idx = "type6_cpnText1" + index;
+			}
+			if (isEmpty(value["cpnText2"]) && idx == "") {
+				idx = "type6_cpnText2" + index;
+			}
+			if (isEmpty(value["cpnText3"]) && idx == "") {
+				idx = "type6_cpnText3" + index;
+			}
+			if (isEmpty(value["cpnText4"]) && idx == "") {
+				idx = "type6_cpnText4" + index;
+			}
+			if (isEmpty(value["cpnNumber"]) && idx == "") {
+				idx = "type6_cpnNumber" + index;
+			}
+		});
+		if (idx != "") {
+			document.getElementById(idx).focus();
+			return false;
+		}
+		
+		// footer
+		if (isEmpty($('#type6_ftrText').val())) {
+			document.getElementById('type6_ftrText').focus();
+			return false;
+		}
+		footer["ftrText"] = $('#type6_ftrText').val();
+		if (isEmpty($('#type6_ftrMblUrl').val())) {
+			document.getElementById('type6_ftrMblUrl').focus();
+			return false;
+		}
+		footer["ftrMblUrl"] = $('#type6_ftrMblUrl').val();
+		if (isEmpty($('#type6_ftrWebUrl').val())) {
+			document.getElementById('type6_ftrWebUrl').focus();
+			return false;
+		}
+		footer["ftrWebUrl"] = $('#type6_ftrWebUrl').val();
+		
+		return true;
+	}
+	function fn_alimi_type6_json() {
+		switch(base['alimiShow']) {
+		case "show": base['alimiShow'] = "Y"; break;
+		default: base['alimiShow'] = "N"; break;
+		}
+		switch(base['alimiType']) {
+		case "type1": base['alimiType'] = "001"; break;
+		case "type2": base['alimiType'] = "002"; break;
+		case "type3": base['alimiType'] = "003"; break;
+		case "type4": base['alimiType'] = "004"; break;
+		case "type5": base['alimiType'] = "005"; break;
+		case "type6": base['alimiType'] = "006"; break;
+		default: base['alimiType'] = "000"; break;
+		}
+		var obj = Object.assign(base, master, { arrCpn: arrCpn6 }, footer);
+		resultJson = JSON.stringify(obj);
+		if (!true) alert(resultJson);
+		if (!true) console.log(">>> " + resultJson);
+		return true;
+	}
+
+	//
 	// validation and json
 	//
 	function fn_alimi_validation() {
@@ -683,9 +1118,13 @@
 		if (true) console.log("fn_alimi_validation() type:" + val);
 
 		switch(val) {
-		case "type1":
-			if (!fn_alimi_type1_validation()) return false;
-			break;
+		case "type1": if (!fn_alimi_type1_validation()) return false; break;
+		case "type2": if (!fn_alimi_type2_validation()) return false; break;
+		case "type3": if (!fn_alimi_type3_validation()) return false; break;
+		case "type4": if (!fn_alimi_type4_validation()) return false; break;
+		case "type5": if (!fn_alimi_type5_validation()) return false; break;
+		case "type6": if (!fn_alimi_type6_validation()) return false; break;
+		default: alert("ERROR in fn_alimi_validation()"); break;
 		}
 		
 		return true;
@@ -694,9 +1133,13 @@
 		var val = $('.alimiType:checked').val();
 		if (true) console.log("fn_alimi_validation() type:" + val);
 		switch(val) {
-		case "type1":
-			if (!fn_alimi_type1_json()) return false;
-			break;
+		case "type1": if (!fn_alimi_type1_json()) return false; break;
+		case "type2": if (!fn_alimi_type2_json()) return false; break;
+		case "type3": if (!fn_alimi_type3_json()) return false; break;
+		case "type4": if (!fn_alimi_type4_json()) return false; break;
+		case "type5": if (!fn_alimi_type5_json()) return false; break;
+		case "type6": if (!fn_alimi_type6_json()) return false; break;
+		default: alert("ERROR in fn_alimi_json()"); break;
 		}
 		
 		return true;
@@ -887,6 +1330,7 @@
 	//
 	// find the table tr elements : NOT USED
 	//
+	/*
 	function fn_img2_findTableTr() {
 		var arr = [];
 		$("#img2_table > tbody > tr").each(function(tr, index) {
@@ -900,6 +1344,7 @@
 		
 		return false;
 	}
+	*/
 	
 	//
 	// blur event of inut element on img2
@@ -936,8 +1381,8 @@
 				rowHtml += "    </span>";
 			}
 			rowHtml += "  </td>";
-			rowHtml += "  <td colspan=\"3\">";
-			rowHtml += "    <input type=\"text\" class=\"imgUrl\" onblur=\"javascript:fn_img2_inputBlur(" + index + ",'imgUrl',this.value);\" style=\"width:700px;\" value=\"" + value.imgUrl + "\" maxlength=\"100\" placeholder='http://' />";
+			rowHtml += "  <td colspan='3'>";
+			rowHtml += "    <input type='text' id='type2_imgUrl" + index + "' class='imgUrl' onblur=\"javascript:fn_img2_inputBlur(" + index + ",'imgUrl',this.value);\" style='width:700px;' value='" + value.imgUrl + "' maxlength='100' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#img2_table > tbody:last").append(rowHtml);
@@ -1006,6 +1451,7 @@
 	//
 	// find the table tr elements : NOT USED
 	//
+	/*
 	function fn_prd2_findTableTr() {
 		var arr = [];
 		$("#prd2_table > tbody > tr").each(function(tr, index) {
@@ -1019,6 +1465,7 @@
 		
 		return false;
 	}
+	*/
 	
 	//
 	// blur event of input element on prd2
@@ -1071,19 +1518,19 @@
 			rowHtml += "  </td>";
 			rowHtml += "  <td class='info'>이미지 URL</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdUrl',this.value);\" style='width:700px;' value='" + value.prdUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type2_prdUrl" + index + "' class='prdUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdUrl',this.value);\" style='width:700px;' value='" + value.prdUrl + "' maxlength='100' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>품명</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdName' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdName',this.value);\" style='width:700px;' value='" + value.prdName + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type2_prdName" + index + "' class='prdName' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdName',this.value);\" style='width:700px;' value='" + value.prdName + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>가격</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdPrice' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdPrice',this.value);\" style='width:700px;' value='" + value.prdPrice + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type2_prdPrice" + index + "' class='prdPrice' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdPrice',this.value);\" style='width:700px;' value='" + value.prdPrice + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
@@ -1099,13 +1546,13 @@
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>보기(Mobile URL)</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdMblUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdMblUrl',this.value);\" style='width:700px;' value='" + value.prdMblUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type2_prdMblUrl" + index + "' class='prdMblUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdMblUrl',this.value);\" style='width:700px;' value='" + value.prdMblUrl + "' maxlength='100' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>보기(Web URL)</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdWebUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdWebUrl',this.value);\" style='width:700px;' value='" + value.prdWebUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type2_prdWebUrl" + index + "' class='prdWebUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdWebUrl',this.value);\" style='width:700px;' value='" + value.prdWebUrl + "' maxlength='100' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#prd2_table > tbody:last").append(rowHtml);
@@ -1189,6 +1636,7 @@
 	//
 	// find the table tr elements : NOT USED
 	//
+	/*
 	function fn_img3_findTableTr() {
 		var arr = [];
 		$("#img3_table > tbody > tr").each(function(tr, index) {
@@ -1202,6 +1650,7 @@
 		
 		return false;
 	}
+	*/
 	
 	//
 	// blur event of inut element on img3
@@ -1238,8 +1687,8 @@
 				rowHtml += "    </span>";
 			}
 			rowHtml += "  </td>";
-			rowHtml += "  <td colspan=\"3\">";
-			rowHtml += "    <input type=\"text\" class=\"imgUrl\" onblur=\"javascript:fn_img3_inputBlur(" + index + ",'imgUrl',this.value);\" style=\"width:700px;\" value=\"" + value.imgUrl + "\" maxlength=\"100\" placeholder='http://' />";
+			rowHtml += "  <td colspan='3'>";
+			rowHtml += "    <input type='text' id='type3_imgUrl" + index + "' class='imgUrl' onblur=\"javascript:fn_img3_inputBlur(" + index + ",'imgUrl',this.value);\" style='width:700px;' value='" + value.imgUrl + "' maxlength='100' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#img3_table > tbody:last").append(rowHtml);
@@ -1308,6 +1757,7 @@
 	//
 	// find the table tr elements : NOT USED
 	//
+	/*
 	function fn_cpn3_findTableTr() {
 		var arr = [];
 		$("#cpn3_table > tbody > tr").each(function(tr, index) {
@@ -1321,6 +1771,7 @@
 		
 		return false;
 	}
+	*/
 	
 	//
 	// blur event of input element on cpn3
@@ -1370,31 +1821,31 @@
 			rowHtml += "  </td>";
 			rowHtml += "  <td class='info'>문구 1</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnText1' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText1',this.value);\" style='width:700px;' value='" + value.cpnText1 + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type3_cpnText1" + index + "' class='cpnText1' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText1',this.value);\" style='width:700px;' value='" + value.cpnText1 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>문구 2</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnText2' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText2',this.value);\" style='width:700px;' value='" + value.cpnText2 + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type3_cpnText2" + index + "' class='cpnText2' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText2',this.value);\" style='width:700px;' value='" + value.cpnText2 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>문구 3</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnText3' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText3',this.value);\" style='width:700px;' value='" + value.cpnText3 + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type3_cpnText3" + index + "' class='cpnText3' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText3',this.value);\" style='width:700px;' value='" + value.cpnText3 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>문구 4</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnText4' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText4',this.value);\" style='width:700px;' value='" + value.cpnText4 + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type3_cpnText4" + index + "' class='cpnText4' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText4',this.value);\" style='width:700px;' value='" + value.cpnText4 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>쿠폰번호</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnNumber' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnNumber',this.value);\" style='width:700px;' value='" + value.cpnNumber + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type3_cpnNumber" + index + "' class='cpnNumber' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnNumber',this.value);\" style='width:700px;' value='" + value.cpnNumber + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
@@ -1486,6 +1937,7 @@
 	//
 	// find the table tr elements : NOT USED
 	//
+	/*
 	function fn_ann4_findTableTr() {
 		var arr = [];
 		$("#ann4_table > tbody > tr").each(function(tr, index) {
@@ -1499,6 +1951,7 @@
 		
 		return false;
 	}
+	*/
 	
 	//
 	// blur event of input element on ann4
@@ -1548,8 +2001,8 @@
 			}
 			rowHtml += "  </td>";
 			rowHtml += "  <td class='info'>문구</td>";
-			rowHtml += "  <td colspan=\"2\">";
-			rowHtml += "    <input type=\"text\" class=\"annText\" onblur=\"javascript:fn_ann4_inputBlur(" + index + ",'annText',this.value);\" style=\"width:700px;\" value=\"" + value.annText + "\" maxlength='100' placeholder='' />";
+			rowHtml += "  <td colspan='2'>";
+			rowHtml += "    <input type='text' id='type4_annText" + index + "' class='annText' onblur=\"javascript:fn_ann4_inputBlur(" + index + ",'annText',this.value);\" style='width:700px;' value='" + value.annText + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
@@ -1637,6 +2090,7 @@
 	//
 	// find the table tr elements : NOT USED
 	//
+	/*
 	function fn_prd5_findTableTr() {
 		var arr = [];
 		$("#prd5_table > tbody > tr").each(function(tr, index) {
@@ -1650,6 +2104,7 @@
 		
 		return false;
 	}
+	*/
 	
 	//
 	// blur event of input element on prd5
@@ -1702,19 +2157,19 @@
 			rowHtml += "  </td>";
 			rowHtml += "  <td class='info'>이미지 URL</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdUrl',this.value);\" style='width:700px;' value='" + value.prdUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type5_prdUrl" + index + "' class='prdUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdUrl',this.value);\" style='width:700px;' value='" + value.prdUrl + "' maxlength='100' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>품명</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdName' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdName',this.value);\" style='width:700px;' value='" + value.prdName + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type5_prdName" + index + "' class='prdName' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdName',this.value);\" style='width:700px;' value='" + value.prdName + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>가격</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdPrice' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdPrice',this.value);\" style='width:700px;' value='" + value.prdPrice + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type5_prdPrice" + index + "' class='prdPrice' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdPrice',this.value);\" style='width:700px;' value='" + value.prdPrice + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
@@ -1730,13 +2185,13 @@
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>보기(Mobile URL)</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdMblUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdMblUrl',this.value);\" style='width:700px;' value='" + value.prdMblUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type5_prdMblUrl" + index + "' class='prdMblUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdMblUrl',this.value);\" style='width:700px;' value='" + value.prdMblUrl + "' maxlength='100' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>보기(Web URL)</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='prdWebUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdWebUrl',this.value);\" style='width:700px;' value='" + value.prdWebUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type5_prdWebUrl" + index + "' class='prdWebUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdWebUrl',this.value);\" style='width:700px;' value='" + value.prdWebUrl + "' maxlength='100' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#prd5_table > tbody:last").append(rowHtml);
@@ -1815,6 +2270,7 @@
 	//
 	// find the table tr elements : NOT USED
 	//
+	/*
 	function fn_cpn6_findTableTr() {
 		var arr = [];
 		$("#cpn6_table > tbody > tr").each(function(tr, index) {
@@ -1828,6 +2284,7 @@
 		
 		return false;
 	}
+	*/
 	
 	//
 	// blur event of input element on cpn6
@@ -1877,31 +2334,31 @@
 			rowHtml += "  </td>";
 			rowHtml += "  <td class='info'>문구 1</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnText1' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText1',this.value);\" style='width:700px;' value='" + value.cpnText1 + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type6_cpnText1" + index + "' class='cpnText1' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText1',this.value);\" style='width:700px;' value='" + value.cpnText1 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>문구 2</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnText2' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText2',this.value);\" style='width:700px;' value='" + value.cpnText2 + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type6_cpnText2" + index + "' class='cpnText2' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText2',this.value);\" style='width:700px;' value='" + value.cpnText2 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>문구 3</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnText3' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText3',this.value);\" style='width:700px;' value='" + value.cpnText3 + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type6_cpnText3" + index + "' class='cpnText3' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText3',this.value);\" style='width:700px;' value='" + value.cpnText3 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>문구 4</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnText4' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText4',this.value);\" style='width:700px;' value='" + value.cpnText4 + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type6_cpnText4" + index + "' class='cpnText4' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText4',this.value);\" style='width:700px;' value='" + value.cpnText4 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>쿠폰번호</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' class='cpnNumber' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnNumber',this.value);\" style='width:700px;' value='" + value.cpnNumber + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type6_cpnNumber" + index + "' class='cpnNumber' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnNumber',this.value);\" style='width:700px;' value='" + value.cpnNumber + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
