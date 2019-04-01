@@ -17,6 +17,7 @@ import skt.tmall.talk.dto.type.Block;
 import skt.tmall.talk.dto.type.BlockBoldText;
 import skt.tmall.talk.dto.type.BlockBtnView;
 import skt.tmall.talk.dto.type.BlockCouponText;
+import skt.tmall.talk.dto.type.BlockImg240;
 import skt.tmall.talk.dto.type.BlockImg500;
 import skt.tmall.talk.dto.type.BlockLinkUrl;
 import skt.tmall.talk.dto.type.BlockProductPrice;
@@ -169,6 +170,7 @@ public class Type1JsonTestMain {
 		Gson gson = new Gson();
 		String jsonParams = null;
 		Map<String, Object> mapParams = null;
+		Map<String, Object> mapImg = null;
 		List<Block> composites = null;
 		int seq = 200 + SEQ;
 		
@@ -201,13 +203,10 @@ public class Type1JsonTestMain {
 					System.out.println(">>>>> " + map);
 				}
 			}
+			mapImg = ((List<Map<String, Object>>) mapParams.get("arrImg")).get(0);
 		}
 		
 		if (flag) {
-			List<BlockImg500.Value> listImg = new ArrayList<>();
-			for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrImg")) {
-				listImg.add(new BlockImg500.Value((String) map.get("imgUrl")));
-			}
 			List<BlockProductPrice.Value> listProduct = new ArrayList<>();
 			for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrPrd")) {
 				listProduct.add(new BlockProductPrice.Value(
@@ -223,7 +222,7 @@ public class Type1JsonTestMain {
 			composites = Lists.newArrayList(
 					new BlockTopCap(new BlockTopCap.Value((String) mapParams.get("title1"), (String) mapParams.get("advText")))
 					, new BlockBoldText(new BlockBoldText.Value((String) mapParams.get("title2") + seq, (String) mapParams.get("title3") + seq))
-					, new BlockImg500(listImg)
+					, new BlockImg240(new BlockImg240.Value((String)mapImg.get("imgUrl")))
 					, new BlockProductPrice(listProduct)
 					, new BlockBtnView(new BlockBtnView.Value((String) mapParams.get("ftrText"), new BlockLinkUrl((String) mapParams.get("ftrMblUrl"), (String) mapParams.get("ftrWebUrl"))))
 			);
@@ -301,6 +300,7 @@ public class Type1JsonTestMain {
 		Gson gson = new Gson();
 		String jsonParams = null;
 		Map<String, Object> mapParams = null;
+		Map<String, Object> mapImg = null;
 		List<Block> composites = null;
 		int seq = 300 + SEQ;
 		
@@ -336,13 +336,10 @@ public class Type1JsonTestMain {
 					System.out.println(">>>>> " + map);
 				}
 			}
+			mapImg = ((List<Map<String, Object>>) mapParams.get("arrImg")).get(0);
 		}
 		
 		if (flag) {
-			List<BlockImg500.Value> listImg = new ArrayList<>();
-			for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrImg")) {
-				listImg.add(new BlockImg500.Value((String) map.get("imgUrl")));
-			}
 			List<BlockCouponText.Value> listCoupon = new ArrayList<>();
 			for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrCpn")) {
 				System.out.println(">>>>> " + map);
@@ -360,7 +357,7 @@ public class Type1JsonTestMain {
 			composites = Lists.newArrayList(
 					new BlockTopCap(new BlockTopCap.Value((String) mapParams.get("title1"), (String) mapParams.get("advText")))
 					, new BlockBoldText(new BlockBoldText.Value((String) mapParams.get("title2") + seq, (String) mapParams.get("title3") + seq))
-					, new BlockImg500(listImg)
+					, new BlockImg240(new BlockImg240.Value((String) mapImg.get("imgUrl")))
 					, new BlockCouponText(listCoupon)
 					, new BlockBtnView(new BlockBtnView.Value((String) mapParams.get("ftrText"), new BlockLinkUrl((String) mapParams.get("ftrMblUrl"), (String) mapParams.get("ftrWebUrl"))))
 			);
@@ -461,8 +458,8 @@ public class Type1JsonTestMain {
 				for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrAnn")) {
 					System.out.println(">>>>> " + map);
 				}
-				mapAnn = ((List<Map<String, Object>>) mapParams.get("arrAnn")).get(0);
 			}
+			mapAnn = ((List<Map<String, Object>>) mapParams.get("arrAnn")).get(0);
 		}
 		
 		if (flag) {
