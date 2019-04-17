@@ -38,6 +38,7 @@ import com.skplanet.sascm.service.CommCodeService;
 import com.skplanet.sascm.service.OfferService;
 import com.skplanet.sascm.service.VariableService;
 import com.skplanet.sascm.util.Common;
+import com.skplanet.sascm.util.Flag;
 
 @Controller
 public class CampaignContentController {
@@ -64,7 +65,7 @@ public class CampaignContentController {
 	private MappingJacksonJsonView jsonView;
 
 	/**
-	 * 
+	 *
 	 * @param request
 	 * @param modelMap
 	 * @return
@@ -80,6 +81,7 @@ public class CampaignContentController {
 
 	/**
 	 * 고객 세그먼트 컨텐츠 매핑 관리
+	 * TODO KANG-20190409: reference for pagination by Seok Kiea Kang
 	 *
 	 * @param request
 	 * @param response
@@ -97,30 +99,42 @@ public class CampaignContentController {
 			selectPageNo = "1";
 		}
 
+		int selectPage = Integer.parseInt(selectPageNo);
 		int pageRange = 10;
 		int rowRange = 5;
-		int selectPage = Integer.parseInt(selectPageNo);
-		int rowTotalCnt = Integer.parseInt(campaignContentService.getCampaignContentListCnt(map));
-		int pageStart = ((selectPage - 1) / pageRange) * pageRange + 1;
+		int rowTotalCnt = Integer.parseInt(this.campaignContentService.getCampaignContentListCnt(map));
 		int totalPage = rowTotalCnt / rowRange + ((rowTotalCnt % rowRange > 0) ? 1 : 0);
+		int pageStart = ((selectPage - 1) / pageRange) * pageRange + 1;
 		int pageEnd = (totalPage <= (pageStart + pageRange - 1)) ? totalPage : (pageStart + pageRange - 1);
 
 		int searchRangeStart = (rowRange * (selectPage - 1)) + 1;
 		int searchRangeEnd = rowRange * selectPage;
-
 		map.put("searchRangeStart", searchRangeStart);
 		map.put("searchRangeEnd", searchRangeEnd);
+		if (Flag.flag) {
+			log.info("=============================================");
+			log.info("selectPage       : " + selectPage);
+			log.info("pageRange        : " + pageRange);
+			log.info("rowRange         : " + rowRange);
+			log.info("rowTotalCnt      : " + rowTotalCnt);
+			log.info("totalPage        : " + totalPage);
+			log.info("pageStart        : " + pageStart);
+			log.info("pageEnd          : " + pageEnd);
+			log.info("searchRangeStart : " + searchRangeStart);
+			log.info("searchRangeEnd   : " + searchRangeEnd);
+			log.info("=============================================");
+		}
 
-		List<CampaignContentBO> list = campaignContentService.getCampaignContentList(map);
+		// 캠페인 정보 목록 조회
+		List<CampaignContentBO> list = this.campaignContentService.getCampaignContentList(map);
 
 		map.put("CampaignContentList", list);
-
-		map.put("rowTotalCnt", rowTotalCnt);
+		map.put("selectPage", selectPage);
 		map.put("pageRange", pageRange);
 		map.put("rowRange", rowRange);
-		map.put("selectPage", selectPage);
-		map.put("pageStart", pageStart);
+		map.put("rowTotalCnt", rowTotalCnt);
 		map.put("totalPage", totalPage);
+		map.put("pageStart", pageStart);
 		map.put("pageEnd", pageEnd);
 
 		jsonView.render(map, request, response);
@@ -173,7 +187,7 @@ public class CampaignContentController {
 	public void GetOfferContentId(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		int offerContentId = Integer.parseInt(campaignContentService.getOfferContentId(map));
+		int offerContentId = Integer.parseInt(this.campaignContentService.getOfferContentId(map));
 
 		map.put("offerContentId", offerContentId);
 
@@ -1347,7 +1361,7 @@ public class CampaignContentController {
 
 		jsonView.render(map, request, response);
 	}
-	
+
 	/**
 	 *
 	 *
@@ -1721,6 +1735,8 @@ public class CampaignContentController {
 	}
 
 	/**
+	 * KANG-20190411: analyzing
+	 *
 	 * 오퍼 쿠폰 페이지 호출
 	 *
 	 * @param request
@@ -1735,10 +1751,9 @@ public class CampaignContentController {
 
 		//paramter
 		log.info("=============================================");
-		log.info("OFFERID      : " + request.getParameter("OFFERID"));
+		log.info("OFFERID            : " + request.getParameter("OFFERID"));
 		log.info("OFFER_TYPE_CD      : " + request.getParameter("OFFER_TYPE_CD"));
-		log.info("OFFER_CONTENT_ID      : " + request.getParameter("OFFER_CONTENT_ID"));
-
+		log.info("OFFER_CONTENT_ID   : " + request.getParameter("OFFER_CONTENT_ID"));
 		log.info("=============================================");
 
 		//오퍼(포인트, 마일리지) 정보 상세 조회
@@ -1746,8 +1761,7 @@ public class CampaignContentController {
 		map.put("OFFER_TYPE_CD", Common.nvl(request.getParameter("OFFER_TYPE_CD"), "").replace(" ", ""));
 		map.put("OFFER_CONTENT_ID", Common.nvl(request.getParameter("OFFER_CONTENT_ID"), "").replace(" ", ""));
 
-		CampaignContentOfferCuBO bo = campaignContentService.getOfferCuInfo(map);
-
+		CampaignContentOfferCuBO bo = this.campaignContentService.getOfferCuInfo(map);
 
 		modelMap.addAttribute("OFFER_CONTENT_ID", Common.nvl(request.getParameter("OFFER_CONTENT_ID"), ""));
 		modelMap.addAttribute("CELLNAME", "미지정-고객세그먼트");

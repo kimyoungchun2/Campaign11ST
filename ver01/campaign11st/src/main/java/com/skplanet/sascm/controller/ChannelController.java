@@ -25,8 +25,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.skplanet.sascm.object.CampaignChannelBO;
 import com.skplanet.sascm.object.CampaignInfoBO;
+import com.skplanet.sascm.object.ChannelAlimiBO;
 import com.skplanet.sascm.object.ChannelBO;
 import com.skplanet.sascm.object.UaextCodeDtlBO;
 import com.skplanet.sascm.object.UaextVariableBO;
@@ -37,6 +46,18 @@ import com.skplanet.sascm.service.CommCodeService;
 import com.skplanet.sascm.service.VariableService;
 import com.skplanet.sascm.util.Common;
 import com.skplanet.sascm.util.Flag;
+
+import skt.tmall.talk.dto.type.Block;
+import skt.tmall.talk.dto.type.BlockBoldText;
+import skt.tmall.talk.dto.type.BlockBtnView;
+import skt.tmall.talk.dto.type.BlockCouponText;
+import skt.tmall.talk.dto.type.BlockImg240;
+import skt.tmall.talk.dto.type.BlockImg500;
+import skt.tmall.talk.dto.type.BlockLinkUrl;
+import skt.tmall.talk.dto.type.BlockProductPrice;
+import skt.tmall.talk.dto.type.BlockSubText;
+import skt.tmall.talk.dto.type.BlockSubTextAlignType;
+import skt.tmall.talk.dto.type.BlockTopCap;
 
 /**
  * ChannelController
@@ -1019,7 +1040,187 @@ public class ChannelController {
 	}
 
 	/**
-	 * KANG-20190328: add alimi data
+	 * KANG-20190328: get
+	 * 
+	 * 채널 MOBILE 정보 얻기
+	 * 
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @param session
+	 * @throws Exception
+	 */
+	@RequestMapping("getChannelMobileAlimi.do")
+	public void getChannelMobileAlimi(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, HttpSession session) throws Exception {
+		String CELLID = Common.nvl(request.getParameter("cellId"), "25");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("CELLID", CELLID);
+
+		// paramter
+		log.info("=============================================");
+		log.info("map       : " + map);
+		log.info("=============================================");
+
+		//if (Flag.flag) this.channelService.delChannelMobileAlimi(map);   // KANG-20190406: imsi
+		ChannelAlimiBO alimi = this.channelService.getChannelMobileAlimi(map);
+		if (alimi == null) {
+			// if not exists, then create default data
+			log.info("ChannelAlimi: NULL -> create default data..");
+			UsmUserBO user = (UsmUserBO) session.getAttribute("ACCOUNT");
+			String jsonDummyAlimi = "{"
+					+ "\"alimiShow\":\"N\","
+					+ "\"alimiText\":\"\","
+					+ "\"alimiType\":\"001\","
+					+ "\"title1\":\"\","
+					+ "\"advText\":\"광고\","
+					+ "\"title2\":\"\","
+					+ "\"title3\":\"\","
+					+ "\"arrImg\":[{\"imgUrl\":\"\"}],"
+					+ "\"ftrText\":\"\","
+					+ "\"ftrMblUrl\":\"\","
+					+ "\"ftrWebUrl\":\"\""
+					+ "}";
+			String jsonDummyBlock = this.getBlockContent(jsonDummyAlimi.replace("\\\"", "\""));  // alimi -> Block
+			//jsonDummyBlock = "{}";
+			log.info("composites: " + jsonDummyBlock);
+
+			map.put("CELLID", CELLID);
+			map.put("CAMPAIGNCODE", "");
+			map.put("CAMPAIGNID", "");
+			map.put("CHANNEL_CD", "MOBILE");
+			map.put("MOBILE_APP_KD_CD", "");
+			map.put("TALK_MSG_DISP_YN", "N");   // <- show/hide, important
+			map.put("TALK_MSG_SUMMARY", "");
+			map.put("TALK_MSG_TMPLT_NO", "001");
+			map.put("TALK_BLCK_CONT", jsonDummyBlock.replace("\"", "\\\""));   // for inserting to oracle table
+			map.put("MOBILE_SEND_PREFER_CD", "");
+			map.put("MOBILE_PERSON_MSG_YN", "N");
+			map.put("useIndi", "N");
+			map.put("CREATE_ID", user.getId());
+			map.put("UPDATE_ID", user.getId());
+			
+			// KANG-20190328: save alimi data
+			if (Flag.flag) {
+				this.channelService.setChannelMobileAlimi(map);   // for inserting to oracle table
+			}
+			alimi = this.channelService.getChannelMobileAlimi(map);  // select dummy record
+		}
+		
+		// JOB
+		String jsonAlimi = getJsonAlimi(alimi);    // get jsonDummyAlimi(not exist) or jsonAlimi(exist)
+		jsonAlimi = jsonAlimi.replace("\\\"", "\"");
+		log.info("jsonAlimi: " +  jsonAlimi);
+		
+		map.put("alimi", jsonAlimi);
+
+		jsonView.render(map, request, response);
+	}
+	
+	private String getJsonAlimi(ChannelAlimiBO alimi) {
+		JsonObject objReturn = new JsonObject();        // target
+		objReturn.addProperty("alimiShow", Common.nvl(alimi.getTalkMsgDispYn(), "N"));
+		objReturn.addProperty("alimiText", Common.nvl(alimi.getTalkMsgSummary(), ""));
+		objReturn.addProperty("alimiType", Common.nvl(alimi.getTalkMsgTmpltNo(), ""));
+		
+		JsonParser parser = new JsonParser();
+		JsonArray arrRoot = parser.parse(Common.nvl(alimi.getTalkBlckCont(), "{}").replace("\\\"", "\"")).getAsJsonArray();
+		for (JsonElement element : arrRoot) {
+			//if (Flag.flag) System.out.println(">>>>> " + element);
+			String id = element.getAsJsonObject().get("id").getAsString();
+			JsonElement payload = element.getAsJsonObject().get("payload");
+			switch (id) {
+			case "Block_Top_Cap":
+				if (Flag.flag) {
+					objReturn.addProperty("title1", Common.nvl(payload.getAsJsonObject().get("text1").getAsString(), ""));
+					objReturn.addProperty("advText", Common.nvl(payload.getAsJsonObject().get("sub_text1").getAsString(), ""));
+				}
+				break;
+			case "Block_Bold_Text":
+				if (Flag.flag) {
+					objReturn.addProperty("title2", Common.nvl(payload.getAsJsonObject().get("text1").getAsString(), ""));
+					objReturn.addProperty("title3", Common.nvl(payload.getAsJsonObject().get("sub_text1").getAsString(), ""));
+				}
+				break;
+			case "Block_Btn_View":
+				if (Flag.flag) {
+					objReturn.addProperty("ftrText", Common.nvl(payload.getAsJsonObject().get("text1").getAsString(), ""));
+					objReturn.addProperty("ftrMblUrl", Common.nvl(payload.getAsJsonObject().get("linkUrl1").getAsJsonObject().get("mobile").getAsString(), ""));
+					objReturn.addProperty("ftrWebUrl", Common.nvl(payload.getAsJsonObject().get("linkUrl1").getAsJsonObject().get("web").getAsString(), ""));
+				}
+				break;
+			case "Block_Img_500":
+				if (Flag.flag) {
+					JsonArray subArr = new JsonArray();
+					for (JsonElement subElement : payload.getAsJsonArray()) {
+						JsonObject subObj = new JsonObject();
+						subObj.addProperty("imgUrl", Common.nvl(subElement.getAsJsonObject().get("imgUrl1").getAsString(), ""));
+						subArr.add(subObj);
+					}
+					objReturn.add("arrImg", subArr);
+				}
+				break;
+			case "Block_Img_240":
+				if (Flag.flag) {
+					JsonArray subArr = new JsonArray();
+					JsonObject subObj = new JsonObject();
+					subObj.addProperty("imgUrl", payload.getAsJsonObject().get("imgUrl1").getAsString());
+					subArr.add(subObj);
+					objReturn.add("arrImg", subArr);
+				}
+				break;
+			case "Block_Product_Price":
+				if (Flag.flag) {
+					JsonArray subArr = new JsonArray();
+					for (JsonElement subElement : payload.getAsJsonArray()) {
+						JsonObject subObj = new JsonObject();
+						subObj.addProperty("prdUrl", subElement.getAsJsonObject().get("imgUrl1").getAsString());
+						subObj.addProperty("prdName", subElement.getAsJsonObject().get("text1").getAsString());
+						subObj.addProperty("prdPrice", subElement.getAsJsonObject().get("price1").getAsString());
+						subObj.addProperty("prdUnit", subElement.getAsJsonObject().get("priceUnit1").getAsString());
+						subObj.addProperty("prdMblUrl", subElement.getAsJsonObject().get("linkUrl1").getAsJsonObject().get("mobile").getAsString());
+						subObj.addProperty("prdWebUrl", subElement.getAsJsonObject().get("linkUrl1").getAsJsonObject().get("web").getAsString());
+						subArr.add(subObj);
+					}
+					objReturn.add("arrPrd", subArr);
+				}
+				break;
+			case "Block_Coupon_Text":
+				if (Flag.flag) {
+					JsonArray subArr = new JsonArray();
+					for (JsonElement subElement : payload.getAsJsonArray()) {
+						JsonObject subObj = new JsonObject();
+						subObj.addProperty("cpnNumber", subElement.getAsJsonObject().get("couponNo").getAsString());
+						subObj.addProperty("cpnText1", subElement.getAsJsonObject().get("couponText").getAsString());
+						subObj.addProperty("cpnText2", subElement.getAsJsonObject().get("title1").getAsString());
+						subObj.addProperty("cpnText3", subElement.getAsJsonObject().get("sub_text1").getAsString());
+						subObj.addProperty("cpnText4", subElement.getAsJsonObject().get("sub_text2").getAsString());
+						subObj.addProperty("cpnVisible", subElement.getAsJsonObject().get("isDisplayBtn").getAsBoolean() ? "show" : "hide");
+						subArr.add(subObj);
+					}
+					objReturn.add("arrCpn", subArr);
+				}
+				break;
+			case "Block_Sub_Text":
+				if (Flag.flag) {
+					JsonArray subArr = new JsonArray();
+					JsonObject subObj = new JsonObject();
+					subObj.addProperty("annText", payload.getAsJsonObject().get("text1").getAsString());
+					subObj.addProperty("annFixed", payload.getAsJsonObject().get("align").getAsString());
+					subArr.add(subObj);
+					objReturn.add("arrAnn", subArr);
+				}
+				break;
+			default:
+				if (Flag.flag) System.out.println(">>>>> switch(id) has a default value.... id=" + id);
+				break;
+			}
+		}
+		return objReturn.toString();
+	}
+	
+	/**
+	 * KANG-20190328: set
 	 * 
 	 * 채널 MOBILE 정보 저장
 	 *
@@ -1067,8 +1268,10 @@ public class ChannelController {
 			map.put("TALK_MSG_DISP_YN", root.path("alimiShow").asText());
 			map.put("TALK_MSG_SUMMARY", root.path("alimiText").asText());
 			map.put("TALK_MSG_TMPLT_NO", root.path("alimiType").asText());
-			//map.put("JSON_CONTENT", json);
-			map.put("TALK_BLCK_CONT", json.replace("\"", "\\\"").replace("'", "\\'"));
+			
+			String jsonBlckCont = this.getBlockContent(json);
+			//map.put("JSON_CONTENT", jsonBlckCont);
+			map.put("TALK_BLCK_CONT", jsonBlckCont.replace("\"", "\\\"").replace("'", "\\'"));
 		}
 		
 		//입력 값
@@ -1103,25 +1306,286 @@ public class ChannelController {
 		CampaignInfoBO bo = this.campaignInfoService.getCampaignInfo(map);
 		String CMP_STATUS = Common.nvl(bo.getCamp_status_cd(), "");
 
-		if (!Flag.flag) {
+		if (Flag.flag) {
+			// add this.channelService.setChannelMobileAlimi
 			if (!CMP_STATUS.equals("START")) {
 				//모바일 정보 저장
 				this.channelService.setChannelMobile(map);
 				
 				// KANG-20190328: save alimi data
+				if (Flag.flag) {
+					
+					// data covert from pc to block
+					this.channelService.setChannelMobileAlimi(map);
+				}
 			}
 		}
-		
-		if (Flag.flag) {
-			this.channelService.setChannelMobileAlimi(map);
-		}
 
+		if (!Flag.flag) {
+			// KANG-20190416: test for CLOB
+			String cellId = (String) map.get("CELLID");  // CELLID
+			String channelCd = (String) map.get("CHANNEL_CD"); // CHANNEL_CD
+			String talkBlckCont = (String) map.get("TALK_BLCK_CONT"); // TALK_BLCK_CONT
+			
+			StringBuffer sb = new StringBuffer();
+			for (int i=0; i < 100; i++) {
+				sb.append("1234567890");
+			}
+			sb.append("");
+			
+			map.put("CELLID", "1004");
+			map.put("CHANNEL_CD", "MOBILE");
+			map.put("TALK_BLCK_CONT", sb.toString());
+			
+			this.channelService.setChannelMobileAlimi(map);
+
+			// restore
+			map.put("CELLID", cellId);
+			map.put("CHANNEL_CD", channelCd);
+			map.put("TALK_BLCK_CONT", talkBlckCont);
+		}
+		
 		//캠페인 상태 리턴
 		map.put("CMP_STATUS", CMP_STATUS);
 
 		this.jsonView.render(map, request, response);
 	}
 
+	private static boolean flag = true;
+	private Gson gson = new Gson();
+	
+	@SuppressWarnings("unchecked")
+	private String getBlockContent(String json) {
+		String ret = "";
+		String jsonParams = null;
+		Map<String, Object> mapParams = null;
+		List<Block> composites = null;
+		
+		if (flag) {
+			switch("000") {
+			case "001":  // Type-1
+				jsonParams = "{\"alimiShow\":\"Y\",\"alimiText\":\"Sample Alimi Type-1\",\"alimiType\":\"001\","
+						+ "\"title1\":\"패션워크\",\"advText\":\"광고\",\"title2\":\"반값 타임딜 하루 1번 오픈\",\"title3\":\"놓치지마세요!\","
+						+ "\"ftrText\":\"상세보기(44)\",\"ftrMblUrl\":\"http://m.11st.co.kr/MW/MyPage/V1/benefitCouponDownList.tmall\",\"ftrWebUrl\":\"http://11st.co.kr\","
+						+ "\"arrImg\":["
+						+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample1.png\"},"
+						+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample2.png\"},"
+						+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample1.png\"},"
+						+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample2.png\"},"
+						+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample1.png\"}"
+						+ "]}";
+				break;
+			case "002":  // Type-2
+				jsonParams = "{\"alimiShow\":\"N\",\"alimiText\":\"Sample Alimi Type-2\",\"alimiType\":\"002\","
+						+ "\"title1\":\"패션워크\",\"advText\":\"광고\",\"title2\":\"반값 타임딜 하루 4번 오픈\",\"title3\":\"놓치지마세요!\","
+						+ "\"ftrText\":\"상세보기(1)\",\"ftrMblUrl\":\"http://m.11st.co.kr/MW/MyPage/V1/benefitCouponDownList.tmall\",\"ftrWebUrl\":\"http://11st.co.kr\","
+						+ "\"arrImg\":["
+						+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_240_sample1.png\"}"
+						+ "],"
+						+ "\"arrPrd\":["
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_small1.jpg\",\"prdName\":\"임시상품-1\",\"prdPrice\":\"10,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"},"
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_small2.jpg\",\"prdName\":\"임시상품-2\",\"prdPrice\":\"20,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"},"
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_small3.jpg\",\"prdName\":\"임시상품-3\",\"prdPrice\":\"30,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"}"
+						+ "]}";
+				break;
+			case "003":  // Type-3
+				jsonParams = "{\"alimiShow\":\"N\",\"alimiText\":\"Sample Alimi Type-3\",\"alimiType\":\"003\","
+						+ "\"title1\":\"패션워크\",\"advText\":\"광고\",\"title2\":\"반값 타임딜 하루 4번 오픈\",\"title3\":\"놓치지마세요!\","
+						+ "\"ftrText\":\"상세보기(1)\",\"ftrMblUrl\":\"http://m.11st.co.kr/MW/MyPage/V1/benefitCouponDownList.tmall\",\"ftrWebUrl\":\"http://11st.co.kr\","
+						+ "\"arrImg\":["
+						+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_240_sample1.png\"}"
+						+ "],"
+						+ "\"arrCpn\":["
+						+ "{\"cpnText1\":\"30%, 2,500(1)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567891\",\"cpnVisible\":\"show\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(2)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567892\",\"cpnVisible\":\"hide\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(3)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567893\",\"cpnVisible\":\"show\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(4)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567894\",\"cpnVisible\":\"hide\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(5)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567895\",\"cpnVisible\":\"show\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(6)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567896\",\"cpnVisible\":\"hide\"}"
+						+ "]}";
+				break;
+			case "004":  // Type-4
+				jsonParams = "{\"alimiShow\":\"N\",\"alimiText\":\"Sample Alimi Type-4\",\"alimiType\":\"004\","
+						+ "\"title1\":\"패션워크\",\"advText\":\"광고\",\"title2\":\"반값 타임딜 하루 4번 오픈\",\"title3\":\"놓치지마세요!\","
+						+ "\"ftrText\":\"상세보기(1)\",\"ftrMblUrl\":\"http://m.11st.co.kr/MW/MyPage/V1/benefitCouponDownList.tmall\",\"ftrWebUrl\":\"http://11st.co.kr\","
+						+ "\"arrAnn\":["
+						+ "{\"annText\":\"직영몰 상품의 주문량이 많아 배송이 늦어질 수 있습니다.\",\"annFixed\":\"center\"}"
+						+ "]}";
+				break;
+			case "005":  // Type-5
+				jsonParams = "{\"alimiShow\":\"N\",\"alimiText\":\"Sample Alimi Type-5\",\"alimiType\":\"005\","
+						+ "\"title1\":\"패션워크\",\"advText\":\"광고\",\"title2\":\"반값 타임딜 하루 4번 오픈\",\"title3\":\"놓치지마세요!\","
+						+ "\"ftrText\":\"상세보기(1)\",\"ftrMblUrl\":\"http://m.11st.co.kr/MW/MyPage/V1/benefitCouponDownList.tmall\",\"ftrWebUrl\":\"http://11st.co.kr\","
+						+ "\"arrPrd\":["
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_big1.jpg\",\"prdName\":\"임시상품-1\",\"prdPrice\":\"10,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"},"
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_big2.jpg\",\"prdName\":\"임시상품-2\",\"prdPrice\":\"20,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"},"
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_big3.jpg\",\"prdName\":\"임시상품-3\",\"prdPrice\":\"30,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"},"
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_big1.jpg\",\"prdName\":\"임시상품-4\",\"prdPrice\":\"40,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"},"
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_big2.jpg\",\"prdName\":\"임시상품-5\",\"prdPrice\":\"50,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"},"
+						+ "{\"prdUrl\":\"http://i.011st.com/ui_img/11talk/Product_Price_img_big3.jpg\",\"prdName\":\"임시상품-6\",\"prdPrice\":\"60,000\",\"prdUnit\":\"원\",\"prdMblUrl\":\"http://i.011st.com/ui_img/11talk/img_500_250_sample2.png\",\"prdWebUrl\":\"\"}"
+						+ "]}";
+				break;
+			case "006":  // Type-6
+				jsonParams = "{\"alimiShow\":\"N\",\"alimiText\":\"Sample Alimi Type-6\",\"alimiType\":\"006\","
+						+ "\"title1\":\"패션워크\",\"advText\":\"광고\",\"title2\":\"반값 타임딜 하루 4번 오픈\",\"title3\":\"놓치지마세요!\","
+						+ "\"ftrText\":\"상세보기(1)\",\"ftrMblUrl\":\"http://m.11st.co.kr/MW/MyPage/V1/benefitCouponDownList.tmall\",\"ftrWebUrl\":\"http://11st.co.kr\","
+						+ "\"arrCpn\":["
+						+ "{\"cpnText1\":\"30%, 2,500(1)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567891\",\"cpnVisible\":\"show\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(2)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567892\",\"cpnVisible\":\"hide\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(3)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567893\",\"cpnVisible\":\"show\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(4)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567894\",\"cpnVisible\":\"hide\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(5)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567895\",\"cpnVisible\":\"show\"},"
+						+ "{\"cpnText1\":\"30%, 2,500(6)\",\"cpnText2\":\"5월 VVIP구매등급 쿠폰\",\"cpnText3\":\"3,000원이상 구매 최대 2,500원 이벤트&기획전 쿠폰\",\"cpnText4\":\"2019.04.01 ~ 2019.04.30\",\"cpnNumber\":\"1234567896\",\"cpnVisible\":\"hide\"}"
+						+ "]}";
+				break;
+			default:
+				jsonParams = json;
+				break;
+			}
+		}
+		
+		if (flag) {
+			mapParams = this.gson.fromJson(jsonParams, new TypeToken<Map<String, Object>>(){}.getType());
+			if (flag) {
+				System.out.println("----- mapParams main -----");
+				System.out.println("alimiShow: " + mapParams.get("alimiShow"));
+				System.out.println("alimiText: " + mapParams.get("alimiText"));
+				System.out.println("alimiType: " + mapParams.get("alimiType"));
+				System.out.println("jsonParams(=json): " + jsonParams);
+			}
+		}
+		
+		if (flag) {
+			switch((String) mapParams.get("alimiType")) {
+			case "001":  // Type-1
+				if (flag) {
+					List<BlockImg500.Value> listImg = new ArrayList<>();
+					for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrImg")) {
+						listImg.add(new BlockImg500.Value((String) map.get("imgUrl")));
+					}
+					composites = Lists.newArrayList(
+							new BlockTopCap(new BlockTopCap.Value((String) mapParams.get("title1"), (String) mapParams.get("advText")))
+							, new BlockBoldText(new BlockBoldText.Value((String) mapParams.get("title2"), (String) mapParams.get("title3")))
+							, new BlockImg500(listImg)
+							, new BlockBtnView(new BlockBtnView.Value((String) mapParams.get("ftrText"), new BlockLinkUrl((String) mapParams.get("ftrMblUrl"), (String) mapParams.get("ftrWebUrl"))))
+					);
+				}
+				break;
+			case "002":  // Type-2
+				if (flag) {
+					Map<String, Object> mapImg = ((List<Map<String, Object>>) mapParams.get("arrImg")).get(0);
+					List<BlockProductPrice.Value> listProduct = new ArrayList<>();
+					for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrPrd")) {
+						listProduct.add(new BlockProductPrice.Value(
+								(String) map.get("prdUrl"), 
+								(String) map.get("prdName"), 
+								(String) map.get("prdPrice"), 
+								(String) map.get("prdUnit"), 
+								new BlockLinkUrl((String) map.get("prdMblUrl"), (String) map.get("prdWebUrl"))
+								));
+					}
+					composites = Lists.newArrayList(
+							new BlockTopCap(new BlockTopCap.Value((String) mapParams.get("title1"), (String) mapParams.get("advText")))
+							, new BlockBoldText(new BlockBoldText.Value((String) mapParams.get("title2"), (String) mapParams.get("title3")))
+							, new BlockImg240(new BlockImg240.Value((String)mapImg.get("imgUrl")))
+							, new BlockProductPrice(listProduct)
+							, new BlockBtnView(new BlockBtnView.Value((String) mapParams.get("ftrText"), new BlockLinkUrl((String) mapParams.get("ftrMblUrl"), (String) mapParams.get("ftrWebUrl"))))
+					);
+				}
+				break;
+			case "003":  // Type-3
+				if (flag) {
+					Map<String, Object> mapImg = ((List<Map<String, Object>>) mapParams.get("arrImg")).get(0);
+					List<BlockCouponText.Value> listCoupon = new ArrayList<>();
+					for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrCpn")) {
+						listCoupon.add(new BlockCouponText.Value(
+								/* couponNo, couponText, title1, sub_text1, sub_text2, true */
+								(String) map.get("cpnNumber"),
+								(String) map.get("cpnText1"),
+								(String) map.get("cpnText2"),
+								(String) map.get("cpnText3"),
+								(String) map.get("cpnText4"),
+								"show".equals((String) map.get("cpnVisible")) ? true : false
+								));
+					}
+					composites = Lists.newArrayList(
+							new BlockTopCap(new BlockTopCap.Value((String) mapParams.get("title1"), (String) mapParams.get("advText")))
+							, new BlockBoldText(new BlockBoldText.Value((String) mapParams.get("title2"), (String) mapParams.get("title3")))
+							, new BlockImg240(new BlockImg240.Value((String) mapImg.get("imgUrl")))
+							, new BlockCouponText(listCoupon)
+							, new BlockBtnView(new BlockBtnView.Value((String) mapParams.get("ftrText"), new BlockLinkUrl((String) mapParams.get("ftrMblUrl"), (String) mapParams.get("ftrWebUrl"))))
+					);
+				}
+				break;
+			case "004":  // Type-4
+				if (flag) {
+					Map<String, Object> mapAnn = ((List<Map<String, Object>>) mapParams.get("arrAnn")).get(0);
+					composites = Lists.newArrayList(
+							new BlockTopCap(new BlockTopCap.Value((String) mapParams.get("title1"), (String) mapParams.get("advText")))
+							, new BlockBoldText(new BlockBoldText.Value((String) mapParams.get("title2"), (String) mapParams.get("title3")))
+							, new BlockSubText(new BlockSubText.Value((String)mapAnn.get("annText"), BlockSubTextAlignType.CENTER))
+							, new BlockBtnView(new BlockBtnView.Value((String) mapParams.get("ftrText"), new BlockLinkUrl((String) mapParams.get("ftrMblUrl"), (String) mapParams.get("ftrWebUrl"))))
+					);
+				}
+				break;
+			case "005":  // Type-5
+				if (flag) {
+					List<BlockProductPrice.Value> listProduct = new ArrayList<>();
+					for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrPrd")) {
+						listProduct.add(new BlockProductPrice.Value(
+								(String) map.get("prdUrl"), 
+								(String) map.get("prdName"), 
+								(String) map.get("prdPrice"), 
+								(String) map.get("prdUnit"), 
+								new BlockLinkUrl((String) map.get("prdMblUrl"), (String) map.get("prdWebUrl"))
+								));
+					}
+					composites = Lists.newArrayList(
+							new BlockTopCap(new BlockTopCap.Value((String) mapParams.get("title1"), (String) mapParams.get("advText")))
+							, new BlockBoldText(new BlockBoldText.Value((String) mapParams.get("title2"), (String) mapParams.get("title3")))
+							, new BlockProductPrice(listProduct)
+							, new BlockBtnView(new BlockBtnView.Value((String) mapParams.get("ftrText"), new BlockLinkUrl((String) mapParams.get("ftrMblUrl"), (String) mapParams.get("ftrWebUrl"))))
+					);
+				}
+				break;
+			case "006":  // Type-6
+				if (flag) {
+					List<BlockCouponText.Value> listCoupon = new ArrayList<>();
+					for (Map<String, Object> map : (List<Map<String, Object>>) mapParams.get("arrCpn")) {
+						listCoupon.add(new BlockCouponText.Value(
+								/* couponNo, couponText, title1, sub_text1, sub_text2, true */
+								(String) map.get("cpnNumber"),
+								(String) map.get("cpnText1"),
+								(String) map.get("cpnText2"),
+								(String) map.get("cpnText3"),
+								(String) map.get("cpnText4"),
+								"show".equals((String) map.get("cpnVisible")) ? true : false
+								));
+					}
+					composites = Lists.newArrayList(
+							new BlockTopCap(new BlockTopCap.Value((String) mapParams.get("title1"), (String) mapParams.get("advText")))
+							, new BlockBoldText(new BlockBoldText.Value((String) mapParams.get("title2"), (String) mapParams.get("title3")))
+							, new BlockCouponText(listCoupon)
+							, new BlockBtnView(new BlockBtnView.Value((String) mapParams.get("ftrText"), new BlockLinkUrl((String) mapParams.get("ftrMblUrl"), (String) mapParams.get("ftrWebUrl"))))
+					);
+				}
+				break;
+			default:
+				composites = Lists.newArrayList();
+				break;
+			}
+			
+			if (flag) {
+				ret = new GsonBuilder().setPrettyPrinting().create().toJson(composites);
+				System.out.println("----- composites main -----");
+				// System.out.println(">>>>> composites: " + composites);
+				System.out.println(">>>>> ret: " + ret);
+			}
+		}
+
+		return ret;
+	}
+	
 	/**
 	 * 채널 Toast배너 링크URL 조회
 	 *

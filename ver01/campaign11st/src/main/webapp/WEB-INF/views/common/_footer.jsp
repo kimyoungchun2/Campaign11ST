@@ -6,7 +6,7 @@
 
 <!-- FOOTER -->
 <div id="footer">
-	<p>Copyright SK planet. All rights reserved.</p>
+	<p>Copyright SK planet<a href='javascript:alert("hello..");'>.</a> All rights reserved.</p>
 </div>
 <!-- END FOOTER -->
 

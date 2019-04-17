@@ -34,6 +34,7 @@ import com.skplanet.sascm.service.CommCodeService;
 import com.skplanet.sascm.service.ScheduleService;
 import com.skplanet.sascm.util.CheckCopyCouponNo;
 import com.skplanet.sascm.util.Common;
+import com.skplanet.sascm.util.Flag;
 @Controller
 public class CampaignController {
 
@@ -106,29 +107,78 @@ public class CampaignController {
 	}
 
 	/**
+	 * KANG-20190410: analyzing
 	 *
 	 * @param request
 	 * @param response
 	 * @param modelMap
 	 * @throws Exception
 	 */
-	@RequestMapping("/campaignList.do")
+	@RequestMapping("/campaignList.do")   // TODO KANG-20190410: 캠페인 리스트 > 캠페인 목록
 	public void getCampaignList(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("serverType", request.getParameter("serverType"));
 
+		//paramter
+		log.info("=============================================");
+		log.info("serverType        : " + request.getParameter("serverType"));
+		log.info("treeValue         : " + request.getParameter("treeValue"));
+		log.info("selectPageNo      : " + request.getParameter("selectPageNo"));
+		log.info("=============================================");
+
+		map.put("serverType", request.getParameter("serverType"));
 		map.put("treeValue", Common.nvl(request.getParameter("treeValue"), ""));
+		map.put("selectPageNo", Common.nvl(request.getParameter("selectPageNo"), "1"));
+
+		//paging
+		String selectPageNo = (String) request.getParameter("selectPageNo");
+		if (selectPageNo == null || selectPageNo.equals("")) {
+			selectPageNo = "1";
+		}
+
+		// KANG-20190410: for understanding of pagination
+		int selectPage = Integer.parseInt(selectPageNo);
+		int pageRange = 10;     // page block
+		int rowRange = 100;    // row block  KANG-20190414: 김창범 메니져의 요청에 의해서 변경이 가능함.
+		int rowTotalCnt = Integer.parseInt(this.campaignInfoService.getCampaignListCnt(map));
+		int totalPage = rowTotalCnt / rowRange + ((rowTotalCnt % rowRange > 0) ? 1 : 0);
+		int pageStart = ((selectPage - 1) / pageRange) * pageRange + 1;
+		int pageEnd = (totalPage <= (pageStart + pageRange - 1)) ? totalPage : (pageStart + pageRange - 1);
+
+		//int searchRangeStart = (rowRange * (selectPage - 1)) + 1;   // num >=  #{searchRangeStart} 
+		int searchRangeStart = (rowRange * (selectPage - 1));   // num >  #{searchRangeStart}
+		int searchRangeEnd   = rowRange * selectPage;           // num <=  #{searchRangeEnd}
+		map.put("searchRangeStart", searchRangeStart);
+		map.put("searchRangeEnd", searchRangeEnd);
+		if (Flag.flag) {
+			log.info("=============================================");
+			log.info("selectPage       : " + selectPage);
+			log.info("pageRange        : " + pageRange);
+			log.info("rowRange         : " + rowRange);
+			log.info("rowTotalCnt      : " + rowTotalCnt);
+			log.info("totalPage        : " + totalPage);
+			log.info("pageStart        : " + pageStart);
+			log.info("pageEnd          : " + pageEnd);
+			log.info("searchRangeStart : " + searchRangeStart);
+			log.info("searchRangeEnd   : " + searchRangeEnd);
+			log.info("=============================================");
+		}
 
 		//공통코드 목록 조회
-		List<CampaignListBO> list = campaignInfoService.getCampaignList(map);
-
-		//List<CampaignListBO> list1 = campaignInfoService.getCampaignList2(map);
-
-		log.info("=============================================");
-		log.info("list   : " + list);
-		log.info("=============================================");
+		List<CampaignListBO> list = this.campaignInfoService.getCampaignList(map);
+		if (Flag.flag) {
+			log.info("=============================================");
+			log.info("list   : " + list);
+			log.info("=============================================");
+		}
 
 		map.put("CampaignList", list);
+		map.put("selectPage", selectPage);
+		map.put("pageRange", pageRange);
+		map.put("rowRange", rowRange);
+		map.put("rowTotalCnt", rowTotalCnt);
+		map.put("totalPage", totalPage);
+		map.put("pageStart", pageStart);
+		map.put("pageEnd", pageEnd);
 
 		jsonView.render(map, request, response);
 	}
@@ -368,7 +418,8 @@ public class CampaignController {
 	}
 
 	/**
-	 *
+	 * KANG-20190410: analyzing
+	 * 
 	 * @param request
 	 * @param response
 	 * @param modelMap
@@ -378,105 +429,97 @@ public class CampaignController {
 	// 캠페인 클릭시 요약/속성/오퍼/채널/일정 항목 전체
 	@RequestMapping("/getCampaignInfoAll.do")
 	public void getCampaignInfoAll(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, HttpSession session) throws Exception {
-		UsmUserBO user = (UsmUserBO) session.getAttribute("ACCOUNT");
 		Map<String, Object> map = new HashMap<String, Object>();
+
+		UsmUserBO user = (UsmUserBO) session.getAttribute("ACCOUNT");
 		map.put("CAMPAIGNID", Common.nvl(request.getParameter("campaignid"), ""));
-		List<CampaignListBO> boPropertyList = campaignInfoService.getCICampaignProperyList(map);
+		List<CampaignListBO> boPropertyList = this.campaignInfoService.getCICampaignProperyList(map);        // KANG-20190413: 01. CampaignInfo.getCICampaignProperyList
 
 		// CI 에서 캠페인 등록후 Property 관련(CM_CAMPAIGN_DTL 테이블에 데이터가 존재하지 않을경우 최초 INSERT 만 한다.
 		// 최초 등록 이후 CI 에서 값을 수정 할경우 별도의 처리를 하지 않는다.2017.12.05
 		if (boPropertyList.size() <= 0){
-			String batchDtCheck = this.chkInsertUpdate(map, user, request, "insert");
+			String batchDtCheck = this.chkInsertUpdate(map, user, request, "insert");                        // KANG-20190413: chkInsertUpdate(INSERT).
 			if (batchDtCheck.equals("8888")){
-				/* 철수전 작업사항 데이터 전송방식 Batch 일경우 캠페인 시작일을 내일부터 지정 할 수 있습니다!!*/
+				// 철수전 작업사항 데이터 전송방식 Batch 일경우 캠페인 시작일을 내일부터 지정 할 수 있습니다!!
 				map.put("batchDtCheck", "ERROR");
 			}
 			// 최초 1회 Insert 완료.
 		} else {
-			/* ############### 속성 / 요약 정보 */
-			CampaignInfoBO bo = campaignInfoService.getCampaignInfo(map);
-			CampaignInfoBO boSummary = campaignInfoService.getCampaignInfoSummary(map);
-			/* ###############속성 / 요약 정보 /// */
+			// ############### 속성 / 요약 정보 (BGN)
+			CampaignInfoBO bo = this.campaignInfoService.getCampaignInfo(map);                               // KANG-20190413: 02. CampaignInfo.getCampaignInfo
+			CampaignInfoBO boSummary = this.campaignInfoService.getCampaignInfoSummary(map);                 // KANG-20190413: 03. CampaignInfo.getCampaignInfoSummary
+			// ############### 속성 / 요약 정보 (END)
 
-			/* ###############오퍼 정보 */
+			// ############### 오퍼 정보 (BGN)
 			Map<String, Object> map1 = new HashMap<String, Object>();
-
 			// 캠페인 정보 상세 조회
 			map1.put("CAMPAIGNID", Common.nvl(request.getParameter("campaignid"), ""));
 			map1.put("USER_ID", user.getId());
-
 			// 오퍼 목록
-			List<CampaignOfferBO> offer_list = campaignInfoService.getCampaignOfferList(map1);
-			/* ###############오퍼 정보 /// */
+			List<CampaignOfferBO> offer_list = this.campaignInfoService.getCampaignOfferList(map1);          // KANG-20190413: 04. CampaignInfo.getCampaignOfferList
+			// ############### 오퍼 정보 (END)
 
 			String CMP_STATUS = Common.nvl(bo.getCamp_status_cd(), "");
-
 			if (!CMP_STATUS.equals("START") && offer_list != null) {
-				/* Offer Update 매핑화면과 싱크를 위해 항상 업데이트 */
-				campaignInfoService.updateOfferData(map);
+				// Offer Update 매핑화면과 싱크를 위해 항상 업데이트
+				this.campaignInfoService.updateOfferData(map);                                               // KANG-20190413: 05. CampaignInfo.updateOfferData
 
-				for (int i = 0; i < offer_list.size(); i++) {
-					CampaignOfferBO campaignOfferBo = new CampaignOfferBO();
-					campaignOfferBo = offer_list.get(i);
-					if (null != campaignOfferBo.getOffer_type_cd() && campaignOfferBo.getOffer_type_cd().equals("CU")) {
-						@SuppressWarnings("unused")
-						CheckCopyCouponNo ccc = new CheckCopyCouponNo();
-
-						log.debug(request.getParameter("campaignid"));
-						log.debug(campaignOfferBo.getCellid());
-						try {// 443: campaign_sk // 1580 : rund id = cell_package_sk
-							System.out.println("########## CheckCopyCouponNo.checkCouponNo Start");
-							CheckCopyCouponNo.checkCouponNo(request.getParameter("campaignid"), campaignOfferBo.getCellid(), dbconnUrl, dbconnUser, dbconnPass, dbconnBoUrl, dbconnBoUser, dbconnBoPass, Integer.parseInt(campaignOfferBo.getOfferid()));
-						} catch (Exception e) {
-							// TODO: handle exception+
-							log.debug("CheckCopyCouponNo.checkCouponNo ERROR !!!! ");
-							e.printStackTrace();
+				if (Flag.flag) {  // KANG-20190414: add by Kiea
+					for (int i = 0; i < offer_list.size(); i++) {
+						CampaignOfferBO campaignOfferBo = new CampaignOfferBO();
+						campaignOfferBo = offer_list.get(i);
+						if (null != campaignOfferBo.getOffer_type_cd() && campaignOfferBo.getOffer_type_cd().equals("CU")) {
+							if (Flag.flag) {
+								log.debug("KANG-20190413: campaignid   = " + request.getParameter("campaignid"));
+								log.debug("KANG-20190413: cellid       = " + campaignOfferBo.getCellid());
+								log.debug("KANG-20190413: offerTypeCd  = " + campaignOfferBo.getOffer_type_cd());
+							}
+							try {// 443: campaign_sk // 1580 : rund id = cell_package_sk
+								CheckCopyCouponNo.checkCouponNo(request.getParameter("campaignid"), campaignOfferBo.getCellid()
+										, dbconnUrl, dbconnUser, dbconnPass
+										, dbconnBoUrl, dbconnBoUser, dbconnBoPass
+										, Integer.parseInt(campaignOfferBo.getOfferid()));
+							} catch (Exception e) {
+								log.debug("CheckCopyCouponNo.checkCouponNo ERROR !!!! ");
+								e.printStackTrace();
+							}
 						}
 					}
 				}
-
 				// DTL 만 Update 됨. // Offer 처리 안됨.
-				this.chkInsertUpdate(map, user, request, "update");
-
+				this.chkInsertUpdate(map, user, request, "update");                                          // KANG-20190413: chkInsertUpdate(UPDATE).
 				/* Channel Update  매핑화면과 싱크를 위해 항상 업데이트 */
-				campaignInfoService.updateChannelData(map);
-
+				this.campaignInfoService.updateChannelData(map);                                             // KANG-20190413: 06. CampaignInfo.updateChannelData
 				// 채널데이터 업데이트
 				//campaignInfoService.updateChannelData2(map1);
 				//campaignInfoService.updateChannelData3(map1);
 			}
 
-			/* ###############채널 정보 */
-			List<CampaignChannelBO> channel_list = channelService.getCampaignChannelList(map1);
-
+			// ############### 채널 정보 (BGN)
+			List<CampaignChannelBO> channel_list = this.channelService.getCampaignChannelList(map1);         // KANG-20190413: 07. Channel.getCampaignChannelList
 			// 2. 대상수준이 PCID일경우 채널이 토스트배너인지 체크
-			String channelValiChk = channelService.getCampaignChannelValiChk(map1);
-
+			String channelValiChk = this.channelService.getCampaignChannelValiChk(map1);                     // KANG-20190413: 08. Channel.getCampaignChannelValiChk
 			// 5. 대상수준이 DEVICE_ID 일 경우 모바일 앱 채널만 사용가능
-			String channelValChkforMobile = channelService.getCampaignChannelValiChkforMobile(map1);
-			/* ###############채널 정보 /// */
+			String channelValChkforMobile = this.channelService.getCampaignChannelValiChkforMobile(map1);    // KANG-20190413: 09. Channel.getCampaignChannelValiChkforMobile
+			// ############### 채널 정보 (END)
 
-			/* ###############일정정보 */
-			CampaignRunResvBO scheduleBo = scheduleService.getScheduleDetail(map1);
-			/* ###############일정정보 */
+			// ############### 일정정보 (BGN)
+			CampaignRunResvBO scheduleBo = this.scheduleService.getScheduleDetail(map1);                     // KANG-20190413: 10. Schedule.getScheduleDetail
+			// ############### 일정정보 (END)
 
-			System.out.println("bo.getCampaigncode() :" + bo.getCampaigncode());
+			if (Flag.flag) System.out.println("KANG-20190413: bo.getCampaigncode() :" + bo.getCampaigncode());
 			map1.put("CAMPAIGNCODE", bo.getCampaigncode());
+			int runScheduleCnt = this.scheduleService.getRunScheduleCnt(map1);                               // KANG-20190410: 11. Schedule.getRunScheduleCnt
 
-			int runScheduleCnt = scheduleService.getRunScheduleCnt(map1);
-
-			map.put("bo", bo);                    // 속성정보
-			map.put("boSummary", boSummary);      // 요약정보
-			map.put("offer_list", offer_list);    //오퍼 정보
-
+			map.put("bo", bo);                        // 속성정보
+			map.put("boSummary", boSummary);          // 요약정보
+			map.put("offer_list", offer_list);        // 오퍼 정보
 			map.put("channel_list", channel_list);    // 체널 목록
 			map.put("channelValiChk", channelValiChk);
 			map.put("channelValChkforMobile", channelValChkforMobile);
 			map.put("CAMPAIGNID", Common.nvl(request.getParameter("CampaignId"), ""));
-
-			map.put("user", user);        // 일정정보
+			map.put("user", user);                    // 일정정보
 			map.put("scheduleBo", scheduleBo);
-
 			map.put("runScheduleCnt", runScheduleCnt);
 			map.put("batchDtCheck", "");
 		}
@@ -484,6 +527,8 @@ public class CampaignController {
 	}
 
 	/**
+	 * KANG-20190411: analyzing
+	 * this method is called by SAS
 	 *
 	 * @param request
 	 * @param response
@@ -492,39 +537,46 @@ public class CampaignController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/callCopyCoupon.do")
-	public void sasCallCoupCoupon(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, HttpSession session) throws Exception {
+	public void sasCallCopyCoupon(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, HttpSession session) throws Exception {
 		String campaignId = request.getParameter("campaignid");
 		String cellId = request.getParameter("cellid");
 		int offerId = Integer.parseInt(request.getParameter("offerid"));
+		
 		try {// 443: campaign_sk // 1580 : rund id = cell_package_sk
-			CheckCopyCouponNo.checkCouponNo(campaignId, cellId, dbconnUrl, dbconnUser, dbconnPass, dbconnBoUrl, dbconnBoUser, dbconnBoPass, offerId);
+			CheckCopyCouponNo.checkCouponNo(
+					campaignId, cellId
+					, this.dbconnUrl,   this.dbconnUser,   this.dbconnPass
+					, this.dbconnBoUrl, this.dbconnBoUser, this.dbconnBoPass
+					, offerId);
 		} catch (Exception e) {
-			// TODO: handle exception
 			log.debug("CheckCopyCouponNo.checkCouponNo ERROR !!!! ");
 			e.printStackTrace();
 		}
 	}
 
 	/*
+	 * KANG-20190413: Sub-insert/update: analyzing
 	 *
 	 */
 	private String chkInsertUpdate(Map<String, Object> map, UsmUserBO user, HttpServletRequest request, String chkIn) throws Exception {
-		CampaignInfoBO boProperty;
-		boProperty = campaignInfoService.getCICampaignProperty(map);
-
+		
+		CampaignInfoBO boProperty = this.campaignInfoService.getCICampaignProperty(map);                     // KANG-20190413: Sub-01. CampaignInfo.getCICampaignProperty
 		map.put("codeId", "G003");
 		map.put("USE_YN", "Y");
-
-		List<UaextCodeDtlBO> manual_trans_list = commCodeService.getCommCodeDtlList(map);
-
+		List<UaextCodeDtlBO> manual_trans_list = this.commCodeService.getCommCodeDtlList(map);               // KANG-20190413: Sub-02. CommCode.getCommCodeDtlList
 		String tmpManualTransYn = "";
 		for (int i = 0; i < manual_trans_list.size(); i++) {
 			UaextCodeDtlBO bo = manual_trans_list.get(i);
-			log.debug(bo.getCode_id());
-			log.debug(bo.getCode_name());
-			log.debug(bo.getComm_code_id());
-			log.debug(boProperty.getSenddatetype());
-			log.debug(bo.getCode_name());
+			if (Flag.flag) {
+				String str = String.format("(%d) [Senddatatype=%s], [Comm_code_id=%s], [Code_id=%s], [Code_name=%s]"
+						, i
+						, boProperty.getSenddatetype()
+						, bo.getComm_code_id()
+						, bo.getCode_id()
+						, bo.getCode_name()
+						);
+				log.debug(str);
+			}
 			if (boProperty.getSenddatetype().equals(bo.getCode_name())){
 				tmpManualTransYn = bo.getCode_id();
 			}
@@ -532,20 +584,17 @@ public class CampaignController {
 
 		Map<String, Object> mapProperty = new HashMap<String, Object>();
 
-		String tmpStr = boProperty.getCamp_from_dt();
+		String tmpStr  = boProperty.getCamp_from_dt();
 		String tmpStr1 = boProperty.getCamp_to_dt();
-
 		if (null != tmpStr && !tmpStr.equals("")){
 			tmpStr = tmpStr.substring(0, 10);
 		}
-
 		if (null != tmpStr1 && !tmpStr1.equals("")){
 			tmpStr1 = tmpStr1.substring(0, 10);
 		}
 
 		String tmpBgnTm = boProperty.getCamp_from_tm();
 		String tmpEndtm = boProperty.getCamp_to_tm();
-
 		log.debug("##### tmpBgnTm : " + tmpBgnTm);
 		log.debug("##### tmpEndtm : " + tmpEndtm);
 
@@ -637,7 +686,7 @@ public class CampaignController {
 		mapProperty.put("CREATE_ID", user.getId());
 		mapProperty.put("UPDATE_ID", user.getId());
 
-		/* 철수전 작업사항 데이터 전송방식 Batch 일경우 캠페인 시작일을 내일부터 지정 할 수 있습니다!!*/
+		// 철수전 작업사항 데이터 전송방식 Batch 일경우 캠페인 시작일을 내일부터 지정 할 수 있습니다!!
 		Date from = new Date();
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String to = transFormat.format(from);
@@ -655,10 +704,8 @@ public class CampaignController {
 
 		}
 
-		/* 철수전 작업사항 데이터 전송방식 Batch 일경우 캠페인 시작일을 내일부터 지정 할 수 있습니다!!//////////*/
-
-		campaignInfoService.setCampaignInfo(mapProperty);
-
+		// 철수전 작업사항 데이터 전송방식 Batch 일경우 캠페인 시작일을 내일부터 지정 할 수 있습니다!!
+		this.campaignInfoService.setCampaignInfo(mapProperty);                                               // KANG-20190413: Sub-03. CampaignInfo.setCampaignInfo
 		if (chkIn.equals("insert")){
 			chkInsertOffer(mapProperty, map);
 		}
@@ -668,6 +715,7 @@ public class CampaignController {
 
 
 	/*
+	 * KANG-20190413: analyzing
 	 *
 	 */
 	private void chkInsertOffer(Map<String, Object> mapProperty, Map<String, Object> map) throws Exception{
@@ -682,18 +730,20 @@ public class CampaignController {
 		String MANUAL_TRANS_YN = Common.nvl((String) mapProperty.get("senddate_type"), "");
 
 		if (MANUAL_TRANS_YN.equals("Y") || MANUAL_TRANS_YN.equals("T")){
-			campaignInfoService.setChannelDispTime(mapProperty);
+			this.campaignInfoService.setChannelDispTime(mapProperty);
 		}
 
-		if (CHANNEL_CMD.equals("YtoN")) { //모든우선 순위가 N으로 변경됨
+		if (CHANNEL_CMD.equals("YtoN")) {
+			// 모든우선 순위가 N으로 변경됨
 			mapProperty.put("PRIORITY_RNK", "N");
-			campaignInfoService.setChannelPriority(mapProperty);
-		} else if (CHANNEL_CMD.equals("NtoY")) { //모든우선 순위가 5로 변경됨
+			this.campaignInfoService.setChannelPriority(mapProperty);
+		} else if (CHANNEL_CMD.equals("NtoY")) {
+			// 모든우선 순위가 5로 변경됨
 			mapProperty.put("PRIORITY_RNK", "5");
-			campaignInfoService.setChannelPriority(mapProperty);
+			this.campaignInfoService.setChannelPriority(mapProperty);
 		}
 
-		/* Offer Insert */
-		campaignInfoService.insertOfferData(map);
+		// Offer Insert
+		this.campaignInfoService.insertOfferData(map);
 	}
 }

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/common.jsp"%>
 <%@ include file="/WEB-INF/views/common/_head_pop.jsp"%>
 
@@ -6,21 +7,26 @@
 
 <!-- PAGE LEVEL STYLES -->
 <link href="${staticPATH }/assets/css/layout2.css" rel="stylesheet" />
-<link href="${staticPATH }/assets/plugins/flot/examples/examples.css" rel="stylesheet" />
-<link rel="stylesheet" href="${staticPATH }/assets/plugins/timeline/timeline.css" />
+<link href="${staticPATH }/assets/plugins/flot/examples/examples.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="${staticPATH }/assets/plugins/timeline/timeline.css" />
 <!-- END PAGE LEVEL  STYLES -->
 
 <!-- 운영 -->
 <link rel="stylesheet" href="http://c.m.011st.com/MW/css/my/my.css" />
 <script src="http://c.m.011st.com/MW/js/ui/ui.js"></script>
 
-<script type="text/javascript" src="${staticPATH }/js/common/jquery-ui-1.10.2.custom.js"></script>
+<script type="text/javascript"
+	src="${staticPATH }/js/common/jquery-ui-1.10.2.custom.js"></script>
 
-<link href="${staticPATH }/css/jquery_1.9.2/base/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+<link
+	href="${staticPATH }/css/jquery_1.9.2/base/jquery-ui-1.9.2.custom.css"
+	rel="stylesheet">
 <script src="${staticPATH }/js/jquery_1.9.2/jquery-1.8.3.js"></script>
 <script src="${staticPATH }/js/jquery_1.9.2/jquery-ui-1.9.2.custom.js"></script>
 
-	<!--
+<!--
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -28,12 +34,18 @@
 	-->
 
 <style>
-	/*
+/*
 		KANG-20190315: add for the belows
 		cellmargin = 0; cellpadding = 0;
 	*/
-	.my_table { border-spacing: 0px; border: 0px; }
-	.my_table td { padding: 0px; }
+.my_table {
+	border-spacing: 0px;
+	border: 0px;
+}
+
+.my_table td {
+	padding: 0px;
+}
 </style>
 
 
@@ -48,7 +60,8 @@
 
 	// this window resize
 	//window.resizeTo(1180,910);
-	window.resizeTo(1180,1100);  // KANG-20190323: resize of the popup
+	window.resizeTo(1180,1010);  // KANG-20190323: resize of the popup
+	//window.resizeTo(1180,1110);  // KANG-20190323: resize of the popup
 
 	// document.ready
 	$(document).ready(function() {
@@ -199,7 +212,7 @@
 					if (result.CMP_STATUS == "START"){
 						alert("진행중인 캠페인은 수정할수 없습니다.");
 					} else {
-					alert("저장되었습니다");
+						alert("저장되었습니다");
 						//부모창 재조회
 						window.opener.fn_getCampaignDtl(campaignid);
 						//창닫기
@@ -434,136 +447,698 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
-	///////////////////////////////////////////////
-	///////////////////////////////////////////////
-	///////////////////////////////////////////////
-	///////////////////////////////////////////////
-	///////////////////////////////////////////////
-	///////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
 	// KANG-20190325: new alimi script
-	///////////////////////////////////////////////
-	var base = { alimiShow: "show", alimiText: "", alimiType: "type1" };
-	var master = { title1: "", advText: "광고", title2: "", title3: "" };
-	var footer = { ftrText: "", ftrMblUrl: "", ftrWebUrl: "" };
+	////////////////////////////////////////////////////////////////////////////////////
+	function fn_for_test() {
+		if (!true) alert("fn_for_test();");
+		var base = { alimiShow: "show", alimiText: "임시" };
+		var master = { title1: "1", title2: "2", title3: "3" };
+		var arrImg2 = JSON.parse("["
+			+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample1.png\"},"
+			+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample2.png\"},"
+			+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample1.png\"},"
+			+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample2.png\"},"
+			+ "{\"imgUrl\":\"http://i.011st.com/ui_img/11talk/img_500_500_sample1.png\"}"
+			+ "]");
+
+		// var obj = Object.assign(base, master, { arrImg: arrImg2 }, { arrPrd: arrPrd2 }, footer);
+		var ret = "{" + fn_getCore(base) + "," + fn_getCore(master) + ", \"arrImg\":" + fn_getCore(arrImg2) + "}";
+		console.log(">>>>> " + ret);
+
+		var obj = JSON.parse(ret);
+		console.log(">>>>> " + JSON.stringify(obj));
+	}
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	// data for clear
+	var _base = { alimiShow: "hide", alimiText: "", alimiType: "type1" };
+	var _master = { title1: "", advText: "광고", title2: "", title3: "" };
+	var _footer = { ftrText: "", ftrMblUrl: "", ftrWebUrl: "" };
 	//var master = { title1: "title1", advText: "advText", title2: "title2", title3: "title3" };
 	//var footer = { ftrText: "ftrText", ftrMblUrl: "http://localhost/mobile", ftrWebUrl: "http://localhost/web" };
-	//
-	// alimi initialization
-	//
-	function fn_newAlimi_init() {
-		//
-		// base section, and value setting
-		//
-		$("#alimiShow_" + base["alimiShow"]).attr("checked", true);
-		$("#alimiText").val(base["alimiText"]);
-		$("#alimiType_" + base["alimiType"]).attr("checked", true);
-		//
-		// declare the event of radio
-		//
-		$('.alimiShow').click(function() {
-			var val = $('.alimiShow:checked').val();
-			if (base["alimiShow"] == val) return;
-			if (true) console.log("alimiShow change: " + val);
-			base["alimiShow"] = val;
-		});
-		$('.alimiType').click(function() {
-			var val = $('.alimiType:checked').val();
-			if (base["alimiType"] == val) return;
-			if (true) console.log("alimiType change: " + val);
-			if (!confirm("타입을 바꾸시면 기존에 작성한 내용은 사라집니다.\n타입을 바꾸시겠습니까?")) {
-				$("#alimiType_" + base["alimiType"]).attr("checked", true);
-				return;
-			}
-			base["alimiType"] = val;
-			fn_newAlimi_hideAllType();
-			master = { title1: "", advText: "광고", title2: "", title3: "" };
-			footer = { ftrText: "", ftrMblUrl: "", ftrWebUrl: "" };
-			//master = { title1: "title1", advText: "advText", title2: "title2", title3: "title3" };
-			//footer = { ftrText: "ftrText", ftrMblUrl: "http://localhost/mobile", ftrWebUrl: "http://localhost/web" };
-			switch(val) {
-			case 'type1':
-				fn_set_master_footer('type1');
-				$('#content-1').show();
-				break;
-			case 'type2':
-				fn_set_master_footer('type2');
-				$('#content-2').show();
-				break;
-			case 'type3':
-				fn_set_master_footer('type3');
-				$('#content-3').show();
-				break;
-			case 'type4':
-				fn_set_master_footer('type4');
-				$('#content-4').show();
-				break;
-			case 'type5':
-				fn_set_master_footer('type5');
-				$('#content-5').show();
-				break;
-			case 'type6':
-				fn_set_master_footer('type6');
-				$('#content-6').show();
-				break;
-			default: console.log("WRONG type value....");
-			}
-		});
-		//
-		// addItem click events
-		//
-		$("#img1_addItem").click(fn_img1_addItem_click);
-		$("#img2_addItem").click(fn_img2_addItem_click);
-		$("#prd2_addItem").click(fn_prd2_addItem_click);
-		$("#img3_addItem").click(fn_img3_addItem_click);
-		$("#cpn3_addItem").click(fn_cpn3_addItem_click);
-		$("#ann4_addItem").click(fn_ann4_addItem_click);
-		$("#prd5_addItem").click(fn_prd5_addItem_click);
-		$("#cpn6_addItem").click(fn_cpn6_addItem_click);
-		//
-		// alimi initialization
-		//
-		fn_newAlimi_hideAllType();
-		//
-		// show content-1
-		//
-		fn_set_master_footer('type1');
-		$("#content-1").show();
-		//
-		// initial layer to nav-tabs-old made active
-		//
-		document.getElementById("nav-tabs-old").click();
-	}
+	var _arrImg1 = [ { imgUrl: "" }];
+	var _arrImg2 = [ { imgUrl: "" }];
+	var _arrPrd2 = [ { prdUrl: "", prdName: "", prdPrice: "", prdUnit: "", prdMblUrl: "", prdWebUrl: "" } ];
+	var _arrImg3 = [ { imgUrl: "" }];
+	var _arrCpn3 = [ { cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "hide" } ];
+	var _arrAnn4 = [ { annText: "", annFixed: "center" } ];
+	var _arrPrd5 = [ { prdUrl: "", prdName: "", prdPrice: "", prdUnit: "", prdMblUrl: "", prdWebUrl: "" } ];
+	var _arrCpn6 = [ { cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "hide" } ];
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	// data for usable
+	var base = null;
+	var master = null;
+	var footer = null;
+	var arrImg1 = null;
+	var arrImg2 = null;
+	var arrPrd2 = null;
+	var arrImg3 = null;
+	var arrCpn3 = null;
+	var arrAnn4 = null;
+	var arrPrd5 = null;
+	var arrCpn6 = null;
+</script>
 
+
+
+
+
+
+
+<script>
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	var fn_cloneObject = function(obj) { return JSON.parse(JSON.stringify(obj)); };
+	var fn_valueClear = function() {
+		base = fn_cloneObject(_base);
+		master = fn_cloneObject(_master);
+		footer = fn_cloneObject(_footer);
+		arrImg1 = fn_cloneObject(_arrImg1);
+		arrImg2 = fn_cloneObject(_arrImg2);
+		arrPrd2 = fn_cloneObject(_arrPrd2);
+		arrImg3 = fn_cloneObject(_arrImg3);
+		arrCpn3 = fn_cloneObject(_arrCpn3);
+		arrAnn4 = fn_cloneObject(_arrAnn4);
+		arrPrd5 = fn_cloneObject(_arrPrd5);
+		arrCpn6 = fn_cloneObject(_arrCpn6);
+	}
+	fn_valueClear();     // set data to default values
 	//
-	//
-	//
-	function fn_newAlimi_hideAllType() {
+	function fn_getCore(orgObj) {              // for Object.assign on MS
+		var jsonObj = JSON.stringify(orgObj)
+		if (jsonObj.charAt(0) == '[') {
+			//return JSON.stringify(orgObj);   // array
+			return jsonObj;   // array
+		} else {
+			return jsonObj.substring(jsonObj.indexOf("{")+1, jsonObj.lastIndexOf("}"));
+		}
+	}
+	function fn_checkQuotationMark(txt) {      // if contains some quotations, then return true.
+		var result = txt.search("['\"]");
+		if (result >= 0) {
+			if (true) alert("인용부호( ' , \" )는 사용할 수 없습니다.");
+			return true;
+		}
+		return false;
+	}
+	// 넘어온 값이 빈값인지 체크합니다. 
+	// !value 하면 생기는 논리적 오류를 제거하기 위해 
+	// 명시적으로 value == 사용 
+	// [], {} 도 빈값으로 처리 
+	function isEmpty(value) {
+		if( value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length ) ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	function fn_clearDisableAlimi_master() {
+		if (true) console.log("fn_clearDisableAlimi_master(): ");
+		$('input[name=alimiShow]').val(['hide']).attr('disabled',false);
+		$('#alimiText').val("").attr('readonly',true);
+		$('input[name=alimiType]').val(['']).attr('disabled',true);
+	}
+	function fn_clearDisableAlimi_type(type) {
+		if (true) console.log("fn_clearDisableAlimi_type(" + type + "): ");
+		$('#' + type + '_title1').val("").attr('readonly',true);
+		$('#' + type + '_advText').val("").attr('readonly',true);
+		$('#' + type + '_title2').val("").attr('readonly',true);
+		$('#' + type + '_title3').val("").attr('readonly',true);
+		switch (type) {
+		case "type1":
+			{
+				arrImg1.forEach(function(value, index, array) {
+					$('#type1_imgUrl' + index).val("").attr('readonly',true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img1_addItem').attr('disabled', true);  // 항목추가
+				$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type2":
+			{
+				arrImg2.forEach(function(value, index, array) {
+					$('#type2_imgUrl' + index).val("").attr('readonly',true);
+				});
+				arrPrd2.forEach(function(value, index, array) {
+					$('#type2_prdUrl' + index).val("").attr('readonly',true);
+					$('#type2_prdName' + index).val("").attr('readonly',true);
+					$('#type2_prdPrice' + index).val("").attr('readonly',true);
+					$('#type2_prdUnit' + index).val("").attr('readonly',true);
+					$('#type2_prdMblUrl' + index).val("").attr('readonly',true);
+					$('#type2_prdWebUrl' + index).val("").attr('readonly',true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img2_addItem').attr('disabled', true);  // 항목추가
+				$('#prd2_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type3":
+			{
+				arrImg3.forEach(function(value, index, array) {
+					$('#type3_imgUrl' + index).val("").attr('readonly',true);
+				});
+				arrCpn3.forEach(function(value, index, array) {
+					$('#type3_cpnText1' + index).val("").attr('readonly',true);
+					$('#type3_cpnText2' + index).val("").attr('readonly',true);
+					$('#type3_cpnText3' + index).val("").attr('readonly',true);
+					$('#type3_cpnText4' + index).val("").attr('readonly',true);
+					$('#type3_cpnNumber' + index).val("").attr('readonly',true);
+					$('input[name=cpnVisible3' + index + ']').val([""]).attr('disabled', true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img3_addItem').attr('disabled', true);  // 항목추가
+				$('#cpn3_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type4":
+			{
+				arrAnn4.forEach(function(value, index, array) {
+					$('#type4_annText' + index).val("").attr('readonly',true);
+					$('input[name=annFixed' + index + ']').val([""]).attr('disabled', true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#ann4_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type5":
+			{
+				arrPrd5.forEach(function(value, index, array) {
+					$('#type5_prdUrl' + index).val("").attr('readonly',true);
+					$('#type5_prdName' + index).val("").attr('readonly',true);
+					$('#type5_prdPrice' + index).val("").attr('readonly',true);
+					$('#type5_prdUnit' + index).val("").attr('readonly',true);
+					$('#type5_prdMblUrl' + index).val("").attr('readonly',true);
+					$('#type5_prdWebUrl' + index).val("").attr('readonly',true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#prd5_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type6":
+			{
+				arrCpn6.forEach(function(value, index, array) {
+					$('#type6_cpnText1' + index).val("").attr('readonly',true);
+					$('#type6_cpnText2' + index).val("").attr('readonly',true);
+					$('#type6_cpnText3' + index).val("").attr('readonly',true);
+					$('#type6_cpnText4' + index).val("").attr('readonly',true);
+					$('#type6_cpnNumber' + index).val("").attr('readonly',true);
+					$('input[name=cpnVisible6' + index + ']').val([""]).attr('disabled', true)
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#cpn6_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		default:
+			break;
+		}
+		$('#' + type + '_ftrText').val("").attr('readonly',true);
+		$('#' + type + '_ftrMblUrl').val("").attr('readonly',true);
+		$('#' + type + '_ftrWebUrl').val("").attr('readonly',true);
+	}
+	function fn_clearDisableAlimi() {
+		fn_clearDisableAlimi_master();
+		fn_clearDisableAlimi_type('type1');
+		fn_clearDisableAlimi_type('type2');
+		fn_clearDisableAlimi_type('type3');
+		fn_clearDisableAlimi_type('type4');
+		fn_clearDisableAlimi_type('type5');
+		fn_clearDisableAlimi_type('type6');
+	}
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	function fn_disableAlimi_master() {
+		if (true) console.log("fn_disableAlimi_master(): ");
+		$('#alimiText').attr('readonly',true);
+		$('input[name=alimiType]').attr('disabled',true);
+	}
+	function fn_disableAlimi_type(type) {
+		if (true) console.log("fn_disableAlimi_type(" + type + "): ");
+		$('#' + type + '_title1').attr('readonly',true);
+		$('#' + type + '_advText').attr('readonly',true);
+		$('#' + type + '_title2').attr('readonly',true);
+		$('#' + type + '_title3').attr('readonly',true);
+		switch (type) {
+		case "type1":
+			{
+				arrImg1.forEach(function(value, index, array) {
+					$('#type1_imgUrl' + index).attr('readonly',true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img1_addItem').attr('disabled', true);  // 항목추가
+				$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type2":
+			{
+				arrImg2.forEach(function(value, index, array) {
+					$('#type2_imgUrl' + index).attr('readonly',true);
+				});
+				arrPrd2.forEach(function(value, index, array) {
+					$('#type2_prdUrl' + index).attr('readonly',true);
+					$('#type2_prdName' + index).attr('readonly',true);
+					$('#type2_prdPrice' + index).attr('readonly',true);
+					$('#type2_prdUnit' + index).attr('readonly',true);
+					$('#type2_prdMblUrl' + index).attr('readonly',true);
+					$('#type2_prdWebUrl' + index).attr('readonly',true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img2_addItem').attr('disabled', true);  // 항목추가
+				$('#prd2_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type3":
+			{
+				arrImg3.forEach(function(value, index, array) {
+					$('#type3_imgUrl' + index).attr('readonly',true);
+				});
+				arrCpn3.forEach(function(value, index, array) {
+					$('#type3_cpnText1' + index).attr('readonly',true);
+					$('#type3_cpnText2' + index).attr('readonly',true);
+					$('#type3_cpnText3' + index).attr('readonly',true);
+					$('#type3_cpnText4' + index).attr('readonly',true);
+					$('#type3_cpnNumber' + index).attr('readonly',true);
+					$('input[name=cpnVisible3' + index + ']').attr('disabled', true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img3_addItem').attr('disabled', true);  // 항목추가
+				$('#cpn3_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type4":
+			{
+				arrAnn4.forEach(function(value, index, array) {
+					$('#type4_annText' + index).attr('readonly',true);
+					$('input[name=annFixed' + index + ']').attr('disabled', true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#ann4_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type5":
+			{
+				arrPrd5.forEach(function(value, index, array) {
+					$('#type5_prdUrl' + index).attr('readonly',true);
+					$('#type5_prdName' + index).attr('readonly',true);
+					$('#type5_prdPrice' + index).attr('readonly',true);
+					$('#type5_prdUnit' + index).attr('readonly',true);
+					$('#type5_prdMblUrl' + index).attr('readonly',true);
+					$('#type5_prdWebUrl' + index).attr('readonly',true);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#prd5_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type6":
+			{
+				arrCpn6.forEach(function(value, index, array) {
+					$('#type6_cpnText1' + index).attr('readonly',true);
+					$('#type6_cpnText2' + index).attr('readonly',true);
+					$('#type6_cpnText3' + index).attr('readonly',true);
+					$('#type6_cpnText4' + index).attr('readonly',true);
+					$('#type6_cpnNumber' + index).attr('readonly',true);
+					$('input[name=cpnVisible6' + index + ']').attr('disabled', true)
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#cpn6_addItem').attr('disabled', true);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		default:
+			break;
+		}
+		$('#' + type + '_ftrText').attr('readonly',true);
+		$('#' + type + '_ftrMblUrl').attr('readonly',true);
+		$('#' + type + '_ftrWebUrl').attr('readonly',true);
+	}
+	function fn_disableAlimi() {
+		fn_disableAlimi_master();
+		fn_disableAlimi_type('type1');
+		fn_disableAlimi_type('type2');
+		fn_disableAlimi_type('type3');
+		fn_disableAlimi_type('type4');
+		fn_disableAlimi_type('type5');
+		fn_disableAlimi_type('type6');
+	}
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	function fn_editableAlimi_master() {
+		if (true) console.log("fn_editableAlimi_master(): ");
+		$('#alimiText').val("").attr('readonly',false);
+		$('input[name=alimiType]').removeAttr('disabled');
+	}
+	function fn_editableAlimi_type(type) {
+		if (true) console.log("fn_editableAlimi_type(" + type + "): ");
+		$('#' + type + '_title1').val("").attr('readonly',false);
+		$('#' + type + '_advText').val(master.advText).attr('readonly',true);
+		$('#' + type + '_title2').val("").attr('readonly',false);
+		$('#' + type + '_title3').val("").attr('readonly',false);
+		switch(type) {
+		case "type1":
+			{
+				arrImg1.forEach(function(value, index, array) {
+					$('#type1_imgUrl' + index).val("").attr('readonly',false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img1_addItem').removeAttr('disabled');  // 항목추가
+				$('#type1_imgUrl1').removeAttr('disabled');  // 미리보기
+			}
+			break;
+		case "type2":
+			{
+				arrImg2.forEach(function(value, index, array) {
+					$('#type2_imgUrl' + index).val("").attr('readonly',false);
+				});
+				arrPrd2.forEach(function(value, index, array) {
+					$('#type2_prdUrl' + index).val("").attr('readonly',false);
+					$('#type2_prdName' + index).val("").attr('readonly',false);
+					$('#type2_prdPrice' + index).val("").attr('readonly',false);
+					$('#type2_prdUnit' + index).val("").attr('readonly',false);
+					$('#type2_prdMblUrl' + index).val("").attr('readonly',false);
+					$('#type2_prdWebUrl' + index).val("").attr('readonly',false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img2_addItem').removeAttr('disabled');  // 항목추가
+				$('#prd2_addItem').removeAttr('disabled');  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type3":
+			{
+				arrImg3.forEach(function(value, index, array) {
+					$('#type3_imgUrl' + index).val("").attr('readonly',false);
+				});
+				arrCpn3.forEach(function(value, index, array) {
+					$('#type3_cpnText1' + index).val("").attr('readonly',false);
+					$('#type3_cpnText2' + index).val("").attr('readonly',false);
+					$('#type3_cpnText3' + index).val("").attr('readonly',false);
+					$('#type3_cpnText4' + index).val("").attr('readonly',false);
+					$('#type3_cpnNumber' + index).val("").attr('readonly',false);
+					$('input[name=cpnVisible3' + index + ']').val([value.cpnVisible]).attr('disabled', false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img3_addItem').removeAttr('disabled');  // 항목추가
+				$('#cpn3_addItem').removeAttr('disabled');  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', false);  // 미리보기
+			}
+			break;
+		case "type4":
+			{
+				arrAnn4.forEach(function(value, index, array) {
+					$('#type4_annText' + index).val("").attr('readonly',false);
+					$('input[name=annFixed' + index + ']').val([value.annFixed]).attr('disabled', false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#ann4_addItem').removeAttr('disabled');  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', false);  // 미리보기
+			}
+			break;
+		case "type5":
+			{
+				arrPrd5.forEach(function(value, index, array) {
+					$('#type5_prdUrl' + index).val("").attr('readonly',false);
+					$('#type5_prdName' + index).val("").attr('readonly',false);
+					$('#type5_prdPrice' + index).val("").attr('readonly',false);
+					$('#type5_prdUnit' + index).val("").attr('readonly',false);
+					$('#type5_prdMblUrl' + index).val("").attr('readonly',false);
+					$('#type5_prdWebUrl' + index).val("").attr('readonly',false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#prd5_addItem').attr('disabled', false);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', false);  // 미리보기
+			}
+			break;
+		case "type6":
+			{
+				arrCpn6.forEach(function(value, index, array) {
+					$('#type6_cpnText1' + index).val("").attr('readonly',false);
+					$('#type6_cpnText2' + index).val("").attr('readonly',false);
+					$('#type6_cpnText3' + index).val("").attr('readonly',false);
+					$('#type6_cpnText4' + index).val("").attr('readonly',false);
+					$('#type6_cpnNumber' + index).val("").attr('readonly',false);
+					$('input[name=cpnVisible6' + index + ']').val([value.cpnVisible]).attr('disabled', false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#cpn6_addItem').removeAttr('disabled');  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', false);  // 미리보기
+			}
+			break;
+		default:
+			break;
+		}
+		$('#' + type + '_ftrText').val("").attr('readonly',false);
+		$('#' + type + '_ftrMblUrl').val("").attr('readonly',false);
+		$('#' + type + '_ftrWebUrl').val("").attr('readonly',false);
+	}
+	function fn_editableAlimi() {     // not be used
+		fn_editableAlimi_master();
+		fn_editableAlimi_type('type1');
+		fn_editableAlimi_type('type2');
+		fn_editableAlimi_type('type3');
+		fn_editableAlimi_type('type4');
+		fn_editableAlimi_type('type5');
+		fn_editableAlimi_type('type6');
+	}
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	function fn_dataFromAlimi_base() {
+		if (true) console.log("fn_dataFromAlimi_master(ALIMI): ");
+		if (ALIMI.alimiShow == 'Y') {
+			base.alimiShow = ALIMI.alimiShow == 'Y' ? 'show' : 'hide';
+			base.alimiText = ALIMI.alimiText;
+			base.alimiType = 'type' + ALIMI.alimiType.substring(2);
+		} else {
+			base.alimiShow = ALIMI.alimiShow;
+			base.alimiText = ALIMI.alimiText;
+			base.alimiType = ALIMI.alimiType;
+		}
+	}
+	function fn_dataFromAlimi_type() {
+		if (true) console.log("fn_dataFromAlimi_type(alimi): type = " + base.alimiType);
+		master.title1 = ALIMI.title1;
+		master.advText = ALIMI.advText;
+		master.title2 = ALIMI.title2;
+		master.title3 = ALIMI.title3;
+		switch(base.alimiType) {
+		case "type1":
+			arrImg1 = ALIMI.arrImg;
+			break;
+		case "type2":
+			arrImg2 = ALIMI.arrImg;
+			arrPrd2 = ALIMI.arrPrd;
+			break;
+		case "type3":
+			arrImg3 = ALIMI.arrImg;
+			arrCpn3 = ALIMI.arrCpn;
+			break;
+		case "type4":
+			arrAnn4 = ALIMI.arrAnn;
+			break;
+		case "type5":
+			arrPrd5 = ALIMI.arrPrd;
+			break;
+		case "type6":
+			arrCpn6 = ALIMI.arrCpn;
+			break;
+		default:
+			break;
+		}
+		footer.ftrText = ALIMI.ftrText;
+		footer.ftrMblUrl = ALIMI.ftrMblUrl;
+		footer.ftrWebUrl = ALIMI.ftrWebUrl;
+	}
+	function fn_dataFromAlimi() {
+		fn_dataFromAlimi_base();
+		fn_dataFromAlimi_type();
+	}
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	function fn_dataAlimi_base() {
+		if (true) console.log("fn_dataAlimi_master(): ");
+		$('input[name="alimiShow"]').val([base.alimiShow]).removeAttr('disabled');
+		$('#alimiText').val(base.alimiText).attr('readonly',false);
+		$('input[name="alimiType"]').val([base.alimiType]).removeAttr('disabled');
+	}
+	function fn_dataAlimi_type(type) {
+		if (true) console.log("fn_dataAlimi_type(" + type + "): ", master);
+		$('#' + type + '_title1').val(master.title1).attr('readonly',false);
+		$('#' + type + '_advText').val(master.advText).attr('readonly',true);
+		$('#' + type + '_title2').val(master.title2).attr('readonly',false);
+		$('#' + type + '_title3').val(master.title3).attr('readonly',false);
+		switch(type) {
+		case "type1":
+			{
+				arrImg1.forEach(function(value, index, array) {
+					$('#type1_imgUrl' + index).val(value.imgUrl).attr('readonly',false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img1_addItem').removeAttr('disabled');  // 항목추가
+				$('#type1_imgUrl1').removeAttr('disabled');  // 미리보기
+			}
+			break;
+		case "type2":
+			{
+				arrImg2.forEach(function(value, index, array) {
+					$('#type2_imgUrl' + index).val(value.imgUrl).attr('readonly',false);
+				});
+				arrPrd2.forEach(function(value, index, array) {
+					$('#type2_prdUrl' + index).val(value.prdUrl).attr('readonly',false);
+					$('#type2_prdName' + index).val(value.prdName).attr('readonly',false);
+					$('#type2_prdPrice' + index).val(value.prdPrice).attr('readonly',false);
+					$('#type2_prdUnit' + index).val(value.prdUnit).attr('readonly',false);
+					$('#type2_prdMblUrl' + index).val(value.prdMblUrl).attr('readonly',false);
+					$('#type2_prdWebUrl' + index).val(value.prdWebUrl).attr('readonly',false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img2_addItem').removeAttr('disabled');  // 항목추가
+				$('#prd2_addItem').removeAttr('disabled');  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', true);  // 미리보기
+			}
+			break;
+		case "type3":
+			{
+				arrImg3.forEach(function(value, index, array) {
+					$('#type3_imgUrl' + index).val(value.imgUrl).attr('readonly',false);
+				});
+				arrCpn3.forEach(function(value, index, array) {
+					$('#type3_cpnText1' + index).val(value.cpnText1).attr('readonly',false);
+					$('#type3_cpnText2' + index).val(value.cpnText2).attr('readonly',false);
+					$('#type3_cpnText3' + index).val(value.cpnText3).attr('readonly',false);
+					$('#type3_cpnText4' + index).val(value.cpnText4).attr('readonly',false);
+					$('#type3_cpnNumber' + index).val(value.cpnNumber).attr('readonly',false);
+					$('input[name=cpnVisible3' + index + ']').val([value.cpnVisible]).removeAttr('disabled');
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#img3_addItem').removeAttr('disabled');  // 항목추가
+				$('#cpn3_addItem').removeAttr('disabled');  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', false);  // 미리보기
+			}
+			break;
+		case "type4":
+			{
+				arrAnn4.forEach(function(value, index, array) {
+					$('#type4_annText' + index).val(value.annText).attr('readonly',false);
+					$('input[name=annFixed' + index + ']').val([value.annFixed]).removeAttr('disabled');
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#ann4_addItem').removeAttr('disabled');  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', false);  // 미리보기
+			}
+			break;
+		case "type5":
+			{
+				arrPrd5.forEach(function(value, index, array) {
+					$('#type5_prdUrl' + index).val(value.prdUrl).attr('readonly',false);
+					$('#type5_prdName' + index).val(value.prdName).attr('readonly',false);
+					$('#type5_prdPrice' + index).val(value.prdPrice).attr('readonly',false);
+					$('#type5_prdUnit' + index).val(value.prdUnit).attr('readonly',false);
+					$('#type5_prdMblUrl' + index).val(value.prdMblUrl).attr('readonly',false);
+					$('#type5_prdWebUrl' + index).val(value.prdWebUrl).attr('readonly',false);
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#prd5_addItem').attr('disabled', false);  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', false);  // 미리보기
+			}
+			break;
+		case "type6":
+			{
+				arrCpn6.forEach(function(value, index, array) {
+					$('#type6_cpnText1' + index).val(value.cpnTest1).attr('readonly',false);
+					$('#type6_cpnText2' + index).val(value.cpnTest2).attr('readonly',false);
+					$('#type6_cpnText3' + index).val(value.cpnTest3).attr('readonly',false);
+					$('#type6_cpnText4' + index).val(value.cpnTest4).attr('readonly',false);
+					$('#type6_cpnNumber' + index).val(value.cpnNumber).attr('readonly',false);
+					$('input[name=cpnVisible6' + index + ']').val([value.cpnVisible]).removeAttr('disabled');
+				});
+				// button(항목추가 / 미리보기) disabled
+				$('#cpn6_addItem').removeAttr('disabled');  // 항목추가
+				//$('#type1_imgUrl1').attr('disabled', false);  // 미리보기
+			}
+			break;
+		default:
+			break;
+		}
+		$('#' + type + '_ftrText').val(footer.ftrText).attr('readonly',false);
+		$('#' + type + '_ftrMblUrl').val(footer.ftrMblUrl).attr('readonly',false);
+		$('#' + type + '_ftrWebUrl').val(footer.ftrWebUrl).attr('readonly',false);
+	}
+	function fn_dataAlimi() {
+		fn_dataAlimi_base();
+		fn_dataAlimi_type('type1');
+		fn_dataAlimi_type('type2');
+		fn_dataAlimi_type('type3');
+		fn_dataAlimi_type('type4');
+		fn_dataAlimi_type('type5');
+		fn_dataAlimi_type('type6');
+	}
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	function fn_newAlimiHideAll() {
 		$("#content-1").hide();
 		$("#content-2").hide();
 		$("#content-3").hide();
 		$("#content-4").hide();
 		$("#content-5").hide();
 		$("#content-6").hide();
-		//
-		// clear contents
-		//
-		arrImg1 = [ { imgUrl: "" }];
-		
-		arrImg2 = [ { imgUrl: "" }];
-		arrPrd2 = [ { prdUrl: "", prdName: "", prdPrice: "", prdUnit: "KRW", prdMblUrl: "", prdWebUrl: "" } ];
-		
-		arrImg3 = [ { imgUrl: "" }];
-		arrCpn3 = [ { cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "show" } ];
-		
-		arrAnn4 = [ { annText: "", annFixed: "center" } ];
-		
-		arrPrd5 = [ { prdUrl: "", prdName: "", prdPrice: "", prdUnit: "KRW", prdMblUrl: "", prdWebUrl: "" } ];
-		
-		arrCpn6 = [ { cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "show" } ];
-		//
-		// setting default values to the elements
-		//
 		fn_img1_appendTableTr();
 		fn_img2_appendTableTr();
 		fn_prd2_appendTableTr();
@@ -573,550 +1148,742 @@
 		fn_prd5_appendTableTr();
 		fn_cpn6_appendTableTr();
 	}
-	
-	//
-	//
-	//
-	function fn_set_master_footer(type) {
-		$('#' + type + '_title1').val(master["title1"]);
-		$('#' + type + '_advText').val(master["advText"]);
-		$('#' + type + '_title2').val(master["title2"]);
-		$('#' + type + '_title3').val(master["title3"]);
-		$('#' + type + '_ftrText').val(footer["ftrText"]);
-		$('#' + type + '_ftrMblUrl').val(footer["ftrMblUrl"]);
-		$('#' + type + '_ftrWebUrl').val(footer["ftrWebUrl"]);
-	}
-	
-	// 넘어온 값이 빈값인지 체크합니다. 
-	// !value 하면 생기는 논리적 오류를 제거하기 위해 
-	// 명시적으로 value == 사용 
-	// [], {} 도 빈값으로 처리 
-	var isEmpty = function(value){ 
-		if( value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length ) ){
-			return true;
-		} else {
-			return false;
+	function fn_newAlimiShow(type) {
+		switch (type) {
+		case "type1":
+			//fn_img1_appendTableTr();
+			$("#content-1").show();
+			break;
+		case "type2":
+			//fn_img2_appendTableTr();
+			//fn_prd2_appendTableTr();
+			$("#content-2").show();
+			break;
+		case "type3":
+			//fn_img3_appendTableTr();
+			//fn_cpn3_appendTableTr();
+			$("#content-3").show();
+			break;
+		case "type4":
+			//fn_ann4_appendTableTr();
+			$("#content-4").show();
+			break;
+		case "type5":
+			//fn_prd5_appendTableTr();
+			$("#content-5").show();
+			break;
+		case "type6":
+			//fn_cpn6_appendTableTr();
+			$("#content-6").show();
+			break;
 		}
-	};
+	}
+</script>
 
+
+
+
+
+
+
+
+
+<script>
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	var ALIMI;
+	var ALIMI_SHOW;
+	var ALIMI_TYPE;
+	// callback function
+	function fn_setNewAlimi() {   // type of alimi is string
+		ALIMI = JSON.parse(ALIMI);
+		if (true) console.log("in fn_setNewAlimi: ALIMI = ", ALIMI);
+		ALIMI.alimiShow = ALIMI.alimiShow == 'Y' ? 'show' : 'hide';
+		ALIMI.alimiType = "type" + ALIMI.alimiType.substring(2);
+		if (true) console.log("in fn_setNewAlimi: JSON.stringify(ALIMI) = " + JSON.stringify(ALIMI));
+		if (true) console.log("ALIMI.alimiShow: " + ALIMI.alimiShow + ", ALIMI.alimiType: " + ALIMI.alimiType);
+		
+		if (ALIMI.alimiShow == 'hide') {
+			// 알리미미노출
+			fn_valueClear();
+			//fn_clearDisableAlimi();
+			fn_dataAlimi();
+			fn_disableAlimi();
+			//
+			ALIMI_SHOW = 'hide';
+			ALIMI_TYPE = 'type1';
+			base.alimiType = 'ALIMI_TYPE';
+			//
+			fn_newAlimiHideAll();
+			fn_newAlimiShow(ALIMI_TYPE);
+			if (true) console.log(">>>>> FIRST: 알리미 미노출 <<<<< (" + ALIMI_SHOW + ", " + ALIMI_TYPE + ")");
+			if (true) console.log("base = ", base);
+		} else {
+			// 알리미노출
+			fn_valueClear();
+			fn_dataFromAlimi();
+			fn_dataAlimi();
+			//
+			ALIMI_SHOW = 'show';
+			ALIMI_TYPE = base.alimiType;
+			//
+			fn_newAlimiHideAll();
+			fn_newAlimiShow(ALIMI_TYPE);
+			if (true) console.log(">>>>> FIRST: 알리미 노출 <<<<< (" + ALIMI_SHOW + ", " + ALIMI_TYPE + ")");
+		}
+		$('input[name=alimiShow]').val([ALIMI_SHOW]);
+		$('input[name=alimiType]').val([ALIMI_TYPE]);
+	}
+	// init event
+	function fn_init_event() {
+		//
+		// Event
+		//
+		$('#alimiShow_show').on({       // SHOW
+			'click': function() {
+				if (ALIMI_SHOW == 'show')
+					return;
+				if (true) console.log("show onclick(). 노출로 변경됨.");
+				fn_valueClear();  // after fn_setDefaultValue()
+				//fn_dataFromAlimi();
+				//fn_dataFromAlimi_type()
+				fn_dataAlimi();
+				//
+				ALIMI_SHOW = 'show';
+				ALIMI_TYPE = base.alimiType;
+				if (true) console.log(">>>>> show_click() <<<<< (" + ALIMI_SHOW + ", " + ALIMI_TYPE + ")");
+				//ALIMI_TYPE = 'type1';
+				fn_newAlimiHideAll();
+				fn_newAlimiShow(ALIMI_TYPE);
+				$('input[name=alimiShow]').val([ALIMI_SHOW]);
+				$('input[name=alimiType]').val([ALIMI_TYPE]);
+			}
+		});
+		$('#alimiShow_hide').on({       // HIDE
+			'click': function() {
+				if (ALIMI_SHOW == 'hide')
+					return;
+				if (!confirm("미노출 선택시 기존의 입력값들이 사라집니다.\n계속 진행하시겠습니까?")) {
+					// 원래 노출로 돌아감.
+					$("#alimiShow_show").trigger("click");
+					return;
+				}
+				// 미노출로 변경됨.
+				if (true) console.log("hide onclick(). 미노출로 변경됨.");
+				fn_valueClear();  // after fn_setDefaultValue()
+				fn_dataAlimi();
+				fn_disableAlimi();
+				//
+				ALIMI_SHOW = 'hide';
+				ALIMI_TYPE = 'type1';
+				if (true) console.log(">>>>> hide_click() <<<<< (" + ALIMI_SHOW + ", " + ALIMI_TYPE + ")");
+				fn_newAlimiHideAll();
+				fn_newAlimiShow(ALIMI_TYPE);
+				$('input[name=alimiShow]').val([ALIMI_SHOW]);
+				$('input[name=alimiType]').val([ALIMI_TYPE]);
+			}
+		});
+		$('input[name="alimiType"]').on({       // Type
+			click: function() {
+				var val = $('input[name="alimiType"]:checked').val();
+				if (true) console.log("alimiType.click() = " + val);
+				if (ALIMI_TYPE == val)
+					return;
+				if (!confirm("타입을 바꾸시면 기존에 작성한 내용은 사라집니다.\n타입을 바꾸시겠습니까?")) {
+					$('input[name="alimiType"]').val([ALIMI_TYPE]);
+					return;
+				}
+				ALIMI_SHOW = 'show';
+				ALIMI_TYPE = val;
+				if (true) console.log(">>>>> type_click() <<<<< (" + ALIMI_SHOW + ", " + ALIMI_TYPE + ")");
+				fn_valueClear();  // after fn_setDefaultValue()
+				fn_dataAlimi();
+				//fn_editableAlimi_type(ALIMI_TYPE);
+				fn_newAlimiHideAll();
+				fn_newAlimiShow(ALIMI_TYPE);
+				$('input[name=alimiShow]').val([ALIMI_SHOW]);
+				$('input[name=alimiType]').val([ALIMI_TYPE]);
+			}
+		});
+		// 항목추가 버튼
+		$("#img1_addItem").click(fn_img1_addItem_click);
+		$("#img2_addItem").click(fn_img2_addItem_click);
+		$("#prd2_addItem").click(fn_prd2_addItem_click);
+		$("#img3_addItem").click(fn_img3_addItem_click);
+		$("#cpn3_addItem").click(fn_cpn3_addItem_click);
+		$("#ann4_addItem").click(fn_ann4_addItem_click);
+		$("#prd5_addItem").click(fn_prd5_addItem_click);
+		$("#cpn6_addItem").click(fn_cpn6_addItem_click);
+	}
+	// ajax call
+	function fn_ajax_getChannelMobileAlimi(cellid) {
+		if (true) console.log(">>>>> ajax_url: " + '${staticPATH }/getChannelMobileAlimi.do?cellId=' + cellid);
+		$('#nav-tabs-new').attr('disabled', true);  // 일단 (신)알리미 탭을 멈춘다.
+		jQuery.ajax({
+			url           : '${staticPATH }/getChannelMobileAlimi.do?cellId=' + cellid,
+			//url           : '${staticPATH }/getChannelMobileAlimi.do',    // imsi cellId=25
+			dataType      : "JSON",
+			scriptCharset : "UTF-8",
+			type          : "GET",
+			success: function(result, option) {
+				if (option=="success"){
+					if (true) console.log("STATUS: 성공입니다. -> result: " + JSON.stringify(result));
+					ALIMI = result.alimi;
+					if (true) fn_setNewAlimi();
+					if (true) fn_init_event();
+					$('#nav-tabs-new').removeAttr('disabled');  // 에러가 없으면 (신)알리미 탭을 살린다.
+				} else {
+					alert("에러가 발생하였습니다.");
+				}
+			},
+			error: function(result, option) {
+				alert("에러가 발생하였습니다.");
+			}
+		});
+	};
+	// ajax call and event functions
+	function fn_getChannelMobileAlimi(cellid) {
+		if (true) console.log(">>>>> cellid: " + cellid);
+		if (true) fn_ajax_getChannelMobileAlimi(cellid);
+	}
+</script>
+
+
+
+
+
+
+
+<script>
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	//
+	// alimi initialization
+	//
+	function fn_newAlimi_init() {
+		//if (!true) fn_for_test(); // for test
+		if (true) fn_getChannelMobileAlimi('${bo.cellid}');
+		// 초기화면 세팅
+		//fn_newAlimiHideAll();
+		//fn_newAlimiShow("type1");
+		document.getElementById("nav-tabs-old").click();  // 첫 화면은 (구)알리미
+	}
+</script>
+
+
+
+
+
+
+<script>
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
 	//
 	// type1 validation and json
 	//
 	function fn_alimi_type1_validation() {
-		// master
-		if (isEmpty($('#type1_title1').val())) {
-			document.getElementById('type1_title1').focus();
+		// master.title1
+		if (isEmpty($('#type1_title1').val()) || fn_checkQuotationMark($('#type1_title1').val())) {
+			$('#type1_title1').focus();
 			return false;
 		}
 		master["title1"] = $('#type1_title1').val();
-		if (isEmpty($('#type1_title2').val())) {
-			document.getElementById('type1_title2').focus();
+		// master.title2
+		if (isEmpty($('#type1_title2').val()) || fn_checkQuotationMark($('#type1_title2').val())) {
+			$('#type1_title2').focus();
 			return false;
 		}
 		master["title2"] = $('#type1_title2').val();
+		// master.title3
+		/*
 		if (isEmpty($('#type1_title3').val())) {
-			document.getElementById('type1_title3').focus();
+			$('#type1_title3').focus();
+			return false;
+		}
+		*/
+		if (fn_checkQuotationMark($('#type1_title3').val())) {
+			$('#type1_title3').focus();
 			return false;
 		}
 		master["title3"] = $('#type1_title3').val();
-		
+		//
 		// array type
 		var idx = "";
 		arrImg1.forEach(function(value, index, array) {
-			if (isEmpty(value["imgUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["imgUrl"]) || fn_checkQuotationMark(value["imgUrl"]))) {
 				idx = "type1_imgUrl" + index;
 			}
 		});
 		if (idx != "") {
-			document.getElementById(idx).focus();
+			$('#' + idx).focus();
 			return false;
 		}
-		
-		// footer
-		if (isEmpty($('#type1_ftrText').val())) {
-			document.getElementById('type1_ftrText').focus();
+		//
+		// footer.ftrText
+		if (isEmpty($('#type1_ftrText').val()) || fn_checkQuotationMark($('#type1_ftrText').val())) {
+			$('#type1_ftrText').focus();
 			return false;
 		}
 		footer["ftrText"] = $('#type1_ftrText').val();
-		if (isEmpty($('#type1_ftrMblUrl').val())) {
-			document.getElementById('type1_ftrMblUrl').focus();
+		// footer.ftrMblUrl
+		if (isEmpty($('#type1_ftrMblUrl').val()) || fn_checkQuotationMark($('#type1_ftrMblUrl').val())) {
+			$('#type1_ftrMblUrl').focus();
 			return false;
 		}
 		footer["ftrMblUrl"] = $('#type1_ftrMblUrl').val();
-		if (isEmpty($('#type1_ftrWebUrl').val())) {
-			document.getElementById('type1_ftrWebUrl').focus();
+		// footer.ftrWebUrl
+		if (isEmpty($('#type1_ftrWebUrl').val()) || fn_checkQuotationMark($('#type1_ftrWebUrl').val())) {
+			$('#type1_ftrWebUrl').focus();
 			return false;
 		}
 		footer["ftrWebUrl"] = $('#type1_ftrWebUrl').val();
-		
 		return true;
 	}
 	function fn_alimi_type1_json() {
-		switch(base['alimiShow']) {
-		case "show": base['alimiShow'] = "Y"; break;
-		default: base['alimiShow'] = "N"; break;
-		}
-		switch(base['alimiType']) {
-		case "type1": base['alimiType'] = "001"; break;
-		case "type2": base['alimiType'] = "002"; break;
-		case "type3": base['alimiType'] = "003"; break;
-		case "type4": base['alimiType'] = "004"; break;
-		case "type5": base['alimiType'] = "005"; break;
-		case "type6": base['alimiType'] = "006"; break;
-		default: base['alimiType'] = "000"; break;
-		}
-		var obj = Object.assign(base, master, { arrImg: arrImg1 }, footer);
-		resultJson = JSON.stringify(obj);
-		if (!true) alert(resultJson);
-		if (!true) console.log(">>> " + resultJson);
+		resultJson = "{" + fn_getCore(base) + "," + fn_getCore(master) + ",\"arrImg\":" + fn_getCore(arrImg1) + "," + fn_getCore(footer) + "}";
+		if (true) console.log(">>> type1_resultJson: " + resultJson);
 		return true;
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
 	//
 	// type2 validation and json
 	//
 	function fn_alimi_type2_validation() {
-		// master
-		if (isEmpty($('#type2_title1').val())) {
-			document.getElementById('type2_title1').focus();
+		// master.title1
+		if (isEmpty($('#type2_title1').val()) || fn_checkQuotationMark($('#type2_title1').val())) {
+			$('#type2_title1').focus();
 			return false;
 		}
 		master["title1"] = $('#type2_title1').val();
-		if (isEmpty($('#type2_title2').val())) {
-			document.getElementById('type2_title2').focus();
+		// master.title2
+		if (isEmpty($('#type2_title2').val()) || fn_checkQuotationMark($('#type2_title2').val())) {
+			$('#type2_title2').focus();
 			return false;
 		}
 		master["title2"] = $('#type2_title2').val();
+		// master.title3
+		/*
 		if (isEmpty($('#type2_title3').val())) {
 			document.getElementById('type2_title3').focus();
 			return false;
 		}
+		*/
+		if (fn_checkQuotationMark($('#type2_title3').val())) {
+			$('#type2_title3').focus();
+			return false;
+		}
 		master["title3"] = $('#type2_title3').val();
-		
+		//
 		// array type
 		var idx = "";
 		arrImg2.forEach(function(value, index, array) {
-			if (isEmpty(value["imgUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["imgUrl"]) || fn_checkQuotationMark(value["imgUrl"]))) {
 				idx = "type2_imgUrl" + index;
 			}
 		});
 		if (idx != "") {
-			document.getElementById(idx).focus();
+			$('#' + idx).focus();
 			return false;
 		}
 		arrPrd2.forEach(function(value, index, array) {
-			if (isEmpty(value["prdUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdUrl"]) || fn_checkQuotationMark(value["prdUrl"]))) {
 				idx = "type2_prdUrl" + index;
 			}
-			if (isEmpty(value["prdName"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdName"]) || fn_checkQuotationMark(value["prdName"]))) {
 				idx = "type2_prdName" + index;
 			}
-			if (isEmpty(value["prdPrice"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdPrice"]) || fn_checkQuotationMark(value["prdPrice"]))) {
 				idx = "type2_prdPrice" + index;
 			}
-			if (isEmpty(value["prdMblUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdUnit"]) || fn_checkQuotationMark(value["prdUnit"]))) {
+				idx = "type2_prdUnit" + index;
+			}
+			if (idx == "" && (isEmpty(value["prdMblUrl"]) || fn_checkQuotationMark(value["prdMblUrl"]))) {
 				idx = "type2_prdMblUrl" + index;
 			}
-			if (isEmpty(value["prdWebUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdWebUrl"]) || fn_checkQuotationMark(value["prdWebUrl"]))) {
 				idx = "type2_prdWebUrl" + index;
 			}
 		});
 		if (idx != "") {
-			document.getElementById(idx).focus();
+			$('#' + idx).focus();
 			return false;
 		}
-		
-		// footer
-		if (isEmpty($('#type2_ftrText').val())) {
-			document.getElementById('type2_ftrText').focus();
+		//
+		// footer.ftrText
+		if (isEmpty($('#type2_ftrText').val()) || fn_checkQuotationMark($('#type2_ftrText').val())) {
+			$('#type2_ftrText').focus();
 			return false;
 		}
 		footer["ftrText"] = $('#type2_ftrText').val();
-		if (isEmpty($('#type2_ftrMblUrl').val())) {
-			document.getElementById('type2_ftrMblUrl').focus();
+		// footer.ftrMblUrl
+		if (isEmpty($('#type2_ftrMblUrl').val()) || fn_checkQuotationMark($('#type2_ftrMblUrl').val())) {
+			$('#type2_ftrMblUrl').focus();
 			return false;
 		}
 		footer["ftrMblUrl"] = $('#type2_ftrMblUrl').val();
-		if (isEmpty($('#type2_ftrWebUrl').val())) {
-			document.getElementById('type2_ftrWebUrl').focus();
+		// footer.ftrWebUrl
+		if (isEmpty($('#type2_ftrWebUrl').val()) || fn_checkQuotationMark($('#type2_ftrWebUrl').val())) {
+			$('#type2_ftrWebUrl').focus();
 			return false;
 		}
 		footer["ftrWebUrl"] = $('#type2_ftrWebUrl').val();
-		
 		return true;
 	}
 	function fn_alimi_type2_json() {
-		switch(base['alimiShow']) {
-		case "show": base['alimiShow'] = "Y"; break;
-		default: base['alimiShow'] = "N"; break;
-		}
-		switch(base['alimiType']) {
-		case "type1": base['alimiType'] = "001"; break;
-		case "type2": base['alimiType'] = "002"; break;
-		case "type3": base['alimiType'] = "003"; break;
-		case "type4": base['alimiType'] = "004"; break;
-		case "type5": base['alimiType'] = "005"; break;
-		case "type6": base['alimiType'] = "006"; break;
-		default: base['alimiType'] = "000"; break;
-		}
-		var obj = Object.assign(base, master, { arrImg: arrImg2 }, { arrPrd: arrPrd2 }, footer);
-		resultJson = JSON.stringify(obj);
-		if (!true) alert(resultJson);
-		if (!true) console.log(">>> " + resultJson);
+		resultJson = "{" + fn_getCore(base) + "," + fn_getCore(master) + ",\"arrImg\":" + fn_getCore(arrImg2) + ",\"arrPrd\":" + fn_getCore(arrPrd2) + "," + fn_getCore(footer) + "}";
+		if (true) console.log(">>> type2_resultJson: " + resultJson);
 		return true;
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
 	//
 	// type3 validation and json
 	//
 	function fn_alimi_type3_validation() {
-		// master
-		if (isEmpty($('#type3_title1').val())) {
-			document.getElementById('type3_title1').focus();
+		// master.title1
+		if (isEmpty($('#type3_title1').val()) || fn_checkQuotationMark($('#type3_title1').val())) {
+			$('#type3_title1').focus();
 			return false;
 		}
 		master["title1"] = $('#type3_title1').val();
-		if (isEmpty($('#type3_title2').val())) {
-			document.getElementById('type3_title2').focus();
+		// master.title2
+		if (isEmpty($('#type3_title2').val()) || fn_checkQuotationMark($('#type3_title2').val())) {
+			$('#type3_title2').focus();
 			return false;
 		}
 		master["title2"] = $('#type3_title2').val();
+		// master.title3
+		/*
 		if (isEmpty($('#type3_title3').val())) {
 			document.getElementById('type3_title3').focus();
 			return false;
 		}
+		*/
+		if (fn_checkQuotationMark($('#type3_title3').val())) {
+			$('#type3_title3').focus();
+			return false;
+		}
 		master["title3"] = $('#type3_title3').val();
-		
+		//
 		// array type
 		var idx = "";
 		arrImg3.forEach(function(value, index, array) {
-			if (isEmpty(value["imgUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["imgUrl"]) || fn_checkQuotationMark(value["imgUrl"]))) {
 				idx = "type3_imgUrl" + index;
 			}
 		});
 		if (idx != "") {
-			document.getElementById(idx).focus();
+			$('#' + idx).focus();
 			return false;
 		}
 		arrCpn3.forEach(function(value, index, array) {
-			if (isEmpty(value["cpnText1"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnText1"]) || fn_checkQuotationMark(value["cpnText1"]))) {
 				idx = "type3_cpnText1" + index;
 			}
-			if (isEmpty(value["cpnText2"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnText2"]) || fn_checkQuotationMark(value["cpnText2"]))) {
 				idx = "type3_cpnText2" + index;
 			}
-			if (isEmpty(value["cpnText3"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnText3"]) || fn_checkQuotationMark(value["cpnText3"]))) {
 				idx = "type3_cpnText3" + index;
 			}
-			if (isEmpty(value["cpnText4"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnText4"]) || fn_checkQuotationMark(value["cpnText4"]))) {
 				idx = "type3_cpnText4" + index;
 			}
-			if (isEmpty(value["cpnNumber"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnNumber"]) || fn_checkQuotationMark(value["cpnNumber"]))) {
 				idx = "type3_cpnNumber" + index;
 			}
 		});
 		if (idx != "") {
-			document.getElementById(idx).focus();
+			$('#' + idx).focus();
 			return false;
 		}
-		
-		// footer
-		if (isEmpty($('#type3_ftrText').val())) {
-			document.getElementById('type3_ftrText').focus();
+		//
+		// footer.ftrText
+		if (isEmpty($('#type3_ftrText').val()) || fn_checkQuotationMark($('#type3_ftrText').val())) {
+			$('#type3_ftrText').focus();
 			return false;
 		}
 		footer["ftrText"] = $('#type3_ftrText').val();
-		if (isEmpty($('#type3_ftrMblUrl').val())) {
-			document.getElementById('type3_ftrMblUrl').focus();
+		// footer.ftrMblUrl
+		if (isEmpty($('#type3_ftrMblUrl').val()) || fn_checkQuotationMark($('#type3_ftrMblUrl').val())) {
+			$('#type3_ftrMblUrl').focus();
 			return false;
 		}
 		footer["ftrMblUrl"] = $('#type3_ftrMblUrl').val();
-		if (isEmpty($('#type3_ftrWebUrl').val())) {
-			document.getElementById('type3_ftrWebUrl').focus();
+		// footer.ftrWebUrl
+		if (isEmpty($('#type3_ftrWebUrl').val()) || fn_checkQuotationMark($('#type3_ftrWebUrl').val())) {
+			$('#type3_ftrWebUrl').focus();
 			return false;
 		}
 		footer["ftrWebUrl"] = $('#type3_ftrWebUrl').val();
-		
 		return true;
 	}
 	function fn_alimi_type3_json() {
-		switch(base['alimiShow']) {
-		case "show": base['alimiShow'] = "Y"; break;
-		default: base['alimiShow'] = "N"; break;
-		}
-		switch(base['alimiType']) {
-		case "type1": base['alimiType'] = "001"; break;
-		case "type2": base['alimiType'] = "002"; break;
-		case "type3": base['alimiType'] = "003"; break;
-		case "type4": base['alimiType'] = "004"; break;
-		case "type5": base['alimiType'] = "005"; break;
-		case "type6": base['alimiType'] = "006"; break;
-		default: base['alimiType'] = "000"; break;
-		}
-		var obj = Object.assign(base, master, { arrImg: arrImg3 }, { arrCpn: arrCpn3 }, footer);
-		resultJson = JSON.stringify(obj);
-		if (!true) alert(resultJson);
-		if (!true) console.log(">>> " + resultJson);
+		resultJson = "{" + fn_getCore(base) + "," + fn_getCore(master) + ",\"arrImg\":" + fn_getCore(arrImg3) + ",\"arrCpn\":" + fn_getCore(arrCpn3) + "," + fn_getCore(footer) + "}";
+		if (true) console.log(">>> type3_resultJson: " + resultJson);
 		return true;
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
 	//
 	// type4 validation and json
 	//
 	function fn_alimi_type4_validation() {
-		// master
-		if (isEmpty($('#type4_title1').val())) {
-			document.getElementById('type4_title1').focus();
+		// master.title1
+		if (isEmpty($('#type4_title1').val()) || fn_checkQuotationMark($('#type4_title1').val())) {
+			$('#type4_title1').focus();
 			return false;
 		}
 		master["title1"] = $('#type4_title1').val();
-		if (isEmpty($('#type4_title2').val())) {
-			document.getElementById('type4_title2').focus();
+		// master.title2
+		if (isEmpty($('#type4_title2').val()) || fn_checkQuotationMark($('#type4_title2').val())) {
+			$('#type4_title2').focus();
 			return false;
 		}
 		master["title2"] = $('#type4_title2').val();
+		// master.title3
+		/*
 		if (isEmpty($('#type4_title3').val())) {
 			document.getElementById('type4_title3').focus();
 			return false;
 		}
+		*/
+		if (fn_checkQuotationMark($('#type4_title3').val())) {
+			$('#type4_title3').focus();
+			return false;
+		}
 		master["title3"] = $('#type4_title3').val();
-		
+		//
 		// array type
 		var idx = "";
 		arrAnn4.forEach(function(value, index, array) {
-			if (isEmpty(value["annText"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["annText"]) || fn_checkQuotationMark(value["annText"]))) {
 				idx = "type4_annText" + index;
 			}
 		});
 		if (idx != "") {
-			document.getElementById(idx).focus();
+			$('#' + idx).focus();
 			return false;
 		}
-		
-		// footer
-		if (isEmpty($('#type4_ftrText').val())) {
-			document.getElementById('type4_ftrText').focus();
+		//
+		// footer.ftrText
+		if (isEmpty($('#type4_ftrText').val()) || fn_checkQuotationMark($('#type4_ftrText').val())) {
+			$('#type4_ftrText').focus();
 			return false;
 		}
 		footer["ftrText"] = $('#type4_ftrText').val();
-		if (isEmpty($('#type4_ftrMblUrl').val())) {
-			document.getElementById('type4_ftrMblUrl').focus();
+		// footer.ftrMblUrl
+		if (isEmpty($('#type4_ftrMblUrl').val()) || fn_checkQuotationMark($('#type4_ftrMblUrl').val())) {
+			$('#type4_ftrMblUrl').focus();
 			return false;
 		}
 		footer["ftrMblUrl"] = $('#type4_ftrMblUrl').val();
-		if (isEmpty($('#type4_ftrWebUrl').val())) {
-			document.getElementById('type4_ftrWebUrl').focus();
+		// footer.ftrWebUrl
+		if (isEmpty($('#type4_ftrWebUrl').val()) || fn_checkQuotationMark($('#type4_ftrWebUrl').val())) {
+			$('#type4_ftrWebUrl').focus();
 			return false;
 		}
 		footer["ftrWebUrl"] = $('#type4_ftrWebUrl').val();
-		
 		return true;
 	}
 	function fn_alimi_type4_json() {
-		switch(base['alimiShow']) {
-		case "show": base['alimiShow'] = "Y"; break;
-		default: base['alimiShow'] = "N"; break;
-		}
-		switch(base['alimiType']) {
-		case "type1": base['alimiType'] = "001"; break;
-		case "type2": base['alimiType'] = "002"; break;
-		case "type3": base['alimiType'] = "003"; break;
-		case "type4": base['alimiType'] = "004"; break;
-		case "type5": base['alimiType'] = "005"; break;
-		case "type6": base['alimiType'] = "006"; break;
-		default: base['alimiType'] = "000"; break;
-		}
-		var obj = Object.assign(base, master, { arrAnn: arrAnn4 }, footer);
-		resultJson = JSON.stringify(obj);
-		if (!true) alert(resultJson);
-		if (!true) console.log(">>> " + resultJson);
+		resultJson = "{" + fn_getCore(base) + "," + fn_getCore(master) + ",\"arrAnn\":" + fn_getCore(arrAnn4) + "," + fn_getCore(footer) + "}";
+		if (true) console.log(">>> type4_resultJson: " + resultJson);
 		return true;
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
 	//
 	// type5 validation and json
 	//
 	function fn_alimi_type5_validation() {
-		// master
-		if (isEmpty($('#type5_title1').val())) {
-			document.getElementById('type5_title1').focus();
+		// master.title1
+		if (isEmpty($('#type5_title1').val()) || fn_checkQuotationMark($('#type5_title1').val())) {
+			$('#type5_title1').focus();
 			return false;
 		}
 		master["title1"] = $('#type5_title1').val();
-		if (isEmpty($('#type5_title2').val())) {
-			document.getElementById('type5_title2').focus();
+		// master.title2
+		if (isEmpty($('#type5_title2').val()) || fn_checkQuotationMark($('#type5_title2').val())) {
+			$('#type5_title2').focus();
 			return false;
 		}
 		master["title2"] = $('#type5_title2').val();
+		// master.title3
+		/*
 		if (isEmpty($('#type5_title3').val())) {
 			document.getElementById('type5_title3').focus();
 			return false;
 		}
+		*/
+		if (fn_checkQuotationMark($('#type5_title3').val())) {
+			$('#type5_title3').focus();
+			return false;
+		}
 		master["title3"] = $('#type5_title3').val();
-		
+		//
 		// array type
 		var idx = "";
 		arrPrd5.forEach(function(value, index, array) {
-			if (isEmpty(value["prdUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdUrl"]) || fn_checkQuotationMark(value["prdUrl"]))) {
 				idx = "type5_prdUrl" + index;
 			}
-			if (isEmpty(value["prdName"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdName"]) || fn_checkQuotationMark(value["prdName"]))) {
 				idx = "type5_prdName" + index;
 			}
-			if (isEmpty(value["prdPrice"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdPrice"]) || fn_checkQuotationMark(value["prdPrice"]))) {
 				idx = "type5_prdPrice" + index;
 			}
-			if (isEmpty(value["prdMblUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdUnit"]) || fn_checkQuotationMark(value["prdUnit"]))) {
+				idx = "type5_prdUnit" + index;
+			}
+			if (idx == "" && (isEmpty(value["prdMblUrl"]) || fn_checkQuotationMark(value["prdMblUrl"]))) {
 				idx = "type5_prdMblUrl" + index;
 			}
-			if (isEmpty(value["prdWebUrl"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["prdWebUrl"]) || fn_checkQuotationMark(value["prdWebUrl"]))) {
 				idx = "type5_prdWebUrl" + index;
 			}
 		});
 		if (idx != "") {
-			document.getElementById(idx).focus();
+			$('#' + idx).focus();
 			return false;
 		}
-		
-		// footer
-		if (isEmpty($('#type5_ftrText').val())) {
-			document.getElementById('type5_ftrText').focus();
+		//
+		// footer.ftrText
+		if (isEmpty($('#type5_ftrText').val()) || fn_checkQuotationMark($('#type5_ftrText').val())) {
+			$('#type5_ftrText').focus();
 			return false;
 		}
 		footer["ftrText"] = $('#type5_ftrText').val();
-		if (isEmpty($('#type5_ftrMblUrl').val())) {
-			document.getElementById('type5_ftrMblUrl').focus();
+		// footer.ftrMblUrl
+		if (isEmpty($('#type5_ftrMblUrl').val()) || fn_checkQuotationMark($('#type5_ftrMblUrl').val())) {
+			$('#type5_ftrMblUrl').focus();
 			return false;
 		}
 		footer["ftrMblUrl"] = $('#type5_ftrMblUrl').val();
-		if (isEmpty($('#type5_ftrWebUrl').val())) {
-			document.getElementById('type5_ftrWebUrl').focus();
+		// footer.ftrWebUrl
+		if (isEmpty($('#type5_ftrWebUrl').val()) || fn_checkQuotationMark($('#type5_ftrWebUrl').val())) {
+			$('#type5_ftrWebUrl').focus();
 			return false;
 		}
 		footer["ftrWebUrl"] = $('#type5_ftrWebUrl').val();
-		
 		return true;
 	}
 	function fn_alimi_type5_json() {
-		switch(base['alimiShow']) {
-		case "show": base['alimiShow'] = "Y"; break;
-		default: base['alimiShow'] = "N"; break;
-		}
-		switch(base['alimiType']) {
-		case "type1": base['alimiType'] = "001"; break;
-		case "type2": base['alimiType'] = "002"; break;
-		case "type3": base['alimiType'] = "003"; break;
-		case "type4": base['alimiType'] = "004"; break;
-		case "type5": base['alimiType'] = "005"; break;
-		case "type6": base['alimiType'] = "006"; break;
-		default: base['alimiType'] = "000"; break;
-		}
-		var obj = Object.assign(base, master, { arrPrd: arrPrd5 }, footer);
-		resultJson = JSON.stringify(obj);
-		if (!true) alert(resultJson);
-		if (!true) console.log(">>> " + resultJson);
+		resultJson = "{" + fn_getCore(base) + "," + fn_getCore(master) + ",\"arrPrd\":" + fn_getCore(arrPrd5) + "," + fn_getCore(footer) + "}";
+		if (true) console.log(">>> type5_resultJson: " + resultJson);
 		return true;
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
 	//
 	// type6 validation and json
 	//
 	function fn_alimi_type6_validation() {
-		// master
-		if (isEmpty($('#type6_title1').val())) {
-			document.getElementById('type6_title1').focus();
+		// master.title1
+		if (isEmpty($('#type6_title1').val()) || fn_checkQuotationMark($('#type6_title1').val())) {
+			$('#type6_title1').focus();
 			return false;
 		}
 		master["title1"] = $('#type6_title1').val();
-		if (isEmpty($('#type6_title2').val())) {
-			document.getElementById('type6_title2').focus();
+		// master.title2
+		if (isEmpty($('#type6_title2').val()) || fn_checkQuotationMark($('#type6_title2').val())) {
+			$('#type6_title2').focus();
 			return false;
 		}
 		master["title2"] = $('#type6_title2').val();
+		// master.title3
+		/*
 		if (isEmpty($('#type6_title3').val())) {
 			document.getElementById('type6_title3').focus();
 			return false;
 		}
+		*/
+		if (fn_checkQuotationMark($('#type6_title3').val())) {
+			$('#type6_title3').focus();
+			return false;
+		}
 		master["title3"] = $('#type6_title3').val();
-		
+		//
 		// array type
 		var idx = "";
 		arrCpn6.forEach(function(value, index, array) {
-			if (isEmpty(value["cpnText1"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnText1"]) || fn_checkQuotationMark(value["cpnText1"]))) {
 				idx = "type6_cpnText1" + index;
 			}
-			if (isEmpty(value["cpnText2"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnText2"]) || fn_checkQuotationMark(value["cpnText2"]))) {
 				idx = "type6_cpnText2" + index;
 			}
-			if (isEmpty(value["cpnText3"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnText3"]) || fn_checkQuotationMark(value["cpnText3"]))) {
 				idx = "type6_cpnText3" + index;
 			}
-			if (isEmpty(value["cpnText4"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnText4"]) || fn_checkQuotationMark(value["cpnText4"]))) {
 				idx = "type6_cpnText4" + index;
 			}
-			if (isEmpty(value["cpnNumber"]) && idx == "") {
+			if (idx == "" && (isEmpty(value["cpnNumber"]) || fn_checkQuotationMark(value["cpnNumber"]))) {
 				idx = "type6_cpnNumber" + index;
 			}
 		});
 		if (idx != "") {
-			document.getElementById(idx).focus();
+			$('#' + idx).focus();
 			return false;
 		}
-		
-		// footer
-		if (isEmpty($('#type6_ftrText').val())) {
-			document.getElementById('type6_ftrText').focus();
+		//
+		// footer.ftrText
+		if (isEmpty($('#type6_ftrText').val()) || fn_checkQuotationMark($('#type6_ftrText').val())) {
+			$('#type6_ftrText').focus();
 			return false;
 		}
 		footer["ftrText"] = $('#type6_ftrText').val();
-		if (isEmpty($('#type6_ftrMblUrl').val())) {
-			document.getElementById('type6_ftrMblUrl').focus();
+		// footer.ftrMblUrl
+		if (isEmpty($('#type6_ftrMblUrl').val()) || fn_checkQuotationMark($('#type6_ftrMblUrl').val())) {
+			$('#type6_ftrMblUrl').focus();
 			return false;
 		}
 		footer["ftrMblUrl"] = $('#type6_ftrMblUrl').val();
-		if (isEmpty($('#type6_ftrWebUrl').val())) {
-			document.getElementById('type6_ftrWebUrl').focus();
+		// footer.ftrWebUrl
+		if (isEmpty($('#type6_ftrWebUrl').val()) || fn_checkQuotationMark($('#type6_ftrWebUrl').val())) {
+			$('#type6_ftrWebUrl').focus();
 			return false;
 		}
 		footer["ftrWebUrl"] = $('#type6_ftrWebUrl').val();
-		
 		return true;
 	}
 	function fn_alimi_type6_json() {
-		switch(base['alimiShow']) {
-		case "show": base['alimiShow'] = "Y"; break;
-		default: base['alimiShow'] = "N"; break;
-		}
-		switch(base['alimiType']) {
-		case "type1": base['alimiType'] = "001"; break;
-		case "type2": base['alimiType'] = "002"; break;
-		case "type3": base['alimiType'] = "003"; break;
-		case "type4": base['alimiType'] = "004"; break;
-		case "type5": base['alimiType'] = "005"; break;
-		case "type6": base['alimiType'] = "006"; break;
-		default: base['alimiType'] = "000"; break;
-		}
-		var obj = Object.assign(base, master, { arrCpn: arrCpn6 }, footer);
-		resultJson = JSON.stringify(obj);
-		if (!true) alert(resultJson);
-		if (!true) console.log(">>> " + resultJson);
+		resultJson = "{" + fn_getCore(base) + "," + fn_getCore(master) + ",\"arrCpn\":" + fn_getCore(arrCpn6) + "," + fn_getCore(footer) + "}";
+		if (true) console.log(">>> type6_resultJson: " + resultJson);
 		return true;
 	}
-
-	//
-	// validation and json
-	//
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
 	function fn_alimi_validation() {
-		// 알리미 문자
-		if (isEmpty($('#alimiText').val())) {
-			document.getElementById('alimiText').focus();
+		if (isEmpty($('#alimiText').val()) || fn_checkQuotationMark($('#alimiText').val())) {
+			$('#alimiText').focus();
 			return false;
 		}
-		base["alimiText"] = $('#alimiText').val();
+		base.alimiText = $('#alimiText').val();
+		base.alimiShow = $('input[name=alimiShow]:checked').val();
+		base.alimiType = $('input[name=alimiType]:checked').val();
+		if (true) console.log("fn_alimi_validation(): base", base);
+		//
 		// 알리미 타입
-		var val = $('.alimiType:checked').val();
-		if (true) console.log("fn_alimi_validation() type:" + val);
-
+		var val = $('input[name=alimiType]:checked').val();
 		switch(val) {
 		case "type1": if (!fn_alimi_type1_validation()) return false; break;
 		case "type2": if (!fn_alimi_type2_validation()) return false; break;
@@ -1124,14 +1891,71 @@
 		case "type4": if (!fn_alimi_type4_validation()) return false; break;
 		case "type5": if (!fn_alimi_type5_validation()) return false; break;
 		case "type6": if (!fn_alimi_type6_validation()) return false; break;
-		default: alert("ERROR in fn_alimi_validation()"); break;
+		default: break;
 		}
-		
 		return true;
 	}
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	function fn_setSavingData() {
+		var type = $('input[name=alimiType]:checked').val();
+		if (true) console.log("fn_setSavingData(): type = " + type);
+		if (true) {
+			// base
+			base.alimiShow = $('input[name=alimiShow]:checked').val() == 'show' ? 'Y' : 'N';
+			base.alimiText = $('#alimiText').val();
+			base.alimiType = "00" + $('input[name=alimiType]:checked').val().substring(4);
+			if (true) console.log("saving base: ", base);
+		}
+		if (true) {
+			// master
+			master.title1 = $('#' + type + '_title1').val();
+			master.advText = $('#' + type + '_advText').val();
+			master.title2 = $('#' + type + '_title2').val();
+			master.title3 = $('#' + type + '_title3').val();
+			if (true) console.log("saving master: ", master);
+		}
+		if (true) {
+			if (true) console.log("saving arrImg1: " + JSON.stringify(arrImg1));
+			if (true) console.log("saving arrImg2: " + JSON.stringify(arrImg2));
+			if (true) console.log("saving arrPrd2: " + JSON.stringify(arrPrd2));
+			if (true) console.log("saving arrImg3: " + JSON.stringify(arrImg3));
+			if (true) console.log("saving arrCpn3: " + JSON.stringify(arrCpn3));
+			if (true) console.log("saving arrAnn4: " + JSON.stringify(arrAnn4));
+			if (true) console.log("saving arrPrd5: " + JSON.stringify(arrPrd5));
+			if (true) console.log("saving arrCpn6: " + JSON.stringify(arrCpn6));
+		}
+		if (true) {
+			// footer
+			footer.ftrText = $('#' + type + '_ftrText').val();
+			footer.ftrMblUrl = $('#' + type + '_ftrMblUrl').val();
+			footer.ftrWebUrl = $('#' + type + '_ftrWebUrl').val();
+			if (true) console.log("saving footer: ", footer);
+		}
+	}
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
 	function fn_alimi_json() {
 		var val = $('.alimiType:checked').val();
-		if (true) console.log("fn_alimi_validation() type:" + val);
+		if (true) console.log("fn_alimi_json() type:" + val);
 		switch(val) {
 		case "type1": if (!fn_alimi_type1_json()) return false; break;
 		case "type2": if (!fn_alimi_type2_json()) return false; break;
@@ -1144,94 +1968,97 @@
 		
 		return true;
 	}
-	//
-	// (신)알리미 확인
-	//
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
 	function fn_get_alimi_json() {
-		if (true) console.log("fn_get_alimi_json()");
-		// validation
-		if (!fn_alimi_validation()) return false;
+		var alimiShow = $('input[name=alimiShow]:checked').val();
+		if (true) console.log("fn_get_alimi_json(): " + alimiShow);
+		//
+		// if show, then validation
+		if (alimiShow == 'show') {
+			if (!fn_alimi_validation()) return false;
+		} else {
+			// value clear for saving
+			fn_valueClear();
+		}
+		//
+		// set saving data
+		fn_setSavingData();
+		//
 		// make json
 		if (!fn_alimi_json()) return false;
+		//
 		// return result
+		if (true) console.log("0405: fn_get_alimi_json(): " + resultJson);
+		//return false;
 		return resultJson;
 	}
 	var resultJson = "";
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
+	/////////////////////////////////////////////////
+	/////////////////////////////////////////////////
+	/////////////////////////////////////////////////
+	/////////////////////////////////////////////////
+	/////////////////////////////////////////////////
 	/////////////////////////////////////////////////
 	// KANG-20190326: type-1 script BEGIN
 	/////////////////////////////////////////////////
 	var maxArrImg1 = 5;
-	var arrImg1 = [
-		{ imgUrl: "" }    // { imgUrl: "http://localhost/imsi.png" },
-	];
 	$("img1_addItem").tooltip();
 	//
-	// click of img1 addItem
+	//
 	//
 	function fn_img1_addItem_click() {
+		if (arrImg1.length >= maxArrImg1) {
+			if (true) alert("이미지는 " + maxArrImg1 + "개까지만 등록 가능합니다.");
+			return;
+		}
 		if (!true) alert("fn_img1_addItem_click()");
 		var idx = arrImg1.length + 1;
-		//arrImg1.push({ imgUrl: "imgUrl - " + idx });
 		arrImg1.push({ imgUrl: "" });
 		fn_img1_appendTableTr();
-		
 		if (idx >= maxArrImg1) {
 			$("#img1_addItem").attr("disabled", true);
 		}
 	}
-	
-	//
-	// clear the img1 table
-	//
-	function fn_img1_clear() {
-		if (!true) alert("fn_img1_clear()");
-		$("#img1_table > tbody").empty();
-	}
-	
-	//
-	// find the table tr elements : NOT USED
-	//
-	/*
-	function fn_img1_findTableTr() {
-		var arr = [];
-		$("#img1_table > tbody > tr").each(function(tr, index) {
-			// var imgUrl = $(tr).find(".imgUrl").val()
-			var imgUrl = $(tr).find("#kang").val()
-			if (true) console.log(">>> " + JSON.stringify($(tr)));
-			if (!true) console.log(">>> " + index + ": " + imgUrl);
-			arr.push({ url: imgUrl});
-		})
-		if (true) console.log("fn_img1_findTableTr: " + $("#img1_table tbody tr").length + " - " + JSON.stringify(arr));
-		
-		return false;
-	}
-	*/
-	//
-	// blur event of inut element on img1
-	//
 	function fn_img1_inputBlur(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
-		arrImg1[idx][cls] = value;
+		arrImg1[idx][cls] = value;   // KANG-20190405
 	}
-	
-	//
-	// append a tr element to img1
-	//
 	function fn_img1_appendTableTr() {
 		// clear
-		fn_img1_clear();
-		
+		$("#img1_table > tbody").empty();
 		// value print
 		arrImg1.forEach(function(value, index, array) {
 			if (!true) alert("fn_img1_appendTableTr(): (" + index + "/" + array.length + ") : " + value.imgUrl);
-			
 			var rowHtml = "";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class=\"info\">";
-			rowHtml += "    이미지 URL " + (index+1) + " &nbsp;&nbsp;";
+			rowHtml += "    이미지 URL " + (index+1) + " ";
 			if (array.length > 1) {
 				rowHtml += "    <span class=\"float-right\">";
 				rowHtml += "      <button type=\"button\" onclick=\"javascript:fn_img1_del(" + index + ")\" class=\"btn btn-primary\" style=\"background-color:#aaa; height:15px;width:15px;padding:0px; font-size:10px;\">R</button>";
@@ -1245,26 +2072,19 @@
 			}
 			rowHtml += "  </td>";
 			rowHtml += "  <td colspan='3'>";
-			rowHtml += "    <input type='text' id='type1_imgUrl" + index + "' class='imgUrl' onblur=\"javascript:fn_img1_inputBlur(" + index + ",'imgUrl',this.value);\" style='width:700px;' value='" + value.imgUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type1_imgUrl" + index + "' class='imgUrl' onblur=\"javascript:fn_img1_inputBlur(" + index + ",'imgUrl',this.value);\" style='width:700px;' value='" + value.imgUrl + "' maxlength='100' placeholder='500*500 사이즈 이미지 경로 입력' />";
+			rowHtml += "    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button type='button' id='type1_imgUrl" + index +"' class='btn btn-success btn-sm' onclick=\"fn_pre_view_img('type1_imgUrl" + index +"');\"><i class='fa fa-eye' aria-hidden='true'></i> 미리보기</button>";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#img1_table > tbody:last").append(rowHtml);
 		});
 	}
-	
-	//
-	// delete the tr element on img1
-	//
 	function fn_img1_del(idx) {
 		if (!true) alert("fn_img_del(" + idx + ")");
 		arrImg1.splice(idx, 1);
 		fn_img1_appendTableTr();
-		$("#img1_addItem").attr("disabled", false);
+		$("#img1_addItem").removeAttr("disabled");
 	}
-	
-	//
-	// move upward on img1
-	//
 	function fn_img1_up(idx) {
 		if (!true) alert("fn_img_up(" + idx + ")");
 		var temp = arrImg1[idx-1];
@@ -1272,10 +2092,6 @@
 		arrImg1[idx] = temp;
 		fn_img1_appendTableTr();
 	}
-	
-	//
-	// move downward on img1
-	//
 	function fn_img1_down(idx) {
 		if (!true) alert("fn_img_down(" + idx + ")");
 		var temp = arrImg1[idx+1];
@@ -1296,71 +2112,31 @@
 	// KANG-20190326: type-2 script BEGIN
 	/////////////////////////////////////////////////
 	var maxArrImg2 = 1;
-	var arrImg2 = [
-		{ imgUrl: "" }    // { imgUrl: "http://localhost/imsi.png" },
-	];
-	
+	$("img2_addItem").tooltip();
+	$("prd2_addItem").tooltip();
 	//
-	// click of img2 addItem
+	//
 	//
 	function fn_img2_addItem_click() {
-		if (!true) alert("fn_img2_addItem_click()");
 		if (arrImg2.length >= maxArrImg2) {
-			if (true) alert("이미지는 " + maxArrImg2 + "개까지 등록 가능합니다.");
+			if (true) alert("이미지는 " + maxArrImg2 + "개까지만 등록 가능합니다.");
 			return;
 		}
+		if (!true) alert("fn_img2_addItem_click()");
 		var idx = arrImg2.length + 1;
-		//arrImg2.push({ imgUrl: "imgUrl - " + idx });
 		arrImg2.push({ imgUrl: "" });
 		fn_img2_appendTableTr();
-		
 		if (idx >= maxArrImg2) {
 			$("#img2_addItem").attr("disabled", true);
 		}
 	}
-	
-	//
-	// clear the img2 table
-	//
-	function fn_img2_clear() {
-		if (!true) alert("fn_img2_clear()");
-		$("#img2_table > tbody").empty();
-	}
-	
-	//
-	// find the table tr elements : NOT USED
-	//
-	/*
-	function fn_img2_findTableTr() {
-		var arr = [];
-		$("#img2_table > tbody > tr").each(function(tr, index) {
-			// var imgUrl = $(tr).find(".imgUrl").val()
-			var imgUrl = $(tr).find("#kang").val()
-			if (true) console.log(">>> " + JSON.stringify($(tr)));
-			if (!true) console.log(">>> " + index + ": " + imgUrl);
-			arr.push({ url: imgUrl});
-		})
-		if (true) console.log("fn_img2_findTableTr: " + $("#img2_table tbody tr").length + " - " + JSON.stringify(arr));
-		
-		return false;
-	}
-	*/
-	
-	//
-	// blur event of inut element on img2
-	//
 	function fn_img2_inputBlur(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrImg2[idx][cls] = value;
 	}
-	
-	//
-	// append a tr element to img2
-	//
 	function fn_img2_appendTableTr() {
 		// clear
-		fn_img2_clear();
-		
+		$("#img2_table > tbody").empty();
 		// value print
 		arrImg2.forEach(function(value, index, array) {
 			if (!true) alert("fn_img2_appendTableTr(): (" + index + "/" + array.length + ") : " + value.imgUrl);
@@ -1368,7 +2144,7 @@
 			var rowHtml = "";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class=\"info\">";
-			rowHtml += "    이미지 URL " + (index+1) + " &nbsp;&nbsp;";
+			rowHtml += "    이미지 URL " + (index+1) + " ";
 			if (array.length > 1) {
 				rowHtml += "    <span class=\"float-right\">";
 				rowHtml += "      <button type=\"button\" onclick=\"javascript:fn_img2_del(" + index + ")\" class=\"btn btn-primary\" style=\"background-color:#aaa; height:15px;width:15px;padding:0px; font-size:10px;\">R</button>";
@@ -1382,26 +2158,19 @@
 			}
 			rowHtml += "  </td>";
 			rowHtml += "  <td colspan='3'>";
-			rowHtml += "    <input type='text' id='type2_imgUrl" + index + "' class='imgUrl' onblur=\"javascript:fn_img2_inputBlur(" + index + ",'imgUrl',this.value);\" style='width:700px;' value='" + value.imgUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type2_imgUrl" + index + "' class='imgUrl' onblur=\"javascript:fn_img2_inputBlur(" + index + ",'imgUrl',this.value);\" style='width:700px;' value='" + value.imgUrl + "' maxlength='100' placeholder='500*240 사이즈 이미지 경로 입력' />";
+			rowHtml += "    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button type='button' id='type2_imgUrl" + index +"' class='btn btn-success btn-sm' onclick=\"fn_pre_view_img('type2_imgUrl" + index +"');\"><i class='fa fa-eye' aria-hidden='true'></i> 미리보기</button>";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#img2_table > tbody:last").append(rowHtml);
 		});
 	}
-	
-	//
-	// delete the tr element on img2
-	//
 	function fn_img2_del(idx) {
 		if (!true) alert("fn_img_del(" + idx + ")");
 		arrImg2.splice(idx, 1);
 		fn_img2_appendTableTr();
-		$("#img2_addItem").attr("disabled", false);
+		$("#img2_addItem").removeAttr("disabled");
 	}
-	
-	//
-	// move upward on img2
-	//
 	function fn_img2_up(idx) {
 		if (!true) alert("fn_img_up(" + idx + ")");
 		var temp = arrImg2[idx-1];
@@ -1409,10 +2178,6 @@
 		arrImg2[idx] = temp;
 		fn_img2_appendTableTr();
 	}
-	
-	//
-	// move downward on img2
-	//
 	function fn_img2_down(idx) {
 		if (!true) alert("fn_img_down(" + idx + ")");
 		var temp = arrImg2[idx+1];
@@ -1422,88 +2187,37 @@
 	}
 	////////////////////////////////////////////////////////////////////
 	var maxArrPrd2 = 10;
-	var arrPrd2 = [
-		{ prdUrl: "", prdName: "", prdPrice: "", prdUnit: "KRW", prdMblUrl: "", prdWebUrl: "" }
-	];
+	$("prd2_addItem").tooltip();
 	//
-	// click of img1 addItem
+	//
 	//
 	function fn_prd2_addItem_click() {
+		if (arrPrd2.length >= maxArrPrd2) {
+			if (true) alert("이미지는 " + maxArrPrd2 + "개까지만 등록 가능합니다.");
+			return;
+		}
 		if (!true) alert("fn_prd2_addItem_click()");
 		var idx = arrPrd2.length + 1;
-		//arrPrd2.push({ imgUrl: "imgUrl - " + idx });
-		arrPrd2.push({ prdUrl: "", prdName: "", prdPrice: "", prdUnit: "KRW", prdMblUrl: "", prdWebUrl: "" });
+		arrPrd2.push({ prdUrl: "", prdName: "", prdPrice: "", prdUnit: "", prdMblUrl: "", prdWebUrl: "" });
 		fn_prd2_appendTableTr();
-		
 		if (idx >= maxArrPrd2) {
 			$("#prd2_addItem").attr("disabled", true);
 		}
 	}
-	
-	//
-	// clear the prd2 table
-	//
-	function fn_prd2_clear() {
-		if (!true) alert("fn_prd2_clear()");
-		$("#prd2_table > tbody").empty();
-	}
-	
-	//
-	// find the table tr elements : NOT USED
-	//
-	/*
-	function fn_prd2_findTableTr() {
-		var arr = [];
-		$("#prd2_table > tbody > tr").each(function(tr, index) {
-			// var imgUrl = $(tr).find(".imgUrl").val()
-			var imgUrl = $(tr).find("#kang").val()
-			if (true) console.log(">>> " + JSON.stringify($(tr)));
-			if (!true) console.log(">>> " + index + ": " + imgUrl);
-			arr.push({ url: imgUrl});
-		})
-		if (true) console.log("fn_prd2_findTableTr: " + $("#prd2_table tbody tr").length + " - " + JSON.stringify(arr));
-		
-		return false;
-	}
-	*/
-	
-	//
-	// blur event of input element on prd2
-	//
 	function fn_prd2_inputBlur(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrPrd2[idx][cls] = value;
 	}
-	
-	//
-	// click event of radio element on prd2
-	//
-	function fn_prd2_radioClick(idx, cls, value) {
-		if (true) console.log(idx + ": " + cls + ": " + value);
-		arrPrd2[idx][cls] = value;
-	}
-	
-	//
-	// append a tr element to prd2
-	//
 	function fn_prd2_appendTableTr() {
 		// clear
-		fn_prd2_clear();
-		
+		$("#prd2_table > tbody").empty();
 		// value print
 		arrPrd2.forEach(function(value, index, array) {
 			if (true) console.log("fn_prd2_appendTableTr(): (" + index + "/" + array.length + ") : " + value.prdName + ", " + value.prdUnit);
-			
-			var checkedKRW = (value.prdUnit == "KRW") ? "checked" : "";
-			var checkedUSD = (value.prdUnit == "USD") ? "checked" : "";
-			var checkedEUR = (value.prdUnit == "EUR") ? "checked" : "";
-			var checkedCNY = (value.prdUnit == "CNY") ? "checked" : "";
-			var checkedJPY = (value.prdUnit == "JPY") ? "checked" : "";
-			
 			var rowHtml = "";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class=\"info\" rowspan='6'>";
-			rowHtml += "    상품 " + (index+1) + " &nbsp;&nbsp;";
+			rowHtml += "    상품 " + (index+1) + " ";
 			if (array.length > 1) {
 				rowHtml += "    <span class=\"float-right\">";
 				rowHtml += "      <button type=\"button\" onclick=\"javascript:fn_prd2_del(" + index + ")\" class=\"btn btn-primary\" style=\"background-color:#aaa; height:15px;width:15px;padding:0px; font-size:10px;\">R</button>";
@@ -1518,11 +2232,12 @@
 			rowHtml += "  </td>";
 			rowHtml += "  <td class='info'>이미지 URL</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' id='type2_prdUrl" + index + "' class='prdUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdUrl',this.value);\" style='width:700px;' value='" + value.prdUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type2_prdUrl" + index + "' class='prdUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdUrl',this.value);\" style='width:600px;' value='" + value.prdUrl + "' maxlength='100' placeholder='188*188 사이즈 이미지 경로 입력' />";
+			rowHtml += "    &nbsp;&nbsp;&nbsp; <button type='button' id='type2_prdUrl" + index +"' class='btn btn-success btn-sm' onclick=\"fn_pre_view_img('type2_prdUrl" + index +"');\"><i class='fa fa-eye' aria-hidden='true'></i> 미리보기</button>";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
-			rowHtml += "  <td class='info'>품명</td>";
+			rowHtml += "  <td class='info'>상품명</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type2_prdName" + index + "' class='prdName' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdName',this.value);\" style='width:700px;' value='" + value.prdName + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
@@ -1536,41 +2251,37 @@
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>표시단위</td>";
 			rowHtml += "  <td colspan='2'>";
+			rowHtml += "    <input type='text' id='type2_prdUnit" + index + "' class='prdUnit' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdUnit',this.value);\" style='width:700px;' value='" + value.prdUnit + "' maxlength='10' placeholder='원~' />";
+			/*
 			rowHtml += "    <input name='prdUnit2" + index + "' onclick=\"javascript:fn_prd2_radioClick(" + index + ",'prdUnit','KRW');\" type='radio' " + checkedKRW + " /> 원화(KRW) &nbsp;&nbsp;&nbsp;";
 			rowHtml += "    <input name='prdUnit2" + index + "' onclick=\"javascript:fn_prd2_radioClick(" + index + ",'prdUnit','USD');\" type='radio' " + checkedUSD + " /> 달러화(USD) &nbsp;&nbsp;&nbsp;";
 			rowHtml += "    <input name='prdUnit2" + index + "' onclick=\"javascript:fn_prd2_radioClick(" + index + ",'prdUnit','EUR');\" type='radio' " + checkedEUR + " /> 유로화(EUR) &nbsp;&nbsp;&nbsp;";
 			rowHtml += "    <input name='prdUnit2" + index + "' onclick=\"javascript:fn_prd2_radioClick(" + index + ",'prdUnit','CNY');\" type='radio' " + checkedCNY + " /> 위완화(CNY) &nbsp;&nbsp;&nbsp;";
 			rowHtml += "    <input name='prdUnit2" + index + "' onclick=\"javascript:fn_prd2_radioClick(" + index + ",'prdUnit','JPY');\" type='radio' " + checkedJPY + " /> 엔화(JPY) &nbsp;&nbsp;&nbsp;";
+			*/
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>보기(Mobile URL)</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' id='type2_prdMblUrl" + index + "' class='prdMblUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdMblUrl',this.value);\" style='width:700px;' value='" + value.prdMblUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type2_prdMblUrl" + index + "' class='prdMblUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdMblUrl',this.value);\" style='width:700px;' value='" + value.prdMblUrl + "' maxlength='256' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>보기(Web URL)</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' id='type2_prdWebUrl" + index + "' class='prdWebUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdWebUrl',this.value);\" style='width:700px;' value='" + value.prdWebUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type2_prdWebUrl" + index + "' class='prdWebUrl' onblur=\"javascript:fn_prd2_inputBlur(" + index + ",'prdWebUrl',this.value);\" style='width:700px;' value='" + value.prdWebUrl + "' maxlength='256' placeholder='모바일 URL 입력' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#prd2_table > tbody:last").append(rowHtml);
 		});
 	}
-	//
-	// delete the tr element on prd2
-	//
 	function fn_prd2_del(idx) {
 		if (!true) alert("fn_img_del(" + idx + ")");
 		arrPrd2.splice(idx, 1);
 		fn_prd2_appendTableTr();
-		$("#prd2_addItem").attr("disabled", false);
+		$("#prd2_addItem").removeAttr("disabled");
 	}
-	
-	//
-	// move upward on prd2
-	//
 	function fn_prd2_up(idx) {
 		if (!true) alert("fn_img_up(" + idx + ")");
 		var temp = arrPrd2[idx-1];
@@ -1578,10 +2289,6 @@
 		arrPrd2[idx] = temp;
 		fn_prd2_appendTableTr();
 	}
-	
-	//
-	// move downward on prd2
-	//
 	function fn_prd2_down(idx) {
 		if (!true) alert("fn_img_down(" + idx + ")");
 		var temp = arrPrd2[idx+1];
@@ -1602,71 +2309,30 @@
 	// KANG-20190326: type-3 script BEGIN
 	/////////////////////////////////////////////////
 	var maxArrImg3 = 1;
-	var arrImg3 = [
-		{ imgUrl: "" }    // { imgUrl: "http://localhost/imsi.png" },
-	];
-	
+	$("img3_addItem").tooltip();
 	//
-	// click of img1 addItem
+	//
 	//
 	function fn_img3_addItem_click() {
-		if (!true) alert("fn_img3_addItem_click()");
 		if (arrImg3.length >= maxArrImg3) {
-			if (true) alert("이미지는 " + maxArrImg3 + "개까지 등록 가능합니다.");
+			if (true) alert("이미지는 " + maxArrImg3 + "개까지만 등록 가능합니다.");
 			return;
 		}
+		if (!true) alert("fn_img3_addItem_click()");
 		var idx = arrImg3.length + 1;
-		//arrImg3.push({ imgUrl: "imgUrl - " + idx });
 		arrImg3.push({ imgUrl: "" });
 		fn_img3_appendTableTr();
-		
 		if (idx >= maxArrImg3) {
 			$("#img3_addItem").attr("disabled", true);
 		}
 	}
-	
-	//
-	// clear the img3 table
-	//
-	function fn_img3_clear() {
-		if (!true) alert("fn_img3_clear()");
-		$("#img3_table > tbody").empty();
-	}
-	
-	//
-	// find the table tr elements : NOT USED
-	//
-	/*
-	function fn_img3_findTableTr() {
-		var arr = [];
-		$("#img3_table > tbody > tr").each(function(tr, index) {
-			// var imgUrl = $(tr).find(".imgUrl").val()
-			var imgUrl = $(tr).find("#kang").val()
-			if (true) console.log(">>> " + JSON.stringify($(tr)));
-			if (!true) console.log(">>> " + index + ": " + imgUrl);
-			arr.push({ url: imgUrl});
-		})
-		if (true) console.log("fn_img3_findTableTr: " + $("#img3_table tbody tr").length + " - " + JSON.stringify(arr));
-		
-		return false;
-	}
-	*/
-	
-	//
-	// blur event of inut element on img3
-	//
 	function fn_img3_inputBlur(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrImg3[idx][cls] = value;
 	}
-	
-	//
-	// append a tr element to img3
-	//
 	function fn_img3_appendTableTr() {
 		// clear
-		fn_img3_clear();
-		
+		$("#img3_table > tbody").empty();
 		// value print
 		arrImg3.forEach(function(value, index, array) {
 			if (!true) alert("fn_img3_appendTableTr(): (" + index + "/" + array.length + ") : " + value.imgUrl);
@@ -1674,7 +2340,7 @@
 			var rowHtml = "";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class=\"info\">";
-			rowHtml += "    이미지 URL " + (index+1) + " &nbsp;&nbsp;";
+			rowHtml += "    이미지 URL " + (index+1) + " ";
 			if (array.length > 1) {
 				rowHtml += "    <span class=\"float-right\">";
 				rowHtml += "      <button type=\"button\" onclick=\"javascript:fn_img3_del(" + index + ")\" class=\"btn btn-primary\" style=\"background-color:#aaa; height:15px;width:15px;padding:0px; font-size:10px;\">R</button>";
@@ -1688,26 +2354,19 @@
 			}
 			rowHtml += "  </td>";
 			rowHtml += "  <td colspan='3'>";
-			rowHtml += "    <input type='text' id='type3_imgUrl" + index + "' class='imgUrl' onblur=\"javascript:fn_img3_inputBlur(" + index + ",'imgUrl',this.value);\" style='width:700px;' value='" + value.imgUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type3_imgUrl" + index + "' class='imgUrl' onblur=\"javascript:fn_img3_inputBlur(" + index + ",'imgUrl',this.value);\" style='width:700px;' value='" + value.imgUrl + "' maxlength='100' placeholder='500*240 사이즈 이미지 경로 입력' />";
+			rowHtml += "    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button type='button' id='type3_imgUrl" + index +"' class='btn btn-success btn-sm' onclick=\"fn_pre_view_img('type3_imgUrl" + index +"');\"><i class='fa fa-eye' aria-hidden='true'></i> 미리보기</button>";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#img3_table > tbody:last").append(rowHtml);
 		});
 	}
-	
-	//
-	// delete the tr element on img3
-	//
 	function fn_img3_del(idx) {
 		if (!true) alert("fn_img_del(" + idx + ")");
 		arrImg3.splice(idx, 1);
 		fn_img3_appendTableTr();
 		$("#img3_addItem").attr("disabled", false);
 	}
-	
-	//
-	// move upward on img3
-	//
 	function fn_img3_up(idx) {
 		if (!true) alert("fn_img_up(" + idx + ")");
 		var temp = arrImg3[idx-1];
@@ -1715,10 +2374,6 @@
 		arrImg3[idx] = temp;
 		fn_img3_appendTableTr();
 	}
-	
-	//
-	// move downward on img3
-	//
 	function fn_img3_down(idx) {
 		if (!true) alert("fn_img_down(" + idx + ")");
 		var temp = arrImg3[idx+1];
@@ -1727,86 +2382,42 @@
 		fn_img3_appendTableTr();
 	}
 	////////////////////////////////////////////////////////////
-	var maxArrCpn3 = 10;
-	var arrCpn3 = [
-		{ cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "show" }
-	];
+	var maxArrCpn3 = 3;
+	$("cpn3_addItem").tooltip();
 	//
-	// click of img1 addItem
+	//
 	//
 	function fn_cpn3_addItem_click() {
+		if (arrCpn3.length >= maxArrCpn3) {
+			if (true) alert("이미지는 " + maxArrCpn3 + "개까지만 등록 가능합니다.");
+			return;
+		}
 		if (!true) alert("fn_cpn3_addItem_click()");
 		var idx = arrCpn3.length + 1;
-		//arrCpn3.push({ imgUrl: "imgUrl - " + idx });
-		arrCpn3.push({ cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "show" });
+		arrCpn3.push({ cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "hide" });
 		fn_cpn3_appendTableTr();
-		
 		if (idx >= maxArrCpn3) {
 			$("#cpn3_addItem").attr("disabled", true);
 		}
 	}
-	
-	//
-	// clear the cpn3 table
-	//
-	function fn_cpn3_clear() {
-		if (!true) alert("fn_cpn3_clear()");
-		$("#cpn3_table > tbody").empty();
-	}
-	
-	//
-	// find the table tr elements : NOT USED
-	//
-	/*
-	function fn_cpn3_findTableTr() {
-		var arr = [];
-		$("#cpn3_table > tbody > tr").each(function(tr, index) {
-			// var imgUrl = $(tr).find(".imgUrl").val()
-			var imgUrl = $(tr).find("#kang").val()
-			if (true) console.log(">>> " + JSON.stringify($(tr)));
-			if (!true) console.log(">>> " + index + ": " + imgUrl);
-			arr.push({ url: imgUrl});
-		})
-		if (true) console.log("fn_cpn3_findTableTr: " + $("#cpn3_table tbody tr").length + " - " + JSON.stringify(arr));
-		
-		return false;
-	}
-	*/
-	
-	//
-	// blur event of input element on cpn3
-	//
 	function fn_cpn3_inputBlur(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrCpn3[idx][cls] = value;
 	}
-	
-	//
-	// click event of radio element on cpn3
-	//
 	function fn_cpn3_radioClick(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrCpn3[idx][cls] = value;
 	}
-	
-	//
-	// append a tr element to cpn3
-	//
 	function fn_cpn3_appendTableTr() {
 		// clear
-		fn_cpn3_clear();
-		
+		$("#cpn3_table > tbody").empty();
 		// value print
 		arrCpn3.forEach(function(value, index, array) {
 			if (true) console.log("fn_cpn3_appendTableTr(): (" + index + "/" + array.length + ") : " + value.cpnText1 + ", " + value.cpnVisible);
-			
-			var checkedShow = (value.cpnVisible == "show") ? "checked" : "";
-			var checkedHide = (value.cpnVisible == "hide") ? "checked" : "";
-			
 			var rowHtml = "";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class=\"info\" rowspan='6'>";
-			rowHtml += "    쿠폰 " + (index+1) + " &nbsp;&nbsp;";
+			rowHtml += "    쿠폰 " + (index+1) + " ";
 			if (array.length > 1) {
 				rowHtml += "    <span class=\"float-right\">";
 				rowHtml += "      <button type=\"button\" onclick=\"javascript:fn_cpn3_del(" + index + ")\" class=\"btn btn-primary\" style=\"background-color:#aaa; height:15px;width:15px;padding:0px; font-size:10px;\">R</button>";
@@ -1819,25 +2430,25 @@
 				rowHtml += "    </span>";
 			}
 			rowHtml += "  </td>";
-			rowHtml += "  <td class='info'>문구 1</td>";
+			rowHtml += "  <td class='info'>쿠폰할인정보</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type3_cpnText1" + index + "' class='cpnText1' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText1',this.value);\" style='width:700px;' value='" + value.cpnText1 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
-			rowHtml += "  <td class='info'>문구 2</td>";
+			rowHtml += "  <td class='info'>쿠폰명</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type3_cpnText2" + index + "' class='cpnText2' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText2',this.value);\" style='width:700px;' value='" + value.cpnText2 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
-			rowHtml += "  <td class='info'>문구 3</td>";
+			rowHtml += "  <td class='info'>쿠폰사용조건</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type3_cpnText3" + index + "' class='cpnText3' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText3',this.value);\" style='width:700px;' value='" + value.cpnText3 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
-			rowHtml += "  <td class='info'>문구 4</td>";
+			rowHtml += "  <td class='info'>쿠폰사용기간</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type3_cpnText4" + index + "' class='cpnText4' onblur=\"javascript:fn_cpn3_inputBlur(" + index + ",'cpnText4',this.value);\" style='width:700px;' value='" + value.cpnText4 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
@@ -1851,27 +2462,20 @@
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>다운받기 노출</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input name='cpnVisible3" + index + "' onclick=\"javascript:fn_cpn3_radioClick(" + index + ",'cpnVisible','show');\" type='radio' " + checkedShow + " /> 쿠폰 노출 &nbsp;&nbsp;&nbsp;";
-			rowHtml += "    <input name='cpnVisible3" + index + "' onclick=\"javascript:fn_cpn3_radioClick(" + index + ",'cpnVisible','hide');\" type='radio' " + checkedHide + " /> 쿠폰 미노출 &nbsp;&nbsp;&nbsp;";
+			rowHtml += "    <input name='cpnVisible3" + index + "' onclick=\"javascript:fn_cpn3_radioClick(" + index + ",'cpnVisible','show');\" type='radio' value='show' /> 쿠폰 노출 &nbsp;&nbsp;&nbsp;";
+			rowHtml += "    <input name='cpnVisible3" + index + "' onclick=\"javascript:fn_cpn3_radioClick(" + index + ",'cpnVisible','hide');\" type='radio' value='hide' /> 쿠폰 미노출 &nbsp;&nbsp;&nbsp;";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#cpn3_table > tbody:last").append(rowHtml);
+			$('input[name=cpnVisible3' + index + ']').val([value.cpnVisible]);
 		});
 	}
-	
-	//
-	// delete the tr element on cpn3
-	//
 	function fn_cpn3_del(idx) {
 		if (!true) alert("fn_img_del(" + idx + ")");
 		arrCpn3.splice(idx, 1);
 		fn_cpn3_appendTableTr();
 		$("#cpn3_addItem").attr("disabled", false);
 	}
-	
-	//
-	// move upward on cpn3
-	//
 	function fn_cpn3_up(idx) {
 		if (!true) alert("fn_img_up(" + idx + ")");
 		var temp = arrCpn3[idx-1];
@@ -1879,10 +2483,6 @@
 		arrCpn3[idx] = temp;
 		fn_cpn3_appendTableTr();
 	}
-	
-	//
-	// move downward on cpn3
-	//
 	function fn_cpn3_down(idx) {
 		if (!true) alert("fn_img_down(" + idx + ")");
 		var temp = arrCpn3[idx+1];
@@ -1903,91 +2503,41 @@
 	// KANG-20190326: type-4 script BEGIN
 	/////////////////////////////////////////////////
 	var maxArrAnn4 = 1;
-	var arrAnn4 = [
-		{ annText: "", annFixed: "center" }
-	];
-	
+	$("ann4_addItem").tooltip();
 	//
-	// click of img1 addItem
+	//
 	//
 	function fn_ann4_addItem_click() {
-		if (!true) alert("fn_ann4_addItem_click()");
 		if (arrAnn4.length >= maxArrAnn4) {
-			if (true) alert("이미지는 " + maxArrAnn4 + "개까지 등록 가능합니다.");
+			if (true) alert("이미지는 " + maxArrAnn4 + "개까지만 등록 가능합니다.");
 			return;
 		}
+		if (!true) alert("fn_ann4_addItem_click()");
 		var idx = arrAnn4.length + 1;
-		//arrAnn4.push({ imgUrl: "imgUrl - " + idx });
 		arrAnn4.push({ annText: "", annFixed: "center" });
 		fn_ann4_appendTableTr();
-		
 		if (idx >= maxArrAnn4) {
 			$("#ann4_addItem").attr("disabled", true);
 		}
 	}
-	
-	//
-	// clear the ann4 table
-	//
-	function fn_ann4_clear() {
-		if (!true) alert("fn_ann4_clear()");
-		$("#ann4_table > tbody").empty();
-	}
-	
-	//
-	// find the table tr elements : NOT USED
-	//
-	/*
-	function fn_ann4_findTableTr() {
-		var arr = [];
-		$("#ann4_table > tbody > tr").each(function(tr, index) {
-			// var imgUrl = $(tr).find(".imgUrl").val()
-			var imgUrl = $(tr).find("#kang").val()
-			if (true) console.log(">>> " + JSON.stringify($(tr)));
-			if (!true) console.log(">>> " + index + ": " + imgUrl);
-			arr.push({ url: imgUrl});
-		})
-		if (true) console.log("fn_ann4_findTableTr: " + $("#ann4_table tbody tr").length + " - " + JSON.stringify(arr));
-		
-		return false;
-	}
-	*/
-	
-	//
-	// blur event of input element on ann4
-	//
 	function fn_ann4_inputBlur(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrAnn4[idx][cls] = value;
 	}
-	
-	//
-	// click event of radio element on ann4
-	//
 	function fn_ann4_radioClick(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrAnn4[idx][cls] = value;
 	}
-	
-	//
-	// append a tr element to ann4
-	//
 	function fn_ann4_appendTableTr() {
 		// clear
-		fn_ann4_clear();
-		
+		$("#ann4_table > tbody").empty();
 		// value print
 		arrAnn4.forEach(function(value, index, array) {
 			if (true) console.log("fn_ann4_appendTableTr(): (" + index + "/" + array.length + ") : " + value.annText + ", " + value.annFixed);
-			
-			var checkedLeft   = (value.annFixed == "left"  ) ? "checked" : "";
-			var checkedCenter = (value.annFixed == "center") ? "checked" : "";
-			var checkedRight  = (value.annFixed == "right" ) ? "checked" : "";
-			
 			var rowHtml = "";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class=\"info\" rowspan='2'>";
-			rowHtml += "    안내 " + (index+1) + " &nbsp;&nbsp;";
+			rowHtml += "    안내 " + (index+1) + " ";
 			if (array.length > 1) {
 				rowHtml += "    <span class=\"float-right\">";
 				rowHtml += "      <button type=\"button\" onclick=\"javascript:fn_ann4_del(" + index + ")\" class=\"btn btn-primary\" style=\"background-color:#aaa; height:15px;width:15px;padding:0px; font-size:10px;\">R</button>";
@@ -2002,34 +2552,27 @@
 			rowHtml += "  </td>";
 			rowHtml += "  <td class='info'>문구</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' id='type4_annText" + index + "' class='annText' onblur=\"javascript:fn_ann4_inputBlur(" + index + ",'annText',this.value);\" style='width:700px;' value='" + value.annText + "' maxlength='100' placeholder='' />";
+			rowHtml += "    <input type='text' id='type4_annText" + index + "' class='annText' onblur=\"javascript:fn_ann4_inputBlur(" + index + ",'annText',this.value);\" style='width:700px;' value='" + value.annText + "' maxlength='24' placeholder='(문자수 최대 24)' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>정렬</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input name='annFixed" + index + "' onclick=\"javascript:fn_ann4_radioClick(" + index + ",'annFixed','left'  );\" type='radio' " + checkedLeft   + " /> 좌측정렬 &nbsp;&nbsp;&nbsp;";
-			rowHtml += "    <input name='annFixed" + index + "' onclick=\"javascript:fn_ann4_radioClick(" + index + ",'annFixed','center');\" type='radio' " + checkedCenter + " /> 중앙정렬 &nbsp;&nbsp;&nbsp;";
-			rowHtml += "    <input name='annFixed" + index + "' onclick=\"javascript:fn_ann4_radioClick(" + index + ",'annFixed','right' );\" type='radio' " + checkedRight  + " /> 우측정렬 &nbsp;&nbsp;&nbsp;";
+			//rowHtml += "    <input name='annFixed" + index + "' onclick=\"javascript:fn_ann4_radioClick(" + index + ",'annFixed','left'  );\" type='radio' value='left' /> 좌측정렬 &nbsp;&nbsp;&nbsp;";
+			rowHtml += "    <input name='annFixed" + index + "' onclick=\"javascript:fn_ann4_radioClick(" + index + ",'annFixed','center');\" type='radio' value='center' checked /> 중앙정렬 &nbsp;&nbsp;&nbsp;";
+			//rowHtml += "    <input name='annFixed" + index + "' onclick=\"javascript:fn_ann4_radioClick(" + index + ",'annFixed','right' );\" type='radio' value='right' /> 우측정렬 &nbsp;&nbsp;&nbsp;";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#ann4_table > tbody:last").append(rowHtml);
+			$('input[name=annFixed' + index + ']').val([value.annFixed]);
 		});
 	}
-	
-	//
-	// delete the tr element on ann4
-	//
 	function fn_ann4_del(idx) {
 		if (!true) alert("fn_img_del(" + idx + ")");
 		arrAnn4.splice(idx, 1);
 		fn_ann4_appendTableTr();
 		$("#ann4_addItem").attr("disabled", false);
 	}
-	
-	//
-	// move upward on ann4
-	//
 	function fn_ann4_up(idx) {
 		if (!true) alert("fn_img_up(" + idx + ")");
 		var temp = arrAnn4[idx-1];
@@ -2037,10 +2580,6 @@
 		arrAnn4[idx] = temp;
 		fn_ann4_appendTableTr();
 	}
-	
-	//
-	// move downward on ann4
-	//
 	function fn_ann4_down(idx) {
 		if (!true) alert("fn_img_down(" + idx + ")");
 		var temp = arrAnn4[idx+1];
@@ -2061,88 +2600,37 @@
 	// KANG-20190326: type-5 script BEGIN
 	/////////////////////////////////////////////////
 	var maxArrPrd5 = 10;
-	var arrPrd5 = [
-		{ prdUrl: "", prdName: "", prdPrice: "", prdUnit: "KRW", prdMblUrl: "", prdWebUrl: "" }
-	];
+	$("prd5_addItem").tooltip();
 	//
-	// click of img1 addItem
+	//
 	//
 	function fn_prd5_addItem_click() {
+		if (arrPrd5.length >= maxArrPrd5) {
+			if (true) alert("이미지는 " + maxArrPrd5 + "개까지만 등록 가능합니다.");
+			return;
+		}
 		if (!true) alert("fn_prd5_addItem_click()");
 		var idx = arrPrd5.length + 1;
-		//arrPrd5.push({ imgUrl: "imgUrl - " + idx });
-		arrPrd5.push({ prdUrl: "", prdName: "", prdPrice: "", prdUnit: "KRW", prdMblUrl: "", prdWebUrl: "" });
+		arrPrd5.push({ prdUrl: "", prdName: "", prdPrice: "", prdUnit: "", prdMblUrl: "", prdWebUrl: "" });
 		fn_prd5_appendTableTr();
-		
 		if (idx >= maxArrPrd5) {
 			$("#prd5_addItem").attr("disabled", true);
 		}
 	}
-	
-	//
-	// clear the prd5 table
-	//
-	function fn_prd5_clear() {
-		if (!true) alert("fn_prd5_clear()");
-		$("#prd5_table > tbody").empty();
-	}
-	
-	//
-	// find the table tr elements : NOT USED
-	//
-	/*
-	function fn_prd5_findTableTr() {
-		var arr = [];
-		$("#prd5_table > tbody > tr").each(function(tr, index) {
-			// var imgUrl = $(tr).find(".imgUrl").val()
-			var imgUrl = $(tr).find("#kang").val()
-			if (true) console.log(">>> " + JSON.stringify($(tr)));
-			if (!true) console.log(">>> " + index + ": " + imgUrl);
-			arr.push({ url: imgUrl});
-		})
-		if (true) console.log("fn_prd5_findTableTr: " + $("#prd5_table tbody tr").length + " - " + JSON.stringify(arr));
-		
-		return false;
-	}
-	*/
-	
-	//
-	// blur event of input element on prd5
-	//
 	function fn_prd5_inputBlur(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrPrd5[idx][cls] = value;
 	}
-	
-	//
-	// click event of radio element on prd5
-	//
-	function fn_prd5_radioClick(idx, cls, value) {
-		if (true) console.log(idx + ": " + cls + ": " + value);
-		arrPrd5[idx][cls] = value;
-	}
-	
-	//
-	// append a tr element to prd5
-	//
 	function fn_prd5_appendTableTr() {
 		// clear
-		fn_prd5_clear();
-		
+		$("#prd5_table > tbody").empty();
 		// value print
 		arrPrd5.forEach(function(value, index, array) {
 			if (true) console.log("fn_prd5_appendTableTr(): (" + index + "/" + array.length + ") : " + value.prdName + ", " + value.prdUnit);
-			
-			var checkedKRW = (value.prdUnit == "KRW") ? "checked" : "";
-			var checkedUSD = (value.prdUnit == "USD") ? "checked" : "";
-			var checkedEUR = (value.prdUnit == "EUR") ? "checked" : "";
-			var checkedCNY = (value.prdUnit == "CNY") ? "checked" : "";
-			var checkedJPY = (value.prdUnit == "JPY") ? "checked" : "";
-			
 			var rowHtml = "";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class=\"info\" rowspan='6'>";
-			rowHtml += "    상품 " + (index+1) + " &nbsp;&nbsp;";
+			rowHtml += "    상품 " + (index+1) + " ";
 			if (array.length > 1) {
 				rowHtml += "    <span class=\"float-right\">";
 				rowHtml += "      <button type=\"button\" onclick=\"javascript:fn_prd5_del(" + index + ")\" class=\"btn btn-primary\" style=\"background-color:#aaa; height:15px;width:15px;padding:0px; font-size:10px;\">R</button>";
@@ -2157,11 +2645,12 @@
 			rowHtml += "  </td>";
 			rowHtml += "  <td class='info'>이미지 URL</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' id='type5_prdUrl" + index + "' class='prdUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdUrl',this.value);\" style='width:700px;' value='" + value.prdUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type5_prdUrl" + index + "' class='prdUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdUrl',this.value);\" style='width:600px;' value='" + value.prdUrl + "' maxlength='100' placeholder='188*188 사이즈 이미지 경로 입력' />";
+			rowHtml += "    &nbsp;&nbsp;&nbsp; <button type='button' class='btn btn-success btn-sm' onclick=\"fn_pre_view_img('type5_prdUrl" + index +"');\"><i class='fa fa-eye' aria-hidden='true'></i> 미리보기</button>";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
-			rowHtml += "  <td class='info'>품명</td>";
+			rowHtml += "  <td class='info'>상품명</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type5_prdName" + index + "' class='prdName' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdName',this.value);\" style='width:700px;' value='" + value.prdName + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
@@ -2175,41 +2664,37 @@
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>표시단위</td>";
 			rowHtml += "  <td colspan='2'>";
+			rowHtml += "    <input type='text' id='type5_prdUnit" + index + "' class='prdUnit' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdUnit',this.value);\" style='width:700px;' value='" + value.prdUnit + "' maxlength='10' placeholder='원~' />";
+			/*
 			rowHtml += "    <input name='prdUnit5" + index + "' onclick=\"javascript:fn_prd5_radioClick(" + index + ",'prdUnit','KRW');\" type='radio' " + checkedKRW + " /> 원화(KRW) &nbsp;&nbsp;&nbsp;";
 			rowHtml += "    <input name='prdUnit5" + index + "' onclick=\"javascript:fn_prd5_radioClick(" + index + ",'prdUnit','USD');\" type='radio' " + checkedUSD + " /> 달러화(USD) &nbsp;&nbsp;&nbsp;";
 			rowHtml += "    <input name='prdUnit5" + index + "' onclick=\"javascript:fn_prd5_radioClick(" + index + ",'prdUnit','EUR');\" type='radio' " + checkedEUR + " /> 유로화(EUR) &nbsp;&nbsp;&nbsp;";
 			rowHtml += "    <input name='prdUnit5" + index + "' onclick=\"javascript:fn_prd5_radioClick(" + index + ",'prdUnit','CNY');\" type='radio' " + checkedCNY + " /> 위완화(CNY) &nbsp;&nbsp;&nbsp;";
 			rowHtml += "    <input name='prdUnit5" + index + "' onclick=\"javascript:fn_prd5_radioClick(" + index + ",'prdUnit','JPY');\" type='radio' " + checkedJPY + " /> 엔화(JPY) &nbsp;&nbsp;&nbsp;";
+			*/
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>보기(Mobile URL)</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' id='type5_prdMblUrl" + index + "' class='prdMblUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdMblUrl',this.value);\" style='width:700px;' value='" + value.prdMblUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type5_prdMblUrl" + index + "' class='prdMblUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdMblUrl',this.value);\" style='width:700px;' value='" + value.prdMblUrl + "' maxlength='256' placeholder='http://' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>보기(Web URL)</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input type='text' id='type5_prdWebUrl" + index + "' class='prdWebUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdWebUrl',this.value);\" style='width:700px;' value='" + value.prdWebUrl + "' maxlength='100' placeholder='http://' />";
+			rowHtml += "    <input type='text' id='type5_prdWebUrl" + index + "' class='prdWebUrl' onblur=\"javascript:fn_prd5_inputBlur(" + index + ",'prdWebUrl',this.value);\" style='width:700px;' value='" + value.prdWebUrl + "' maxlength='256' placeholder='모바일 URL 입력' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#prd5_table > tbody:last").append(rowHtml);
 		});
 	}
-	//
-	// delete the tr element on prd5
-	//
 	function fn_prd5_del(idx) {
 		if (!true) alert("fn_img_del(" + idx + ")");
 		arrPrd5.splice(idx, 1);
 		fn_prd5_appendTableTr();
 		$("#prd5_addItem").attr("disabled", false);
 	}
-	
-	//
-	// move upward on prd5
-	//
 	function fn_prd5_up(idx) {
 		if (!true) alert("fn_img_up(" + idx + ")");
 		var temp = arrPrd5[idx-1];
@@ -2217,10 +2702,6 @@
 		arrPrd5[idx] = temp;
 		fn_prd5_appendTableTr();
 	}
-	
-	//
-	// move downward on prd5
-	//
 	function fn_prd5_down(idx) {
 		if (!true) alert("fn_img_down(" + idx + ")");
 		var temp = arrPrd5[idx+1];
@@ -2240,86 +2721,42 @@
 	/////////////////////////////////////////////////
 	// KANG-20190326: type-6 script BEGIN
 	/////////////////////////////////////////////////
-	var maxArrCpn6 = 10;
-	var arrCpn6 = [
-		{ cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "show" }
-	];
+	var maxArrCpn6 = 3;
+	$("cpn6_addItem").tooltip();
 	//
-	// click of img1 addItem
+	//
 	//
 	function fn_cpn6_addItem_click() {
+		if (arrCpn6.length >= maxArrCpn6) {
+			if (true) alert("이미지는 " + maxArrCpn6 + "개까지만 등록 가능합니다.");
+			return;
+		}
 		if (!true) alert("fn_cpn6_addItem_click()");
 		var idx = arrCpn6.length + 1;
-		//arrCpn6.push({ imgUrl: "imgUrl - " + idx });
-		arrCpn6.push({ cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "show" });
+		arrCpn6.push({ cpnText1: "", cpnText2: "", cpnText3: "", cpnText4: "", cpnNumber: "", cpnVisible: "hide" });
 		fn_cpn6_appendTableTr();
-		
 		if (idx >= maxArrCpn6) {
 			$("#cpn6_addItem").attr("disabled", true);
 		}
 	}
-	
-	//
-	// clear the cpn6 table
-	//
-	function fn_cpn6_clear() {
-		if (!true) alert("fn_cpn6_clear()");
-		$("#cpn6_table > tbody").empty();
-	}
-	
-	//
-	// find the table tr elements : NOT USED
-	//
-	/*
-	function fn_cpn6_findTableTr() {
-		var arr = [];
-		$("#cpn6_table > tbody > tr").each(function(tr, index) {
-			// var imgUrl = $(tr).find(".imgUrl").val()
-			var imgUrl = $(tr).find("#kang").val()
-			if (true) console.log(">>> " + JSON.stringify($(tr)));
-			if (!true) console.log(">>> " + index + ": " + imgUrl);
-			arr.push({ url: imgUrl});
-		})
-		if (true) console.log("fn_cpn6_findTableTr: " + $("#cpn6_table tbody tr").length + " - " + JSON.stringify(arr));
-		
-		return false;
-	}
-	*/
-	
-	//
-	// blur event of input element on cpn6
-	//
 	function fn_cpn6_inputBlur(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrCpn6[idx][cls] = value;
 	}
-	
-	//
-	// click event of radio element on cpn6
-	//
 	function fn_cpn6_radioClick(idx, cls, value) {
 		if (true) console.log(idx + ": " + cls + ": " + value);
 		arrCpn6[idx][cls] = value;
 	}
-	
-	//
-	// append a tr element to cpn6
-	//
 	function fn_cpn6_appendTableTr() {
 		// clear
-		fn_cpn6_clear();
-		
+		$("#cpn6_table > tbody").empty();
 		// value print
 		arrCpn6.forEach(function(value, index, array) {
 			if (true) console.log("fn_cpn6_appendTableTr(): (" + index + "/" + array.length + ") : " + value.cpnText1 + ", " + value.cpnVisible);
-			
-			var checkedShow = (value.cpnVisible == "show") ? "checked" : "";
-			var checkedHide = (value.cpnVisible == "hide") ? "checked" : "";
-			
 			var rowHtml = "";
 			rowHtml += "<tr>";
 			rowHtml += "  <td class=\"info\" rowspan='6'>";
-			rowHtml += "    쿠폰 " + (index+1) + " &nbsp;&nbsp;";
+			rowHtml += "    쿠폰 " + (index+1) + " ";
 			if (array.length > 1) {
 				rowHtml += "    <span class=\"float-right\">";
 				rowHtml += "      <button type=\"button\" onclick=\"javascript:fn_cpn6_del(" + index + ")\" class=\"btn btn-primary\" style=\"background-color:#aaa; height:15px;width:15px;padding:0px; font-size:10px;\">R</button>";
@@ -2332,25 +2769,25 @@
 				rowHtml += "    </span>";
 			}
 			rowHtml += "  </td>";
-			rowHtml += "  <td class='info'>문구 1</td>";
+			rowHtml += "  <td class='info'>쿠폰할인정보</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type6_cpnText1" + index + "' class='cpnText1' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText1',this.value);\" style='width:700px;' value='" + value.cpnText1 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
-			rowHtml += "  <td class='info'>문구 2</td>";
+			rowHtml += "  <td class='info'>쿠폰명</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type6_cpnText2" + index + "' class='cpnText2' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText2',this.value);\" style='width:700px;' value='" + value.cpnText2 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
-			rowHtml += "  <td class='info'>문구 3</td>";
+			rowHtml += "  <td class='info'>쿠폰사용조건</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type6_cpnText3" + index + "' class='cpnText3' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText3',this.value);\" style='width:700px;' value='" + value.cpnText3 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			rowHtml += "<tr>";
-			rowHtml += "  <td class='info'>문구 4</td>";
+			rowHtml += "  <td class='info'>쿠폰사용기간</td>";
 			rowHtml += "  <td colspan='2'>";
 			rowHtml += "    <input type='text' id='type6_cpnText4" + index + "' class='cpnText4' onblur=\"javascript:fn_cpn6_inputBlur(" + index + ",'cpnText4',this.value);\" style='width:700px;' value='" + value.cpnText4 + "' maxlength='100' placeholder='' />";
 			rowHtml += "  </td>";
@@ -2364,27 +2801,20 @@
 			rowHtml += "<tr>";
 			rowHtml += "  <td class='info'>다운받기 노출</td>";
 			rowHtml += "  <td colspan='2'>";
-			rowHtml += "    <input name='cpnVisible6" + index + "' onclick=\"javascript:fn_cpn6_radioClick(" + index + ",'cpnVisible','show');\" type='radio' " + checkedShow + " /> 쿠폰 노출 &nbsp;&nbsp;&nbsp;";
-			rowHtml += "    <input name='cpnVisible6" + index + "' onclick=\"javascript:fn_cpn6_radioClick(" + index + ",'cpnVisible','hide');\" type='radio' " + checkedHide + " /> 쿠폰 미노출 &nbsp;&nbsp;&nbsp;";
+			rowHtml += "    <input name='cpnVisible6" + index + "' onclick=\"javascript:fn_cpn6_radioClick(" + index + ",'cpnVisible','show');\" type='radio' value='show' /> 쿠폰 노출 &nbsp;&nbsp;&nbsp;";
+			rowHtml += "    <input name='cpnVisible6" + index + "' onclick=\"javascript:fn_cpn6_radioClick(" + index + ",'cpnVisible','hide');\" type='radio' value='hide' /> 쿠폰 미노출 &nbsp;&nbsp;&nbsp;";
 			rowHtml += "  </td>";
 			rowHtml += "</tr>";
 			$("#cpn6_table > tbody:last").append(rowHtml);
+			$('input[name=cpnVisible6' + index + ']').val([value.cpnVisible]);
 		});
 	}
-	
-	//
-	// delete the tr element on cpn6
-	//
 	function fn_cpn6_del(idx) {
 		if (!true) alert("fn_img_del(" + idx + ")");
 		arrCpn6.splice(idx, 1);
 		fn_cpn6_appendTableTr();
 		$("#cpn6_addItem").attr("disabled", false);
 	}
-	
-	//
-	// move upward on cpn6
-	//
 	function fn_cpn6_up(idx) {
 		if (!true) alert("fn_img_up(" + idx + ")");
 		var temp = arrCpn6[idx-1];
@@ -2392,10 +2822,6 @@
 		arrCpn6[idx] = temp;
 		fn_cpn6_appendTableTr();
 	}
-	
-	//
-	// move downward on cpn6
-	//
 	function fn_cpn6_down(idx) {
 		if (!true) alert("fn_img_down(" + idx + ")");
 		var temp = arrCpn6[idx+1];
@@ -2419,943 +2845,1116 @@
 
 
 
-
-
 <!--PAGE CONTENT -->
-		<div id="content" style="width:100%; height100%;">
-			<!--BLOCK SECTION -->
-			<div class="row" style="width:100%; height100%;">
-				<div class="col-lg-1"></div>
-				<div class="col-lg-10">
-					<div class="col-md-12 page-header" style="margin-top:0px;">
-						<h3>채널 상세 정보.</h3>
-					</div>
-					<form name="form" id="form">
-						<input type="hidden" id="CampaignId" name="CampaignId" value="${bo.campaignid}" />
-						<input type="hidden" id="CAMPAIGNCODE" name="CAMPAIGNCODE" value="${bo.campaigncode}" />
-						<input type="hidden" id="FLOWCHARTID" name="FLOWCHARTID" value="${bo.flowchartid}" />
-						<input type="hidden" id="CELLID" name="CELLID" value="${bo.cellid}" />
-						<input type="hidden" id="TO_DATE" name="TO_DATE" value="" />
-						<input type="hidden" id="TO_DATE_P1" name="TO_DATE_P1" value="" />
-						<input type="hidden" id="TO_DATE_P2" name="TO_DATE_P2" value="" />
-						<input type="hidden" id="ALIMI_PARAMS" name="ALIMI_PARAMS" value="" />
-	<!-- Nav tabs -->
-						<ul class="nav nav-tabs">
-							<li class="nav-item">
-								<a id="nav-tabs-old" class="nav-link active" data-toggle="tab" href="#oldAlimi">(구)알리미등록창</a>
-							</li>
-							<li class="nav-item">
-								<a id="nav-tabs-new" class="nav-link" data-toggle="tab" href="#newAlimi">(신)알리미등록창</a>
-							</li>
-						</ul>
-			
-	<!-- Tab panes -->
-						<div class="tab-content" style="margin: 0; padding: 0;">
-			<!-- ############# -->
-			<!-- (구)알리미 등록창 -->
-			<!-- ############# -->
-							<div id="oldAlimi" class="container-fluid tab-pane active" style="margin: 0 0 0 0;"><br>
-								<div>
-									<h6>* 캠페인 기본</h6>
-								</div>
-								<div class="col-lg-12" id="table">
-									<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-										<colgroup>
-											<col width="15%"/>
-											<col width="35%"/>
-											<col width="15%"/>
-											<col width="35%"/>
-										</colgroup>
-										<tr>
-											<td class="info">캠페인 코드/명</td>
-											<td class="tbtd_content" colspan="3">[${bo.campaigncode}]${bo.campaignname}</td>
-											<%-- <td class="info">플로차트 이름</td>
+<div id="content" style="width: 100%;">
+	<!--BLOCK SECTION -->
+	<div class="row" style="width: 100%;">
+		<div class="col-lg-1"></div>
+		<div class="col-lg-10">
+			<div class="col-md-12 page-header" style="margin-top: 0px;">
+				<h3>채널 상세 정보.</h3>
+			</div>
+			<form name="form" id="form">
+				<input type="hidden" id="CampaignId" name="CampaignId"
+					value="${bo.campaignid}" /> <input type="hidden" id="CAMPAIGNCODE"
+					name="CAMPAIGNCODE" value="${bo.campaigncode}" /> <input
+					type="hidden" id="FLOWCHARTID" name="FLOWCHARTID"
+					value="${bo.flowchartid}" /> <input type="hidden" id="CELLID"
+					name="CELLID" value="${bo.cellid}" /> <input type="hidden"
+					id="TO_DATE" name="TO_DATE" value="" /> <input type="hidden"
+					id="TO_DATE_P1" name="TO_DATE_P1" value="" /> <input type="hidden"
+					id="TO_DATE_P2" name="TO_DATE_P2" value="" /> <input type="hidden"
+					id="ALIMI_PARAMS" name="ALIMI_PARAMS" value="" />
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a id="nav-tabs-old"
+						class="nav-link active" data-toggle="tab" href="#oldAlimi">(구)알리미등록창</a>
+					</li>
+					<li class="nav-item"><a id="nav-tabs-new" class="nav-link"
+						data-toggle="tab" href="#newAlimi">(신)알리미등록창</a></li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content" style="margin: 0; padding: 0;">
+					<!-- ############# -->
+					<!-- (구)알리미 등록창 -->
+					<!-- ############# -->
+					<div id="oldAlimi" class="container-fluid tab-pane active"
+						style="margin: 0 0 0 0;">
+						<br>
+						<div>
+							<h6>* 캠페인 기본</h6>
+						</div>
+						<div class="col-lg-12" id="table">
+							<table
+								class="table table-striped table-hover table-condensed table-bordered my_table"
+								style="width: 100%;">
+								<colgroup>
+									<col width="15%" />
+									<col width="35%" />
+									<col width="15%" />
+									<col width="35%" />
+								</colgroup>
+								<tr>
+									<td class="info">캠페인 코드/명</td>
+									<td class="tbtd_content" colspan="3">[${bo.campaigncode}]${bo.campaignname}</td>
+									<%-- <td class="info">플로차트 이름</td>
 											<td class="tbtd_content" colspan="3">${bo.flowchartname}</td> --%>
-										</tr>
-										<tr>
-											<td class="info">채널</td>
-											<td class="tbtd_content">
-												<select id="CHANNEL_CD" name="CHANNEL_CD"  style="width:125px;"<c:if test="${DISABLED == 'Y'}">disabled="disabled"</c:if>>
-													<c:forEach var="val" items="${channel_list}">
-														<option value="${val.code_id}" <c:if test="${val.code_id eq CHANNEL_CD}">selected="selected"</c:if>>
-															${val.code_name}
-														</option>
-													</c:forEach>
-												</select>
-											</td>
-											<td class="info">고객세그먼트</td>
-											<td class="tbtd_content" colspan="3">${bo.cellname}</td>
-										</tr>
-									</table>
-								</div>
-								<div>
-									<h6>* 캠페인 내용</h6>
-								</div>
-								<div class="col-lg-12" style="padding-top: 5px;">
-									<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-										<colgroup>
-											<col width="15%"/>
-											<col width="35%"/>
-											<col width="15%"/>
-											<col width="35%"/>
-										</colgroup>
-		
-										<tr>
-											<td class="info">앱구분</td>
-											<td class="tbtd_content">
-												<select id="MOBILE_APP_KD_CD" name="MOBILE_APP_KD_CD"  style="width:90px;">
-													<c:forEach var="val" items="${mobileApp_list}">
-														<option value="${val.code_id}" <c:if test="${val.code_id eq bo.mobile_app_kd_cd}">selected="selected"</c:if>>
-															${val.code_name}
-														</option>
-													</c:forEach>
-												</select>
-											</td>
-											<td class="info">발송시간</td>
-											<td class="tbtd_content">
-												<select id="MOBILE_DISP_TIME" name="MOBILE_DISP_TIME"  style="width:80px;"></select>
-												<select id="MOBILE_SEND_PREFER_CD" name="MOBILE_SEND_PREFER_CD">
-													<c:forEach var="val" items="${mobileSendPreferCd}">
-														<option value="${val.code_id}" <c:if test="${val.code_id eq bo.mobile_send_prefer_cd}">selected="selected"</c:if>>
-															${val.code_name}
-														</option>
-													</c:forEach>
-												</select>
-											</td>
-										</tr>
-		
-										<tr>
-											<td class="info">연결페이지</td>
-											<td class="tbtd_content" colspan="3">
-												<select id="MOBILE_LNK_PAGE_TYP" name="MOBILE_LNK_PAGE_TYP"  style="width:115px;">
-													<option value="01" <c:if test="${bo.mobile_lnk_page_typ eq '01' or bo.mobile_lnk_page_typ == null or bo.mobile_lnk_page_typ == ''}">selected</c:if>>모바일+URL</option>
-													<option value="02" <c:if test="${bo.mobile_lnk_page_typ eq '02'}">selected</c:if>>URL</option>
-												</select>&nbsp;
-												<c:if test="${bo.mobile_lnk_page_typ eq '01' or bo.mobile_lnk_page_typ == null or bo.mobile_lnk_page_typ == ''}">
-													<c:set var="mobile_lnk_page_url" value="http://m.11st.co.kr"/>
+								</tr>
+								<tr>
+									<td class="info">채널</td>
+									<td class="tbtd_content"><select id="CHANNEL_CD"
+										name="CHANNEL_CD" style="width: 125px;"
+										<c:if test="${DISABLED == 'Y'}">disabled="disabled"</c:if>>
+											<c:forEach var="val" items="${channel_list}">
+												<option value="${val.code_id}"
+													<c:if test="${val.code_id eq CHANNEL_CD}">selected="selected"</c:if>>
+													${val.code_name}</option>
+											</c:forEach>
+									</select></td>
+									<td class="info">고객세그먼트</td>
+									<td class="tbtd_content" colspan="3">${bo.cellname}</td>
+								</tr>
+							</table>
+						</div>
+						<div>
+							<h6>* 캠페인 내용</h6>
+						</div>
+						<div class="col-lg-12" style="padding-top: 5px;">
+							<table
+								class="table table-striped table-hover table-condensed table-bordered my_table"
+								style="width: 100%;">
+								<colgroup>
+									<col width="15%" />
+									<col width="35%" />
+									<col width="15%" />
+									<col width="35%" />
+								</colgroup>
+
+								<tr>
+									<td class="info">앱구분</td>
+									<td class="tbtd_content"><select id="MOBILE_APP_KD_CD"
+										name="MOBILE_APP_KD_CD" style="width: 90px;">
+											<c:forEach var="val" items="${mobileApp_list}">
+												<option value="${val.code_id}"
+													<c:if test="${val.code_id eq bo.mobile_app_kd_cd}">selected="selected"</c:if>>
+													${val.code_name}</option>
+											</c:forEach>
+									</select></td>
+									<td class="info">발송시간</td>
+									<td class="tbtd_content"><select id="MOBILE_DISP_TIME"
+										name="MOBILE_DISP_TIME" style="width: 80px;"></select> <select
+										id="MOBILE_SEND_PREFER_CD" name="MOBILE_SEND_PREFER_CD">
+											<c:forEach var="val" items="${mobileSendPreferCd}">
+												<option value="${val.code_id}"
+													<c:if test="${val.code_id eq bo.mobile_send_prefer_cd}">selected="selected"</c:if>>
+													${val.code_name}</option>
+											</c:forEach>
+									</select></td>
+								</tr>
+
+								<tr>
+									<td class="info">연결페이지</td>
+									<td class="tbtd_content" colspan="3"><select
+										id="MOBILE_LNK_PAGE_TYP" name="MOBILE_LNK_PAGE_TYP"
+										style="width: 115px;">
+											<option value="01"
+												<c:if test="${bo.mobile_lnk_page_typ eq '01' or bo.mobile_lnk_page_typ == null or bo.mobile_lnk_page_typ == ''}">selected</c:if>>모바일+URL</option>
+											<option value="02"
+												<c:if test="${bo.mobile_lnk_page_typ eq '02'}">selected</c:if>>URL</option>
+									</select>&nbsp; <c:if
+											test="${bo.mobile_lnk_page_typ eq '01' or bo.mobile_lnk_page_typ == null or bo.mobile_lnk_page_typ == ''}">
+											<c:set var="mobile_lnk_page_url" value="http://m.11st.co.kr" />
+										</c:if> <c:if test="${bo.mobile_lnk_page_typ eq '02'}">
+											<c:set var="mobile_lnk_page_url"
+												value="${bo.mobile_lnk_page_url }" />
+										</c:if> <input name="MOBILE_LNK_PAGE_URL" class="txt"
+										id="MOBILE_LNK_PAGE_URL" style="width: 400px;" type="text"
+										maxlength="150" readonly="readonly"
+										value="${mobile_lnk_page_url}"></td>
+								</tr>
+
+								<tr>
+									<td class="info">노출일</td>
+									<td class="tbtd_content"><input type="text"
+										id="MOBILE_DISP_DT" name="MOBILE_DISP_DT" class="txt"
+										style="width: 95px;"
+										<c:if test="${bo.mobile_disp_dt != null}">value="${bo.mobile_disp_dt}"</c:if>
+										<c:if test="${bo.mobile_disp_dt == null && bo.camp_term_cd eq '01'}">value="${bo.camp_bgn_dt}"</c:if>
+										readonly="readonly" /> <c:if test="${bo.camp_term_cd eq '02'}">(전송일 +1일)</c:if>
+									</td>
+									<td class="info">우선순위</td>
+									<td class="tbtd_content"><select id="MOBILE_PRIORITY_RNK"
+										name="MOBILE_PRIORITY_RNK" style="width: 60px;">
+											<c:forEach var="val" items="${priority_rank}">
+												<!-- 캠페인의 채널우선순위 적용여부 체크 -->
+												<c:if
+													test="${bo.channel_priority_yn == 'N' && bo.channel_priority_yn == val.code_id}">"
+															<option value="${val.code_id}">${val.code_name}
+													</option>
 												</c:if>
-												<c:if test="${bo.mobile_lnk_page_typ eq '02'}">
-													<c:set var="mobile_lnk_page_url" value="${bo.mobile_lnk_page_url }"/>
+												<c:if
+													test="${bo.channel_priority_yn == 'Y' && val.code_id != 'N' }">
+													<!-- 사용자의 권한체크(user.title) 우선순위 권한에 따라 보여준다 -->
+													<%-- <c:if test="${user.title =='N' || user.title <= val.code_id  }"> --%>
+													<option value="${val.code_id}"
+														<c:if test="${val.code_id eq bo.mobile_priority_rnk}">selected="selected"</c:if>>
+														${val.code_name}</option>
+													<%-- </c:if> --%>
 												</c:if>
-												<input name="MOBILE_LNK_PAGE_URL" class="txt" id="MOBILE_LNK_PAGE_URL" style="width: 400px;" type="text" maxlength="150" readonly="readonly" value="${mobile_lnk_page_url}">
-											</td>
-										</tr>
-		
-										<tr>
-											<td class="info">노출일</td>
-											<td class="tbtd_content">
-												<input type="text" id="MOBILE_DISP_DT" name="MOBILE_DISP_DT" class="txt" style="width:95px;"
-													<c:if test="${bo.mobile_disp_dt != null}">value="${bo.mobile_disp_dt}"</c:if>
-													<c:if test="${bo.mobile_disp_dt == null && bo.camp_term_cd eq '01'}">value="${bo.camp_bgn_dt}"</c:if>
-													readonly="readonly"/>
-													<c:if test="${bo.camp_term_cd eq '02'}">(전송일 +1일)</c:if>
-											</td>
-											<td class="info">우선순위</td>
-											<td class="tbtd_content">
-												<select id="MOBILE_PRIORITY_RNK" name="MOBILE_PRIORITY_RNK"  style="width:60px;">
-													<c:forEach var="val" items="${priority_rank}">
-														<!-- 캠페인의 채널우선순위 적용여부 체크 -->
-														<c:if test="${bo.channel_priority_yn == 'N' && bo.channel_priority_yn == val.code_id}">"
-															<option value="${val.code_id}">
-																${val.code_name}
-															</option>
-														</c:if>
-														<c:if test="${bo.channel_priority_yn == 'Y' && val.code_id != 'N' }">
-															<!-- 사용자의 권한체크(user.title) 우선순위 권한에 따라 보여준다 -->
-															<%-- <c:if test="${user.title =='N' || user.title <= val.code_id  }"> --%>
-																<option value="${val.code_id}" <c:if test="${val.code_id eq bo.mobile_priority_rnk}">selected="selected"</c:if>>
-																	${val.code_name}
-																</option>
-															<%-- </c:if> --%>
-														</c:if>
-													</c:forEach>
-												</select>
-											</td>
-										</tr>
-		
-										<tr>
-											<td class="info">푸시알림제목</td>
-											<td class="tbtd_content" colspan="3">
-												<input type="text" id="MOBILE_DISP_TITLE" name="MOBILE_DISP_TITLE" style="width:350px;" value="${bo.mobile_disp_title}" class="txt" maxlength="100"/>
-											</td>
-										</tr>
-		
-										<!-- 광고 -->
-										<c:set var="subjectVal" value="${bo.mobile_content}"/>
-										<c:if test="${bo.mobile_content == '' || bo.mobile_content eq null}">
-											<c:set var="subjectVal" value="(광고)"/>
-										</c:if>
-		
-										<tr>
-											<td class="info">푸시알림내용</td>
-											<td class="tbtd_content" colspan="3"><input type="text" id="MOBILE_CONTENT" name="MOBILE_CONTENT" style="width:550px;" value="${subjectVal}" class="txt" maxlength="216"/></td>
-										</tr>
-		
-										<tr>
-											<td class="info">알리미타임라인에노출</td>
-											<td class="tbtd_content">
-											<c:forEach var="val" items="${timeline_disp_yn}" varStatus="status">
-												<input type="radio" name="TIMELINE_DISP_YN" class="txt"  value="${val.code_id}"
+											</c:forEach>
+									</select></td>
+								</tr>
+
+								<tr>
+									<td class="info">푸시알림제목</td>
+									<td class="tbtd_content" colspan="3"><input type="text"
+										id="MOBILE_DISP_TITLE" name="MOBILE_DISP_TITLE"
+										style="width: 350px;" value="${bo.mobile_disp_title}"
+										class="txt" maxlength="100" /></td>
+								</tr>
+
+								<!-- 광고 -->
+								<c:set var="subjectVal" value="${bo.mobile_content}" />
+								<c:if
+									test="${bo.mobile_content == '' || bo.mobile_content eq null}">
+									<c:set var="subjectVal" value="(광고)" />
+								</c:if>
+
+								<tr>
+									<td class="info">푸시알림내용</td>
+									<td class="tbtd_content" colspan="3"><input type="text"
+										id="MOBILE_CONTENT" name="MOBILE_CONTENT"
+										style="width: 550px;" value="${subjectVal}" class="txt"
+										maxlength="216" /></td>
+								</tr>
+
+								<tr>
+									<td class="info">알리미타임라인에노출</td>
+									<td class="tbtd_content"><c:forEach var="val"
+											items="${timeline_disp_yn}" varStatus="status">
+											<input type="radio" name="TIMELINE_DISP_YN" class="txt"
+												value="${val.code_id}"
 												<c:if test="${status.first}">checked="checked"</c:if>
 												<c:if test="${val.code_id eq bo.timeline_disp_yn}">checked="checked"</c:if> /> ${val.code_name}
-											</c:forEach>
-											</td>
-											<td class="info">썸네일이미지URL</td>
-											<td class="tbtd_content" colspan="3">
-												<div id="search2">
-													<input type="text" id="THUM_IMG_URL" name="THUM_IMG_URL" style="width:250px;" value="${bo.thum_img_url}" class="txt" maxlength="100"/>
-													<button type="button" class="btn btn-success btn-sm" onclick="fn_pre_view_img('THUM_IMG_URL');"><i class="fa fa-eye" aria-hidden="true"></i> 미리보기</button>
-												</div>
-											</td>
-										</tr>
-		
-										<tr>
-											<td class="info">알림표시방법</td>
-											<td class="tbtd_content">
-											<c:forEach var="val" items="${push_msg_popup_indc_yn}" varStatus="status">
-												<input type="radio" name="PUSH_MSG_POPUP_INDC_YN" class="txt"  value="${val.code_id}"
+											</c:forEach></td>
+									<td class="info">썸네일이미지URL</td>
+									<td class="tbtd_content" colspan="3">
+										<div id="search2">
+											<input type="text" id="THUM_IMG_URL" name="THUM_IMG_URL"
+												style="width: 250px;" value="${bo.thum_img_url}" class="txt"
+												maxlength="100" />
+											<button type="button" class="btn btn-success btn-sm"
+												onclick="fn_pre_view_img('THUM_IMG_URL');">
+												<i class="fa fa-eye" aria-hidden="true"></i> 미리보기
+											</button>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td class="info">알림표시방법</td>
+									<td class="tbtd_content"><c:forEach var="val"
+											items="${push_msg_popup_indc_yn}" varStatus="status">
+											<input type="radio" name="PUSH_MSG_POPUP_INDC_YN" class="txt"
+												value="${val.code_id}"
 												<c:if test="${status.first}">checked="checked"</c:if>
-												<c:if test="${val.code_id eq bo.push_msg_popup_indc_yn}">checked="checked"</c:if>/> ${val.code_name}
-											</c:forEach>
-											</td>
-											<td class="info">스테이터스바<br/>배너이미지URL</td>
-											<td class="tbtd_content" colspan="3">
-												<div id="search2">
-													<input type="text" id="BNNR_IMG_URL" name="BNNR_IMG_URL" style="width:250px;" value="${bo.bnnr_img_url}" class="txt" maxlength="100"/>
-													<button type="button" class="btn btn-success btn-sm" onclick="fn_pre_view_img('BNNR_IMG_URL');"><i class="fa fa-eye" aria-hidden="true"></i> 미리보기</button>
-												</div>
-											</td>
-										</tr>
-		
-										<tr>
-											<td class="info">추가텍스트</td>
-											<td class="tbtd_content" colspan="3">
-												<table>
-													<tr>
-														<td>
-															<textarea name="MOBILE_ADD_TEXT" id="MOBILE_ADD_TEXT" rows="12" cols="100">${bo.mobile_add_text}</textarea>
-														</td>
-														<td width="10px"></td>
-														<td valign="top">
-															<!-- label for="useIndiL"></label -->
-															<input type="radio" name="useIndi" value="N" id="useIndia" <c:if test="${bo.mobile_person_msg_yn eq 'N'}"> checked</c:if> > 개인별 적용(안함)<br/>
-															<input type="radio" name="useIndi" value="Y" id="useIndib" <c:if test="${bo.mobile_person_msg_yn eq 'Y'}"> checked</c:if> > 개인별 적용(DB방식)<br/>
-															<input type="radio" name="useIndi" value="P" id="useIndic" <c:if test="${bo.mobile_person_msg_yn eq 'P'}"> checked</c:if> > 개인별 적용(API방식)<br/>
-															
-															<select style="width:150px; height:123px" size="4" id="VAL_LIST" name="VAL_LIST" disabled >
-																<c:forEach var="val" items="${vri_list}">
-																	<option value="${val.vari_name}">
-																		${val.vari_name}
-																	</option>
-																</c:forEach>
-															</select><br/>
-															<button type="button" class="btn btn-success btn-sm" onclick="fn_pre_view();"><i class="fa fa-eye" aria-hidden="true"></i> 미리보기</button>
-														</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-										<tr>
-											<td class="info">등록자</td>
-											<td class="tbtd_content">${bo.create_nm}</td>
-											<td class="info">등록일시</td>
-											<td class="tbtd_content">${bo.create_dt}</td>
-										</tr>
-		
-										<tr>
-											<td class="info">수정자</td>
-											<td class="tbtd_content">${bo.update_nm}</td>
-											<td class="info">수정일시</td>
-											<td class="tbtd_content">${bo.update_dt}</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-							
-							
-							
-							
-							
-			<!-- ############# -->
-			<!-- (신)알리미 등록창 -->
-			<!-- ############# -->
-							<div id="newAlimi" class="container-fluid tab-pane fade"><br>
-								<div id="base">
-									<div>
-										<h6>* 기본내용(Base)</h6>
-									</div>
-									<div>
-										<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-											<colgroup>
-												<col width="15%"/>
-												<col width="35%"/>
-												<col width="15%"/>
-												<col width="35%"/>
-											</colgroup>
+												<c:if test="${val.code_id eq bo.push_msg_popup_indc_yn}">checked="checked"</c:if> /> ${val.code_name}
+											</c:forEach></td>
+									<td class="info">스테이터스바<br />배너이미지URL
+									</td>
+									<td class="tbtd_content" colspan="3">
+										<div id="search2">
+											<input type="text" id="BNNR_IMG_URL" name="BNNR_IMG_URL"
+												style="width: 250px;" value="${bo.bnnr_img_url}" class="txt"
+												maxlength="100" />
+											<button type="button" class="btn btn-success btn-sm"
+												onclick="fn_pre_view_img('BNNR_IMG_URL');">
+												<i class="fa fa-eye" aria-hidden="true"></i> 미리보기
+											</button>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td class="info">추가텍스트</td>
+									<td class="tbtd_content" colspan="3">
+										<table>
 											<tr>
-												<td class="info">알림톡 노출여부</td>
-												<td class="tbtd_content" colspan="3">
-													<input id='alimiShow_show' class="alimiShow" type='radio' name='alimiShow' value="show" /> 알림톡 노출 &nbsp;&nbsp;&nbsp;
-													<input id='alimiShow_hide' class="alimiShow" type='radio' name='alimiShow' value="hide" /> 알림톡 미노출 &nbsp;&nbsp;&nbsp;
+												<td><textarea name="MOBILE_ADD_TEXT"
+														id="MOBILE_ADD_TEXT" rows="12" cols="100">${bo.mobile_add_text}</textarea>
 												</td>
-											</tr>
-											<tr>
-												<td class="info">알림톡 방문록 텍스트</td>
-												<td class="tbtd_content" colspan="3">
-													<input id='alimiText' type="text" style="width:700px;" name="alimiText" value="" maxlength="100"/>
-												</td>
-											</tr>
-											<tr>
-												<td class="info">알림톡 타입</td>
-												<td class="tbtd_content" colspan="3">
-													<input id='alimiType_type1' class='alimiType' type='radio' name='alimiType' value="type1" /> 타입-1 &nbsp;&nbsp;&nbsp;
-													<input id='alimiType_type2' class='alimiType' type='radio' name='alimiType' value="type2" /> 타입-2 &nbsp;&nbsp;&nbsp;
-													<input id='alimiType_type3' class='alimiType' type='radio' name='alimiType' value="type3" /> 타입-3 &nbsp;&nbsp;&nbsp;
-													<input id='alimiType_type4' class='alimiType' type='radio' name='alimiType' value="type4" /> 타입-4 &nbsp;&nbsp;&nbsp;
-													<input id='alimiType_type5' class='alimiType' type='radio' name='alimiType' value="type5" /> 타입-5 &nbsp;&nbsp;&nbsp;
-													<input id='alimiType_type6' class='alimiType' type='radio' name='alimiType' value="type6" /> 타입-6 &nbsp;&nbsp;&nbsp;
+												<td width="10px"></td>
+												<td valign="top">
+													<!-- label for="useIndiL"></label --> <input type="radio"
+													name="useIndi" value="N" id="useIndia"
+													<c:if test="${bo.mobile_person_msg_yn eq 'N'}"> checked</c:if>>
+													개인별 적용(안함)<br /> <input type="radio" name="useIndi"
+													value="Y" id="useIndib"
+													<c:if test="${bo.mobile_person_msg_yn eq 'Y'}"> checked</c:if>>
+													개인별 적용(DB방식)<br /> <input type="radio" name="useIndi"
+													value="P" id="useIndic"
+													<c:if test="${bo.mobile_person_msg_yn eq 'P'}"> checked</c:if>>
+													개인별 적용(API방식)<br /> <select
+													style="width: 150px; height: 123px" size="4" id="VAL_LIST"
+													name="VAL_LIST" disabled>
+														<c:forEach var="val" items="${vri_list}">
+															<option value="${val.vari_name}">
+																${val.vari_name}</option>
+														</c:forEach>
+												</select><br />
+													<button type="button" class="btn btn-success btn-sm"
+														onclick="fn_pre_view();">
+														<i class="fa fa-eye" aria-hidden="true"></i> 미리보기
+													</button>
 												</td>
 											</tr>
 										</table>
-									</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="info">등록자</td>
+									<td class="tbtd_content">${bo.create_nm}</td>
+									<td class="info">등록일시</td>
+									<td class="tbtd_content">${bo.create_dt}</td>
+								</tr>
+
+								<tr>
+									<td class="info">수정자</td>
+									<td class="tbtd_content">${bo.update_nm}</td>
+									<td class="info">수정일시</td>
+									<td class="tbtd_content">${bo.update_dt}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+
+
+
+
+
+					<!-- ############# -->
+					<!-- (신)알리미 등록창 -->
+					<!-- ############# -->
+					<div id="newAlimi" class="container-fluid tab-pane fade">
+						<br>
+						<div id="base">
+							<div>
+								<h6>* 기본내용(Base)</h6>
+							</div>
+							<div>
+								<table
+									class="table table-striped table-hover table-condensed table-bordered my_table"
+									style="width: 100%;">
+									<colgroup>
+										<col width="15%" />
+										<col width="35%" />
+										<col width="15%" />
+										<col width="35%" />
+									</colgroup>
+									<tr>
+										<td class="info">알림톡 노출여부</td>
+										<td class="tbtd_content" colspan="3"><input
+											id='alimiShow_show' class="alimiShow" type='radio'
+											name='alimiShow' value="show" /> 알림톡 노출 &nbsp;&nbsp;&nbsp; <input
+											id='alimiShow_hide' class="alimiShow" type='radio'
+											name='alimiShow' value="hide" /> 알림톡 미노출 &nbsp;&nbsp;&nbsp;
+										</td>
+									</tr>
+									<tr>
+										<td class="info">알림톡 방목록 텍스트</td>
+										<td class="tbtd_content" colspan="3"><input
+											id='alimiText' type="text" style="width: 700px;"
+											name="alimiText" value="" maxlength="100" /></td>
+									</tr>
+									<tr>
+										<td class="info">알림톡 타입</td>
+										<td class="tbtd_content" colspan="3"><input
+											id='alimiType_type1' class='alimiType' type='radio'
+											name='alimiType' value="type1" /> 타입-1 &nbsp;&nbsp;&nbsp; <input
+											id='alimiType_type2' class='alimiType' type='radio'
+											name='alimiType' value="type2" /> 타입-2 &nbsp;&nbsp;&nbsp; <input
+											id='alimiType_type3' class='alimiType' type='radio'
+											name='alimiType' value="type3" /> 타입-3 &nbsp;&nbsp;&nbsp; <input
+											id='alimiType_type4' class='alimiType' type='radio'
+											name='alimiType' value="type4" /> 타입-4 &nbsp;&nbsp;&nbsp; <input
+											id='alimiType_type5' class='alimiType' type='radio'
+											name='alimiType' value="type5" /> 타입-5 &nbsp;&nbsp;&nbsp; <input
+											id='alimiType_type6' class='alimiType' type='radio'
+											name='alimiType' value="type6" /> 타입-6 &nbsp;&nbsp;&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<!-- 타입-1 -->
+						<div id='content-1'>
+							<div id="_master-1">
+								<div>
+									<h6>* 마스터내용(Master)</h6>
 								</div>
-								<!-- 타입-1 -->
-								<div id='content-1'>
-									<div id="_master-1">
-										<div>
-											<h6>* 마스터내용(Master)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info">제목 1</td>
-													<td colspan="3">
-														<input type="text" id="type1_title1" class="type1" style="width:700px;" name="title1" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">광고 표시 문구</td>
-													<td colspan="3">
-														<input type="text" id="type1_advText" class="type1" style="width:700px;" name="advText" value="" maxlength="100" readonly/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 2</td>
-													<td colspan="3">
-														<input type="text" id="type1_title2" class="type1" style="width:700px;" name="title2" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 3</td>
-													<td colspan="3">
-														<input type="text" id="type1_title3" class="type1" style="width:700px;" name="title3" value="" maxlength="100"/>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div id="_images-1">
-										<div>
-											<h6>* 이미지내용(Images)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<button id="img1_addItem" type="button" class="btn btn-primary" style="height:20px;width:50px;padding:2px; font-size:12px;" title="이미지는 최대 5개까지 등록 가능합니다.">항목추가</button>
-											</h6>
-										<div>
-										</div>
-											<table id="img1_table" class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tbody>
-													<!-- dynamic tr elements -->
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="_footer-1">
-										<div>
-											<h6>* 하단내용(Footer)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info" colspan="2">하단 문구</td>
-													<td colspan="2">
-														<input type="text" id="type1_ftrText" class="type1" style="width:700px;" name="ftrText" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info" rowspan="2">상세보기</td>
-													<td class="info">Mobile URL</td>
-													<td colspan="2">
-														<input type="text" id="type1_ftrMblUrl" class="type1" style="width:700px;" name="ftrMblUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-												<tr>
-													<td class="info">Web URL</td>
-													<td colspan="2">
-														<input type="text" id="type1_ftrWebUrl" class="type1" style="width:700px;" name="ftrWebUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-								<!-- 타입-2 -->
-								<div id='content-2'>
-									<div id="_master-2">
-										<div>
-											<h6>* 마스터내용(Master)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info">제목 1</td>
-													<td colspan="3">
-														<input type="text" id="type2_title1" class="type2" style="width:700px;" name="title1" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">광고 표시 문구</td>
-													<td colspan="3">
-														<input type="text" id="type2_advText" class="type2" style="width:700px;" name="advText" value="" maxlength="100" readonly/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 2</td>
-													<td colspan="3">
-														<input type="text" id="type2_title2" class="type2" style="width:700px;" name="title2" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 3</td>
-													<td colspan="3">
-														<input type="text" id="type2_title3" class="type2" style="width:700px;" name="title3" value="" maxlength="100"/>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div id="_images-2">
-										<div>
-											<h6>* 이미지내용(Images)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<button id="img2_addItem" type="button" class="btn btn-primary" style="height:20px;width:50px;padding:2px; font-size:12px;">항목추가</button>
-											</h6>
-										</div>
-										<div>
-											<table id="img2_table" class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tbody>
-													<!-- dynamic tr elements -->
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="_goods-2">
-										<div>
-											<h6>* 상품내용(Goods)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<button id="prd2_addItem" type="button" class="btn btn-primary" style="height:20px;width:50px;padding:2px; font-size:12px;">항목추가</button>
-											</h6>
-										</div>
-										<div>
-											<table id="prd2_table" class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tbody>
-													<!-- dynamic tr elements -->
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="_footer-2">
-										<div>
-											<h6>* 하단내용(Footer)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info" colspan="2">하단 문구</td>
-													<td colspan="2">
-														<input type="text" id="type2_ftrText" class="type2" style="width:700px;" name="ftrText" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info" rowspan="2">상세보기</td>
-													<td class="info">Mobile URL</td>
-													<td colspan="2">
-														<input type="text" id="type2_ftrMblUrl" class="type2" style="width:700px;" name="ftrMblUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-												<tr>
-													<td class="info">Web URL</td>
-													<td colspan="2">
-														<input type="text" id="type2_ftrWebUrl" class="type2" style="width:700px;" name="ftrWebUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-								<!-- 타입-3 -->
-								<div id='content-3'>
-									<div id="_master-3">
-										<div>
-											<h6>* 마스터내용(Master)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info">제목 1</td>
-													<td colspan="3">
-														<input type="text" id="type3_title1" class="type3" style="width:700px;" name="title1" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">광고 표시 문구</td>
-													<td colspan="3">
-														<input type="text" id="type3_advText" class="type3" style="width:700px;" name="advText" value="" maxlength="100" readonly/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 2</td>
-													<td colspan="3">
-														<input type="text" id="type3_title2" class="type3" style="width:700px;" name="title2" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 3</td>
-													<td colspan="3">
-														<input type="text" id="type3_title3" class="type3" style="width:700px;" name="title3" value="" maxlength="100"/>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div id="_images-3">
-										<div>
-											<h6>* 이미지내용(Images)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<button id="img3_addItem" type="button" class="btn btn-primary" style="height:20px;width:50px;padding:2px; font-size:12px;">항목추가</button>
-											</h6>
-										<div>
-										</div>
-											<table id="img3_table" class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tbody>
-													<!-- dynamic tr elements -->
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="_coupons-3">
-										<div>
-											<h6>* 쿠폰내용(Coupons)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<button id="cpn3_addItem" type="button" class="btn btn-primary" style="height:20px;width:50px;padding:2px; font-size:12px;">항목추가</button>
-											</h6>
-										</div>
-										<div>
-											<table id="cpn3_table" class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tbody>
-													<!-- dynamic tr elements -->
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="_footer-3">
-										<div>
-											<h6>* 하단내용(Footer)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info" colspan="2">하단 문구</td>
-													<td colspan="2">
-														<input type="text" id="type3_ftrText" class="type3" style="width:700px;" name="ftrText" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info" rowspan="2">상세보기</td>
-													<td class="info">Mobile URL</td>
-													<td colspan="2">
-														<input type="text" id="type3_ftrMblUrl" class="type3" style="width:700px;" name="ftrMblUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-												<tr>
-													<td class="info">Web URL</td>
-													<td colspan="2">
-														<input type="text" id="type3_ftrWebUrl" class="type3" style="width:700px;" name="ftrWebUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-								<!-- 타입-4 -->
-								<div id='content-4'>
-									<div id="_master-4">
-										<div>
-											<h6>* 마스터내용(Master)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info">제목 1</td>
-													<td colspan="3">
-														<input type="text" id="type4_title1" class="type4" style="width:700px;" name="title1" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">광고 표시 문구</td>
-													<td colspan="3">
-														<input type="text" id="type4_advText" class="type4" style="width:700px;" name="advText" value="" maxlength="100" readonly/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 2</td>
-													<td colspan="3">
-														<input type="text" id="type4_title2" class="type4" style="width:700px;" name="title2" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 3</td>
-													<td colspan="3">
-														<input type="text" id="type4_title3" class="type4" style="width:700px;" name="title3" value="" maxlength="100"/>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div id="_announce-4">
-										<div>
-											<h6>* 안내내용(Announce)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<button id="ann4_addItem" type="button" class="btn btn-primary" style="height:20px;width:50px;padding:2px; font-size:12px;">항목추가</button>
-											</h6>
-										</div>
-										<div>
-											<table id="ann4_table" class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tbody>
-													<!-- dynamic tr elements -->
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="_footer-4">
-										<div>
-											<h6>* 하단내용(Footer)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info" colspan="2">하단 문구</td>
-													<td colspan="2">
-														<input type="text" id="type4_ftrText" class="type4" style="width:700px;" name="ftrText" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info" rowspan="2">상세보기</td>
-													<td class="info">Mobile URL</td>
-													<td colspan="2">
-														<input type="text" id="type4_ftrMblUrl" class="type4" style="width:700px;" name="ftrMblUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-												<tr>
-													<td class="info">Web URL</td>
-													<td colspan="2">
-														<input type="text" id="type4_ftrWebUrl" class="type4" style="width:700px;" name="ftrWebUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-								<!-- 타입-5 -->
-								<div id='content-5'>
-									<div id="_master-5">
-										<div>
-											<h6>* 마스터내용(Master)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info">제목 1</td>
-													<td colspan="3">
-														<input type="text" id="type5_title1" class="type5" style="width:700px;" name="title1" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">광고 표시 문구</td>
-													<td colspan="3">
-														<input type="text" id="type5_advText" class="type5" style="width:700px;" name="advText" value="" maxlength="100" readonly/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 2</td>
-													<td colspan="3">
-														<input type="text" id="type5_title2" class="type5" style="width:700px;" name="title2" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 3</td>
-													<td colspan="3">
-														<input type="text" id="type5_title3" class="type5" style="width:700px;" name="title3" value="" maxlength="100"/>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div id="_goods-5">
-										<div>
-											<h6>* 상품내용(Goods)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<button id="prd5_addItem" type="button" class="btn btn-primary" style="height:20px;width:50px;padding:2px; font-size:12px;">항목추가</button>
-											</h6>
-										</div>
-										<div>
-											<table id="prd5_table" class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tbody>
-													<!-- dynamic tr elements -->
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="_footer-5">
-										<div>
-											<h6>* 하단내용(Footer)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info" colspan="2">하단 문구</td>
-													<td colspan="2">
-														<input type="text" id="type5_ftrText" class="type5" style="width:700px;" name="ftrText" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info" rowspan="2">상세보기</td>
-													<td class="info">Mobile URL</td>
-													<td colspan="2">
-														<input type="text" id="type5_ftrMblUrl" class="type5" style="width:700px;" name="ftrMblUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-												<tr>
-													<td class="info">Web URL</td>
-													<td colspan="2">
-														<input type="text" id="type5_ftrWebUrl" class="type5" style="width:700px;" name="ftrWebUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-								<!-- 타입-6 -->
-								<div id='content-6'>
-									<div id="_master-6">
-										<div>
-											<h6>* 마스터내용(Master)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info">제목 1</td>
-													<td colspan="3">
-														<input type="text" id="type6_title1" class="type6" style="width:700px;" name="title1" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">광고 표시 문구</td>
-													<td colspan="3">
-														<input type="text" id="type6_advText" class="type6" style="width:700px;" name="advText" value="" maxlength="100" readonly/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 2</td>
-													<td colspan="3">
-														<input type="text" id="type6_title2" class="type6" style="width:700px;" name="title2" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info">제목 3</td>
-													<td colspan="3">
-														<input type="text" id="type6_title3" class="type6" style="width:700px;" name="title3" value="" maxlength="100"/>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div id="_coupons-6">
-										<div>
-											<h6>* 쿠폰내용(Coupons)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<button id="cpn6_addItem" type="button" class="btn btn-primary" style="height:20px;width:50px;padding:2px; font-size:12px;">항목추가</button>
-											</h6>
-										</div>
-										<div>
-											<table id="cpn6_table" class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tbody>
-													<!-- dynamic tr elements -->
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="_footer-6">
-										<div>
-											<h6>* 하단내용(Footer)</h6>
-										</div>
-										<div>
-											<table class="table table-striped table-hover table-condensed table-bordered my_table" style="width: 100%;">
-												<colgroup>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="15%"/>
-													<col width="55%"/>
-												</colgroup>
-												<tr>
-													<td class="info" colspan="2">하단 문구</td>
-													<td colspan="2">
-														<input type="text" id="type6_ftrText" class="type6" style="width:700px;" name="ftrText" value="" maxlength="100"/>
-													</td>
-												</tr>
-												<tr>
-													<td class="info" rowspan="2">상세보기</td>
-													<td class="info">Mobile URL</td>
-													<td colspan="2">
-														<input type="text" id="type6_ftrMblUrl" class="type6" style="width:700px;" name="ftrMblUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-												<tr>
-													<td class="info">Web URL</td>
-													<td colspan="2">
-														<input type="text" id="type6_ftrWebUrl" class="type6" style="width:700px;" name="ftrWebUrl" value="" maxlength="100" placeholder='http://' />
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info">소타이틀</td>
+											<td colspan="3"><input type="text" id="type1_title1"
+												class="type1" style="width: 700px;" name="title1" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info">광고 표시 문구</td>
+											<td colspan="3"><input type="text" id="type1_advText"
+												class="type1" style="width: 700px;" name="advText" value=""
+												maxlength="100" readonly /></td>
+										</tr>
+										<tr>
+											<td class="info">메인문구</td>
+											<td colspan="3"><input type="text" id="type1_title2"
+												class="type1" style="width: 700px;" name="title2" value=""
+												maxlength="12" placeholder='(문자수 최대 12)' /></td>
+										</tr>
+										<tr>
+											<td class="info">서브문구 (선택입력)</td>
+											<td colspan="3"><input type="text" id="type1_title3"
+												class="type1" style="width: 700px;" name="title3" value=""
+												maxlength="14" placeholder='(문자수 최대 14) '/></td>
+										</tr>
+									</table>
 								</div>
 							</div>
-							
-							
-							
-							
-							
+							<div id="_images-1">
+								<div>
+									<h6>
+										* 이미지내용(Images)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button id="img1_addItem" type="button"
+											class="btn btn-primary"
+											style="height: 20px; width: 50px; padding: 2px; font-size: 12px;"
+											title="이미지는 최대 5개까지 등록 가능합니다.">항목추가</button>
+									</h6>
+									<div></div>
+									<table id="img1_table"
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tbody>
+											<!-- dynamic tr elements -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="_footer-1">
+								<div>
+									<h6>* 하단내용(Footer)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info" colspan="2">하단 문구</td>
+											<td colspan="2"><input type="text" id="type1_ftrText"
+												class="type1" style="width: 700px;" name="ftrText" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info" rowspan="2">상세보기</td>
+											<td class="info">Mobile URL</td>
+											<td colspan="2"><input type="text" id="type1_ftrMblUrl"
+												class="type1" style="width: 700px;" name="ftrMblUrl"
+												value="" maxlength="256" placeholder='http://' /></td>
+										</tr>
+										<tr>
+											<td class="info">Web URL</td>
+											<td colspan="2"><input type="text" id="type1_ftrWebUrl"
+												class="type1" style="width: 700px;" name="ftrWebUrl"
+												value="" maxlength="256" placeholder='모바일 URL 입력' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
 						</div>
+						<!-- 타입-2 -->
+						<div id='content-2'>
+							<div id="_master-2">
+								<div>
+									<h6>* 마스터내용(Master)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info">소타이틀</td>
+											<td colspan="3"><input type="text" id="type2_title1"
+												class="type2" style="width: 700px;" name="title1" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info">광고 표시 문구</td>
+											<td colspan="3"><input type="text" id="type2_advText"
+												class="type2" style="width: 700px;" name="advText" value=""
+												maxlength="100" readonly /></td>
+										</tr>
+										<tr>
+											<td class="info">메인문구</td>
+											<td colspan="3"><input type="text" id="type2_title2"
+												class="type2" style="width: 700px;" name="title2" value=""
+												maxlength="12" placeholder='(문자수 최대 12)' /></td>
+										</tr>
+										<tr>
+											<td class="info">서브문구 (선택입력)</td>
+											<td colspan="3"><input type="text" id="type2_title3"
+												class="type2" style="width: 700px;" name="title3" value=""
+												maxlength="14" placeholder='(문자수 최대 14)' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div id="_images-2">
+								<div>
+									<h6>
+										* 이미지내용(Images)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<!--
+										<button id="img2_addItem" type="button"
+											class="btn btn-primary"
+											style="height: 20px; width: 50px; padding: 2px; font-size: 12px;"
+											title="이미지는 최대 1개까지 등록 가능합니다.">항목추가</button>
+										-->
+									</h6>
+								</div>
+								<div>
+									<table id="img2_table"
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tbody>
+											<!-- dynamic tr elements -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="_goods-2">
+								<div>
+									<h6>
+										* 상품내용(Goods)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button id="prd2_addItem" type="button"
+											class="btn btn-primary"
+											style="height: 20px; width: 50px; padding: 2px; font-size: 12px;"
+											title="이미지는 최대 10개까지 등록 가능합니다.">항목추가</button>
+									</h6>
+								</div>
+								<div>
+									<table id="prd2_table"
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tbody>
+											<!-- dynamic tr elements -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="_footer-2">
+								<div>
+									<h6>* 하단내용(Footer)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info" colspan="2">하단 문구</td>
+											<td colspan="2"><input type="text" id="type2_ftrText"
+												class="type2" style="width: 700px;" name="ftrText" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info" rowspan="2">상세보기</td>
+											<td class="info">Mobile URL</td>
+											<td colspan="2"><input type="text" id="type2_ftrMblUrl"
+												class="type2" style="width: 700px;" name="ftrMblUrl"
+												value="" maxlength="256" placeholder='http://' /></td>
+										</tr>
+										<tr>
+											<td class="info">Web URL</td>
+											<td colspan="2"><input type="text" id="type2_ftrWebUrl"
+												class="type2" style="width: 700px;" name="ftrWebUrl"
+												value="" maxlength="256" placeholder='모바일 URL 입력' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- 타입-3 -->
+						<div id='content-3'>
+							<div id="_master-3">
+								<div>
+									<h6>* 마스터내용(Master)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info">소타이틀</td>
+											<td colspan="3"><input type="text" id="type3_title1"
+												class="type3" style="width: 700px;" name="title1" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info">광고 표시 문구</td>
+											<td colspan="3"><input type="text" id="type3_advText"
+												class="type3" style="width: 700px;" name="advText" value=""
+												maxlength="100" readonly /></td>
+										</tr>
+										<tr>
+											<td class="info">메인문구</td>
+											<td colspan="3"><input type="text" id="type3_title2"
+												class="type3" style="width: 700px;" name="title2" value=""
+												maxlength="12" placeholder='(문자수 최대 12)' /></td>
+										</tr>
+										<tr>
+											<td class="info">서브문구 (선택입력)</td>
+											<td colspan="3"><input type="text" id="type3_title3"
+												class="type3" style="width: 700px;" name="title3" value=""
+												maxlength="14" placeholder='(문자수 최대 14)' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div id="_images-3">
+								<div>
+									<h6>
+										* 이미지내용(Images)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<!--
+										<button id="img3_addItem" type="button"
+											class="btn btn-primary"
+											style="height: 20px; width: 50px; padding: 2px; font-size: 12px;"
+											title="이미지는 최대 5개까지 등록 가능합니다.">항목추가</button>
+										-->
+									</h6>
+									<div></div>
+									<table id="img3_table"
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tbody>
+											<!-- dynamic tr elements -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="_coupons-3">
+								<div>
+									<h6>
+										* 쿠폰내용(Coupons)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button id="cpn3_addItem" type="button"
+											class="btn btn-primary"
+											style="height: 20px; width: 50px; padding: 2px; font-size: 12px;">항목추가</button>
+									</h6>
+								</div>
+								<div>
+									<table id="cpn3_table"
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tbody>
+											<!-- dynamic tr elements -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="_footer-3">
+								<div>
+									<h6>* 하단내용(Footer)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info" colspan="2">하단 문구</td>
+											<td colspan="2"><input type="text" id="type3_ftrText"
+												class="type3" style="width: 700px;" name="ftrText" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info" rowspan="2">상세보기</td>
+											<td class="info">Mobile URL</td>
+											<td colspan="2"><input type="text" id="type3_ftrMblUrl"
+												class="type3" style="width: 700px;" name="ftrMblUrl"
+												value="" maxlength="256" placeholder='http://' /></td>
+										</tr>
+										<tr>
+											<td class="info">Web URL</td>
+											<td colspan="2"><input type="text" id="type3_ftrWebUrl"
+												class="type3" style="width: 700px;" name="ftrWebUrl"
+												value="" maxlength="256" placeholder='모바일 URL 입력' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- 타입-4 -->
+						<div id='content-4'>
+							<div id="_master-4">
+								<div>
+									<h6>* 마스터내용(Master)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info">소타이틀</td>
+											<td colspan="3"><input type="text" id="type4_title1"
+												class="type4" style="width: 700px;" name="title1" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info">광고 표시 문구</td>
+											<td colspan="3"><input type="text" id="type4_advText"
+												class="type4" style="width: 700px;" name="advText" value=""
+												maxlength="100" readonly /></td>
+										</tr>
+										<tr>
+											<td class="info">메인문구</td>
+											<td colspan="3"><input type="text" id="type4_title2"
+												class="type4" style="width: 700px;" name="title2" value=""
+												maxlength="12" placeholder='(문자수 최대 12)' /></td>
+										</tr>
+										<tr>
+											<td class="info">서브문구 (선택입력)</td>
+											<td colspan="3"><input type="text" id="type4_title3"
+												class="type4" style="width: 700px;" name="title3" value=""
+												maxlength="14" placeholder='(문자수 최대 14)' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div id="_announce-4">
+								<div>
+									<h6>
+										* 안내내용(Announce)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<!--
+										<button id="ann4_addItem" type="button"
+											class="btn btn-primary"
+											style="height: 20px; width: 50px; padding: 2px; font-size: 12px;"
+											title="이미지는 최대 5개까지 등록 가능합니다.">항목추가</button>
+										-->
+									</h6>
+								</div>
+								<div>
+									<table id="ann4_table"
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tbody>
+											<!-- dynamic tr elements -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="_footer-4">
+								<div>
+									<h6>* 하단내용(Footer)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info" colspan="2">하단 문구</td>
+											<td colspan="2"><input type="text" id="type4_ftrText"
+												class="type4" style="width: 700px;" name="ftrText" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info" rowspan="2">상세보기</td>
+											<td class="info">Mobile URL</td>
+											<td colspan="2"><input type="text" id="type4_ftrMblUrl"
+												class="type4" style="width: 700px;" name="ftrMblUrl"
+												value="" maxlength="256" placeholder='http://' /></td>
+										</tr>
+										<tr>
+											<td class="info">Web URL</td>
+											<td colspan="2"><input type="text" id="type4_ftrWebUrl"
+												class="type4" style="width: 700px;" name="ftrWebUrl"
+												value="" maxlength="256" placeholder='모바일 URL 입력' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- 타입-5 -->
+						<div id='content-5'>
+							<div id="_master-5">
+								<div>
+									<h6>* 마스터내용(Master)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info">소타이틀</td>
+											<td colspan="3"><input type="text" id="type5_title1"
+												class="type5" style="width: 700px;" name="title1" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info">광고 표시 문구</td>
+											<td colspan="3"><input type="text" id="type5_advText"
+												class="type5" style="width: 700px;" name="advText" value=""
+												maxlength="100" readonly /></td>
+										</tr>
+										<tr>
+											<td class="info">메인문구</td>
+											<td colspan="3"><input type="text" id="type5_title2"
+												class="type5" style="width: 700px;" name="title2" value=""
+												maxlength="12" placeholder='(문자수 최대 12)' /></td>
+										</tr>
+										<tr>
+											<td class="info">서브문구 (선택입력)</td>
+											<td colspan="3"><input type="text" id="type5_title3"
+												class="type5" style="width: 700px;" name="title3" value=""
+												maxlength="14" placeholder='(문자수 최대 14)' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div id="_goods-5">
+								<div>
+									<h6>
+										* 상품내용(Goods)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button id="prd5_addItem" type="button"
+											class="btn btn-primary"
+											style="height: 20px; width: 50px; padding: 2px; font-size: 12px;">항목추가</button>
+									</h6>
+								</div>
+								<div>
+									<table id="prd5_table"
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tbody>
+											<!-- dynamic tr elements -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="_footer-5">
+								<div>
+									<h6>* 하단내용(Footer)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info" colspan="2">하단 문구</td>
+											<td colspan="2"><input type="text" id="type5_ftrText"
+												class="type5" style="width: 700px;" name="ftrText" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info" rowspan="2">상세보기</td>
+											<td class="info">Mobile URL</td>
+											<td colspan="2"><input type="text" id="type5_ftrMblUrl"
+												class="type5" style="width: 700px;" name="ftrMblUrl"
+												value="" maxlength="256" placeholder='http://' /></td>
+										</tr>
+										<tr>
+											<td class="info">Web URL</td>
+											<td colspan="2"><input type="text" id="type5_ftrWebUrl"
+												class="type5" style="width: 700px;" name="ftrWebUrl"
+												value="" maxlength="256" placeholder='모바일 URL 입력' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- 타입-6 -->
+						<div id='content-6'>
+							<div id="_master-6">
+								<div>
+									<h6>* 마스터내용(Master)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info">소타이틀</td>
+											<td colspan="3"><input type="text" id="type6_title1"
+												class="type6" style="width: 700px;" name="title1" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info">광고 표시 문구</td>
+											<td colspan="3"><input type="text" id="type6_advText"
+												class="type6" style="width: 700px;" name="advText" value=""
+												maxlength="100" readonly /></td>
+										</tr>
+										<tr>
+											<td class="info">메인문구</td>
+											<td colspan="3"><input type="text" id="type6_title2"
+												class="type6" style="width: 700px;" name="title2" value=""
+												maxlength="12" placeholder='(문자수 최대 12)' /></td>
+										</tr>
+										<tr>
+											<td class="info">서브문구 (선택입력)</td>
+											<td colspan="3"><input type="text" id="type6_title3"
+												class="type6" style="width: 700px;" name="title3" value=""
+												maxlength="14" placeholder='(문자수 최대 14)' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div id="_coupons-6">
+								<div>
+									<h6>
+										* 쿠폰내용(Coupons)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button id="cpn6_addItem" type="button"
+											class="btn btn-primary"
+											style="height: 20px; width: 50px; padding: 2px; font-size: 12px;">항목추가</button>
+									</h6>
+								</div>
+								<div>
+									<table id="cpn6_table"
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tbody>
+											<!-- dynamic tr elements -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="_footer-6">
+								<div>
+									<h6>* 하단내용(Footer)</h6>
+								</div>
+								<div>
+									<table
+										class="table table-striped table-hover table-condensed table-bordered my_table"
+										style="width: 100%;">
+										<colgroup>
+											<col width="15%" />
+											<col width="15%" />
+											<col width="15%" />
+											<col width="55%" />
+										</colgroup>
+										<tr>
+											<td class="info" colspan="2">하단 문구</td>
+											<td colspan="2"><input type="text" id="type6_ftrText"
+												class="type6" style="width: 700px;" name="ftrText" value=""
+												maxlength="6" placeholder='(문자수 최대 6)' /></td>
+										</tr>
+										<tr>
+											<td class="info" rowspan="2">상세보기</td>
+											<td class="info">Mobile URL</td>
+											<td colspan="2"><input type="text" id="type6_ftrMblUrl"
+												class="type6" style="width: 700px;" name="ftrMblUrl"
+												value="" maxlength="256" placeholder='http://' /></td>
+										</tr>
+										<tr>
+											<td class="info">Web URL</td>
+											<td colspan="2"><input type="text" id="type6_ftrWebUrl"
+												class="type6" style="width: 700px;" name="ftrWebUrl"
+												value="" maxlength="256" placeholder='모바일 URL 입력' /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-						<div id="sysbtn" class="col-md-12" style="text-align: right; margin: 10px 10px 0px 0px;">
-							<!--
+
+
+
+
+
+
+
+				<div id="sysbtn" class="col-md-12"
+					style="text-align: right; margin: 10px 10px 0px 0px;">
+					<!--
 							<button type="button" class="btn btn-success btn-sm" onclick="fn_pre_view();"><i class="fa fa-eye" aria-hidden="true"></i> 미리보기 </button>
 							-->
-							<button type="button" class="btn btn-danger btn-sm" onclick="fn_save();"><i class="fa fa-floppy-o" aria-hidden="true"></i> 저장 </button>
-							<button type="button" class="btn btn-default btn-sm" onclick="fn_close();"><i class="fa fa-times" aria-hidden="true"></i> 닫기 </button>
-						</div>
-					
-					</form>
+					<button type="button" class="btn btn-danger btn-sm"
+						onclick="fn_save();">
+						<i class="fa fa-floppy-o" aria-hidden="true"></i> 저장
+					</button>
+					<button type="button" class="btn btn-default btn-sm"
+						onclick="fn_close();">
+						<i class="fa fa-times" aria-hidden="true"></i> 닫기
+					</button>
 				</div>
-			</div>
+				<p/><p/><p/>
+
+
+
+
+
+
+
+				<div id="wrapA"
+					style="position: fixed; display: none; left: 25%; top: 100px; width: 563px; background-color: #ffffff;">
+					<div style="background-color: #CDCDCD; border: 1px solid #ffffff;">
+						<a href="javascript:fn_pre_viewClose();" class="bt"> <img
+							width="30" height="30"
+							style="padding: 0px; border: 0px; margin-left: 95%;" alt="닫기"
+							src="<c:url value='/image/btn/x_button.png'/>">
+						</a>
+					</div>
+					<!-- contents -->
+					<section id="cts">
+						<h1 class="top_tit">
+							<a href="#">알리미</a>
+						</h1>
+						<ul id="myAlimi" class="my_alimi">
+							<li class="app">
+								<div class="al_title btn_oc">
+									<!-- 제목 -->
+									<h2 class="tit">
+										<span id="mo_title"></span>
+									</h2>
+								</div>
+								<div class="alimi_con"
+									style="background-color: #ffffff; height: 470px;">
+									<div class="al_html"
+										style="background-color: #ffffff; width: 100%; height: 470px; overflow-y: scroll; float: left; font-size: 12px; line-height: 15px; white-space: nowrap;">
+										<!-- 알림내용 -->
+										<span id="mo_content"></span>
+										<!-- 추가텍스트 -->
+										<span id="mo_addText"></span>
+									</div>
+								</div> <a href="#" class="btn_amore btn_oc">더보기</a>
+							</li>
+						</ul>
+					</section>
+				</div>
+
+
+
+
+			</form>
 		</div>
+	</div>
+</div>
 <!--PAGE CONTENT END -->
 
-		<div style="visibility: hidden; background-color:#e00; height:10px;"></div>  <!-- visibility: hidden/visible -->
+<div style="visibility: hidden; background-color: #e00; height: 10px;"></div>
+<!-- visibility: hidden/visible -->
+
+
 
